@@ -1,0 +1,136 @@
+{
+   "data":"DoubleEG.root",
+   "signal":[
+
+         {
+            "name":"Pseudoscalar",
+            "treeName":"SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_h4g",
+            "legend":"m_{a} = 60 GeV",
+            "color":300,
+            "style":1,
+            "weight":200000,
+            "file":"signal_m_60.root",
+            "xsec" : 0.1,
+            "sfactor" : 100
+         },
+         {
+            "name":"Pseudoscalar",
+            "treeName":"SUSYGluGluToHToAA_AToGG_M_30_TuneCUETP8M1_13TeV_pythia8_13TeV_h4g",
+            "legend":"m_{a} = 30 GeV",
+            "color":600,
+            "style":1,
+            "weight":200000,
+            "file":"signal_m_30.root",
+            "xsec" : 0.1,
+            "sfactor" : 100
+         },
+         {
+            "name":"Pseudoscalar",
+            "treeName":"SUSYGluGluToHToAA_AToGG_M_15_TuneCUETP8M1_13TeV_pythia8_13TeV_h4g",
+            "legend":"m_{a} = 15 GeV",
+            "color":900,
+            "style":1,
+            "weight":200000,
+            "file":"signal_m_15.root",
+            "xsec" : 0.1,
+            "sfactor" : 100
+         }
+   ],
+
+     "background":{
+
+        "Fake-Fake":{
+           "position":1,
+           "legend":"Fake-Fake",
+           "color":"#885BB2",
+           "files":[
+              {
+                 "file":"QCD30to40.root",
+                 "treeName":"QCD_Pt_30to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_h4g",
+                 "cut" : "(pho1_match!=1 && pho2_match!=1)"
+              },
+              {
+                 "file":"QCD30toInf.root",
+                 "treeName":"QCD_Pt_30toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_h4g",
+                 "cut" : "(pho1_match!=1 && pho2_match!=1)"
+              },
+              {
+                 "file":"QCD40toInf.root",
+                 "treeName":"QCD_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_h4g",
+                 "cut" : "(pho1_match!=1 && pho2_match!=1)"
+              },
+              {
+                 "file":"GJet20to40.root",
+                 "treeName":"GJet_Pt_20to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_h4g",
+                 "cut" : "(pho1_match!=1 && pho2_match!=1)"
+              },
+              {
+                 "file":"GJet20toInf.root",
+                 "treeName":"GJet_Pt_20toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_h4g",
+                 "cut" : "(pho1_match!=1 && pho2_match!=1)"
+              },
+              {
+                "file":"GJet40toInf.root",
+                "treeName":"GJet_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_h4g",
+                "cut" : "(pho1_match!=1 && pho2_match!=1)"
+              }
+
+           ]
+        },
+        "Prompt-Fake":{
+           "position":3,
+           "legend":"Prompt-Fake",
+           "color":"#51A7F9",
+           "files":[
+              {
+                 "file":"QCD30to40.root",
+                 "treeName":"QCD_Pt_30to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_h4g",
+                 "cut" : "((pho1_match == 1 && pho2_match != 1) || (pho1_match != 1 && pho2_match == 1))"
+              },
+              {
+                 "file":"QCD30toInf.root",
+                 "treeName":"QCD_Pt_30toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_h4g",
+                 "cut" : "((pho1_match == 1 && pho2_match != 1) || (pho1_match != 1 && pho2_match == 1))"
+              },
+              {
+                 "file":"QCD40toInf.root",
+                 "treeName":"QCD_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_h4g",
+                 "cut" : "((pho1_match == 1 && pho2_match != 1) || (pho1_match != 1 && pho2_match == 1))"
+              },
+              {
+                 "file":"GJet20to40.root",
+                 "treeName":"GJet_Pt_20to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_h4g",
+                 "cut" : "((pho1_match == 1 && pho2_match != 1) || (pho1_match != 1 && pho2_match == 1))"
+              },
+              {
+                 "file":"GJet20toInf.root",
+                 "treeName":"GJet_Pt_20toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_h4g",
+                 "cut" : "((pho1_match == 1 && pho2_match != 1) || (pho1_match != 1 && pho2_match == 1))"
+              },
+              {
+                "file":"GJet40toInf.root",
+                "treeName":"GJet_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_h4g",
+                "cut" : "((pho1_match == 1 && pho2_match != 1) || (pho1_match != 1 && pho2_match == 1))"
+              }
+
+           ]
+        },
+        "Prompt-Prompt":{
+           "position":2,
+           "legend":"Prompt-Prompt",
+           "color":"#2175E0",
+           "files":[
+              {
+                 "file":"DiPho40to80.root",
+                 "treeName":"DiPhotonJetsBox_M40_80_Sherpa_13TeV_h4g",
+                  "cut" : "1>0"
+              },
+              {
+                 "file":"DiPho80toInf.root",
+                 "treeName":"DiPhotonJetsBox_MGG_80toInf_13TeV_Sherpa_13TeV_h4g",
+                 "cut" : "1>0"
+              }
+           ]
+        }
+     }
+     }

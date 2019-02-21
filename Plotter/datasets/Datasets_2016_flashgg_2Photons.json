@@ -1,0 +1,114 @@
+{
+   "data":"DoubleEG.root",
+   "signal":[
+
+         {
+            "name":"Pseudoscalar",
+            "treeName":"SUSYGluGluToHToAA_AToGG_M_1_TuneCUETP8M1_13TeV_pythia8_13TeV_2photons",
+            "legend":"m_{a} = 1 GeV",
+            "color":1118,
+            "style":1,
+            "weight":200000,
+            "file":"Signal_m_1.root",
+            "xsec" : 0.1,
+            "sfactor" : 0.5
+         }
+   ],
+
+     "background":{
+
+        "Jet-Jet":{
+           "position":1,
+           "legend":"QCD",
+           "color":"#885BB2",
+           "files":[
+              {
+                 "file":"QCD30to40.root",
+                 "treeName":"QCD_Pt_30to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_2photons",
+                 "cut" : "(pho1_match!=1 && pho2_match!=1)"
+              },
+              {
+                 "file":"QCD30toInf.root",
+                 "treeName":"QCD_Pt_30toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_2photons",
+                 "cut" : "(pho1_match!=1 && pho2_match!=1)"
+              },
+              {
+                 "file":"QCD40toInf.root",
+                 "treeName":"QCD_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_2photons",
+                 "cut" : "(pho1_match!=1 && pho2_match!=1)"
+              },
+              {
+                 "file":"GJet20to40.root",
+                 "treeName":"GJet_Pt_20to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_2photons",
+                 "cut" : "(pho1_match!=1 && pho2_match!=1)"
+              },
+              {
+                 "file":"GJet20toInf.root",
+                 "treeName":"GJet_Pt_20toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_2photons",
+                 "cut" : "(pho1_match!=1 && pho2_match!=1)"
+              },
+              {
+                "file":"GJet40toInf.root",
+                "treeName":"GJet_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_2photons",
+                "cut" : "(pho1_match!=1 && pho2_match!=1)"
+              }
+
+           ]
+        },
+        "Jet-Photon":{
+           "position":3,
+           "legend":"#gamma+Jets",
+           "color":"#51A7F9",
+           "files":[
+              {
+                 "file":"QCD30to40.root",
+                 "treeName":"QCD_Pt_30to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_2photons",
+                 "cut" : "((pho1_match == 1 && pho2_match != 1) || (pho1_match != 1 && pho2_match == 1))"
+              },
+              {
+                 "file":"QCD30toInf.root",
+                 "treeName":"QCD_Pt_30toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_2photons",
+                 "cut" : "((pho1_match == 1 && pho2_match != 1) || (pho1_match != 1 && pho2_match == 1))"
+              },
+              {
+                 "file":"QCD40toInf.root",
+                 "treeName":"QCD_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_2photons",
+                 "cut" : "((pho1_match == 1 && pho2_match != 1) || (pho1_match != 1 && pho2_match == 1))"
+              },
+              {
+                 "file":"GJet20to40.root",
+                 "treeName":"GJet_Pt_20to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_2photons",
+                 "cut" : "((pho1_match == 1 && pho2_match != 1) || (pho1_match != 1 && pho2_match == 1))"
+              },
+              {
+                 "file":"GJet20toInf.root",
+                 "treeName":"GJet_Pt_20toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_2photons",
+                 "cut" : "((pho1_match == 1 && pho2_match != 1) || (pho1_match != 1 && pho2_match == 1))"
+              },
+              {
+                "file":"GJet40toInf.root",
+                "treeName":"GJet_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_2photons",
+                "cut" : "((pho1_match == 1 && pho2_match != 1) || (pho1_match != 1 && pho2_match == 1))"
+              }
+
+           ]
+        },
+        "DiPhoJets":{
+           "position":2,
+           "legend":"#gamma#gamma+Jets",
+           "color":"#2175E0",
+           "files":[
+              {
+                 "file":"DiPho40to80.root",
+                 "treeName":"DiPhotonJetsBox_M40_80_Sherpa_13TeV_2photons",
+                  "cut" : "1>0"
+              },
+              {
+                 "file":"DiPho80toInf.root",
+                 "treeName":"DiPhotonJetsBox_MGG_80toInf_13TeV_Sherpa_13TeV_2photons",
+                 "cut" : "1>0"
+              }
+           ]
+        }
+     }
+     }

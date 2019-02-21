@@ -1,0 +1,27 @@
+{
+   "signal":[
+
+         {
+            "name":"Pseudoscalar",
+            "treeName":"SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_h4g",
+            "legend":"m_{a} = 60 GeV",
+            "color":300,
+            "file":"Signal_m_60.root",
+         },
+         {
+            "name":"Pseudoscalar",
+            "treeName":"SUSYGluGluToHToAA_AToGG_M_30_TuneCUETP8M1_13TeV_pythia8_13TeV_h4g",
+            "legend":"m_{a} = 30 GeV",
+            "color":600,
+            "file":"Signal_m_30.root",
+         },
+         {
+            "name":"Pseudoscalar",
+            "treeName":"SUSYGluGluToHToAA_AToGG_M_15_TuneCUETP8M1_13TeV_pythia8_13TeV_h4g",
+            "legend":"m_{a} = 15 GeV",
+            "color":900,
+            "file":"Signal_m_15.root",
+         }
+   ]
+
+     }

@@ -1,0 +1,154 @@
+{
+   "data":"Data_2016.root",
+   "signal":[
+
+         {
+            "name":"Pseudoscalar",
+            "treeName":"SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons",
+            "legend":"m_{a} = 60 GeV",
+            "color":300,
+            "style":1,
+            "file":"signal_m_60.root"
+         },
+         {
+            "name":"Pseudoscalar",
+            "treeName":"SUSYGluGluToHToAA_AToGG_M_30_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons",
+            "legend":"m_{a} = 30 GeV",
+            "color":924,
+            "style":1,
+            "file":"signal_m_30.root"
+         },
+         {
+            "name":"Pseudoscalar",
+            "treeName":"SUSYGluGluToHToAA_AToGG_M_15_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons",
+            "legend":"m_{a} = 15 GeV",
+            "color":900,
+            "style":1,
+            "file":"signal_m_15.root"
+         }
+   ],
+
+     "background":{
+
+        "QCD":{
+           "position":1,
+           "legend":"QCD",
+           "color":"#2B74BA",
+           "files":[
+              {
+                 "file":"QCD30to40.root",
+                 "treeName":"QCD_Pt_30to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons",
+                 "cut":"!(pho1_match==1 && pho2_match ==1)"
+              },
+              {
+                 "file":"QCD30toInf.root",
+                 "treeName":"QCD_Pt_30toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons",
+                 "cut":"!(pho1_match==1 && pho2_match ==1)"
+              },
+              {
+                 "file":"QCD40toInf.root",
+                 "treeName":"QCD_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons",
+                 "cut":"!(pho1_match==1 && pho2_match ==1)"
+              }
+
+           ]
+        },
+        "GJets":{
+           "position":3,
+           "legend":"#gamma+Jets",
+           "color":"#EAAC27",
+           "files":[
+              {
+                 "file":"GJet20to40.root",
+                 "treeName":"GJet_Pt_20to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons",
+                 "cut":"!(pho1_match==1 && pho2_match ==1)"
+              },
+              {
+                 "file":"GJet20toInf.root",
+                 "treeName":"GJet_Pt_20toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons",
+                 "cut":"!(pho1_match==1 && pho2_match ==1)"
+              },
+              {
+                "file":"GJet40toInf.root",
+                "treeName":"GJet_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons",
+                "cut":"!(pho1_match==1 && pho2_match ==1)"
+             }
+
+
+           ]
+        },
+        "DiPhoJets":{
+           "position":2,
+           "legend":"#gamma#gamma+Jets",
+           "color":"#D0F1D8",
+           "files":[
+              {
+                 "file":"DiPho40to80.root",
+                 "treeName":"DiPhotonJetsBox_M40_80_Sherpa_13TeV_4photons",
+                 "cut": "1>0"
+              },
+              {
+                 "file":"DiPho80toInf.root",
+                 "treeName":"DiPhotonJetsBox_MGG_80toInf_13TeV_Sherpa_13TeV_4photons",
+                 "cut": "1>0"
+              }
+           ]
+        },
+        "DYJets":{
+           "position":4,
+           "legend":"DY",
+           "color":"#ad395f",
+           "files":[
+              {
+                 "file":"DYJets.root",
+                 "treeName":"DYToLL_13TeV_4photons",
+                 "cut": "1>0"
+              }
+           ]
+        },
+        "SMHgg":{
+           "position":6,
+           "legend":"SM H#gamma#gamma",
+           "color":"#6a4c93",
+           "files":[
+              {
+                 "file":"VHToGG.root",
+                 "treeName":"VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8_13TeV_4photons",
+                 "cut":"1>0"
+              },
+              {
+                 "file":"GluGluHToGG.root",
+                 "treeName":"GluGluHToGG_M_125_13TeV_powheg_pythia8_13TeV_4photons",
+                 "cut":"1>0"
+              },
+              {
+                "file":"VBFHToGG.root",
+                "treeName":"VBFHToGG_M_125_13TeV_powheg_pythia8_13TeV_4photons",
+                "cut":"1>0"
+             }
+           ]
+        },
+        "Others":{
+           "position":5,
+           "legend":"Others",
+           "color":"#dd542e",
+           "files":[
+              {
+                 "file":"TTGG_0Jets.root",
+                 "treeName":"TTGG_0Jets_TuneCUETP8M1_13TeV_amcatnlo_madspin_pythia8_13TeV_4photons",
+                 "cut":"1>0"
+              },
+              {
+                 "file":"TTGJets.root",
+                 "treeName":"TTGJets_TuneCUETP8M1_13TeV_amcatnloFXFX_madspin_pythia8_13TeV_4photons",
+                 "cut":"1>0"
+              },
+              {
+                "file":"TGJets.root",
+                "treeName":"TGJets_TuneCUETP8M1_13TeV_amcatnlo_madspin_pythia8_13TeV_4photons",
+                "cut":"1>0"
+             }
+           ]
+        }
+     }
+     }

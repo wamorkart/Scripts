@@ -1,0 +1,120 @@
+{
+   "data":"DoubleEG.root",
+   "signal":[
+
+         {
+            "name":"Pseudoscalar",
+            "legend":"m_{a} = 60 GeV",
+            "color":300,
+            "style":1,
+            "weight":198014,
+            "file":"signal_m_60.root",
+            "xsec" : 0.1,
+            "sfactor" : 0.5
+         },
+         {
+            "name":"Pseudoscalar",
+            "legend":"m_{a} = 30 GeV",
+            "color":600,
+            "style":1,
+            "weight":200000,
+            "file":"signal_m_30.root",
+            "xsec" : 0.1,
+            "sfactor" : 0.5
+         },
+         {
+            "name":"Pseudoscalar",
+            "legend":"m_{a} = 15 GeV",
+            "color":900,
+            "style":1,
+            "weight":200000,
+            "file":"signal_m_15.root",
+            "xsec" : 0.1,
+            "sfactor" : 0.5
+         }
+   ],
+
+     "background":{
+
+        "QCD":{
+           "position":1,
+           "legend":"QCD",
+           "color":"#885BB2",
+           "files":[
+              {
+                 "file":"QCD30to40.root",
+                 "xsec":22110.0,
+                 "nevents":18009301,
+                 "weight":18009320.786133,
+                 "sfactor":0.01
+              },
+              {
+                 "file":"QCD30toInf.root",
+                 "xsec":260500.0,
+                 "nevents":37562075,
+                 "weight":37562075,
+                 "sfactor":0.01
+              },
+              {
+                 "file":"QCD40toInf.root",
+                 "xsec":113400.0,
+                 "nevents":20632076,
+                 "weight":20632076,
+                 "sfactor":0.01
+              }
+
+           ]
+        },
+        "GJets":{
+           "position":3,
+           "legend":"#gamma+Jets",
+           "color":"#51A7F9",
+           "files":[
+              {
+                 "file":"GJets20to40.root",
+                 "xsec":220.0,
+                 "nevents":24989649,
+                 "weight":24989649,
+                 "sfactor":0.3
+              },
+              {
+                 "file":"GJets20toInf.root",
+                 "xsec":3216.0,
+                 "nevents":37274572,
+                 "weight":37274572,
+                 "sfactor":0.3
+              },
+              {
+                "file":"GJets40toInf.root",
+                "xsec":850.8,
+                "nevents":72299185,
+                "weight":72299185,
+                "sfactor":0.3
+             }               
+
+
+           ]
+        },
+        "DiPhoJets":{
+           "position":2,
+           "legend":"#gamma#gamma+Jets",
+           "color":"#2175E0",
+           "files":[
+              {
+                 "file":"DiPho40to80.root",
+                 "xsec":303.2,
+                 "nevents":4764442.0,
+                 "weight":3601376.531525,
+                 "sfactor": 0.08
+              },
+              {
+                 "file":"DiPho80toInf.root",
+                 "xsec":84.4,
+                 "nevents":57861736.0,
+                 "weight":27363279.712975,
+                 "sfactor": 0.08
+              }
+           ]
+        }
+     }
+     }
