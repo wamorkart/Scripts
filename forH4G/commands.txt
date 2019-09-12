@@ -1,0 +1,1 @@
+python GenerateRoc.py -s /eos/user/t/twamorka/SignalTreesforMVAOptimization/signal_m_60.root -sT SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons -bT DiPhotonJetsBox_M40_80_Sherpa_13TeV_4photons -b /eos/user/t/twamorka/SignalTreesforMVAOptimization/Background/DiPho40_80.root -v pho1_MVA,100,-1,1 -c "abs(pho1_eta)<1.5" -o test.root
