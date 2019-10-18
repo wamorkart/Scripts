@@ -11,20 +11,17 @@ parser.add_argument('-v', '--var', dest='var', required=True, type=str)
 parser.add_argument('-c', '--cut', dest='cut', required=False, type=str)
 
 opt = parser.parse_args()
-print "HERE"
 sigMass = opt.sig
 bkg = opt.bac
 var = opt.var
 cut = opt.cut
 
-print sigMass
 f_sig = TFile('/eos/user/t/twamorka/newCatalog_fixVtx_3Oct2019/hadd_Tree/signal_m_'+str(sigMass)+'.root')
 t_sig = f_sig.Get('h4gCandidateDumper/trees/SUSYGluGluToHToAA_AToGG_M_'+str(sigMass)+'_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons')
 
 bkgFiles = []
 # print bkg
 if bkg == 'QCD':
-   print "here"
    bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/QCD30to40.root','QCD_Pt_30to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons','QCD 30to40'])
    bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/QCD30toInf.root','QCD_Pt_30toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons','QCD 30toInf'])
    bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/QCD40toInf.root','QCD_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons','QCD 40toInf'])
@@ -46,7 +43,6 @@ while i<1:
     Cut_Cat.append(['pho1_MVA > '+str(i)+' && pho2_MVA >'+str(i)+'&&'+cut, 'pho1_MVA > '+str(i)+' && pho2_MVA >'+str(i)+' && pho3_MVA >' + str(i) +' && pho4_MVA >'+str(i)+'&&'+cut,'pho1_MVA > -0.9 && pho2_MVA > -0.9'+' && pho3_MVA >'+str(i)+' && pho4_MVA >'+str(i)+'&&'+cut] )
     i += 0.1
 
-print bkgFiles
 t_bkg = TChain()
 for file in bkgFiles:
     t_bkg.Add(str(file[0])+'/h4gCandidateDumper/trees/'+str(file[1]))
@@ -79,30 +75,29 @@ for cut in Cut_Cat:
     sigEff_Cat2.append(h2_sig.Integral()/tot_sig)
     bkgEff_Cat2.append(1-(h2_bkg.Integral()/tot_bkg))
 
-print sigEff_Cat0
-print bkgEff_Cat0
 
 gr1 = TGraph(len(sigEff_Cat0),sigEff_Cat0,bkgEff_Cat0)
 gr1.SetMarkerColor(kBlack)
 gr1.SetMarkerStyle(20)
+gr1.SetMarkerSize(1.5)
 
 gr2 = TGraph(len(sigEff_Cat1),sigEff_Cat1,bkgEff_Cat1)
 gr2.SetMarkerColor(kRed)
 gr2.SetMarkerStyle(20)
+gr2.SetMarkerSize(1.5)
 
 gr3 = TGraph(len(sigEff_Cat2),sigEff_Cat2,bkgEff_Cat2)
 gr3.SetMarkerColor(kGreen)
 gr3.SetMarkerStyle(20)
+gr3.SetMarkerSize(1.5)
 
-print sigEff_Cat2
-print sigEff_Cat1
+
 c0 = TCanvas("c", "c", 800, 750)
 c0.SetGridy()
 c0.SetGridx()
 graphs.Add(gr1)
 graphs.Add(gr2)
 graphs.Add(gr3)
-# gr2.Draw("AP")
-# gr1.Draw("AP same")
+graphs.SetTitle(";Signal Efficiency; 1- Background Efficiency")
 graphs.Draw("AP")
-c0.SaveAs('test.pdf')
+c0.SaveAs('Eff_'+str(bkg)+'.pdf')
