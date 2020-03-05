@@ -98,31 +98,49 @@ if __name__ == '__main__':
   #   #print " ---> dp2_p1i = ", dp2_p1i, "   dp1_p1i  = ", dp1_p1i
   #
   #   ## (1) and (2) from the next one
-  #   #ObjList = [key.GetName() for key in  itree.GetListOfBranches()]
-  #   ##for branch in ObjList:
-  #     ##if branch.startswith("p1_")  or  branch.startswith("p2_") :
-  #       ##getattr(treeSkimmer, branch)[0] = getattr(itree, branch)
-  #   #for branch in ObjList:
-  #     #nameToSearch1 = "p" + str(dp1_p1i) + "_"
-  #     #nameToSearch1.replace(' ', '')
-  #     #nameToSearch2 = "p" + str(dp2_p1i) + "_"
-  #     #nameToSearch2.replace(' ', '')
-  #     #if branch.startswith(nameToSearch1)  or  branch.startswith(nameToSearch2) :
-  #       #getattr(treeSkimmer, branch)[0] = getattr(itree, branch)
+  #   ObjList = [key.GetName() for key in  itree.GetListOfBranches()]
+  # #   ##for branch in ObjList:
+  # #     ##if branch.startswith("p1_")  or  branch.startswith("p2_") :
+  # #       ##getattr(treeSkimmer, branch)[0] = getattr(itree, branch)
+  #   for branch in ObjList:
+  #     nameToSearch1 = "pho" + str(dp1_p1i) + "_"
+  #     nameToSearch1.replace(' ', '')
+  #     nameToSearch2 = "pho" + str(dp2_p1i) + "_"
+  #     nameToSearch2.replace(' ', '')
+  #     if branch.startswith(nameToSearch1)  or  branch.startswith(nameToSearch2) :
+  #       getattr(treeSkimmer, branch)[0] = getattr(itree, branch)
 
+    if evt == eventsToRun :
+      itree.GetEntry(0)
+    else :
+      itree.GetEntry(evt)
+      # print "evt", evt
 
+    ObjList = [key.GetName() for key in  itree.GetListOfBranches()]
+    for branch in ObjList:
+      nameToSearch1 = "pho" + str(int(dp1_p1i)+1) + "_"
+      # print "before ", nameToSearch1
+      # nameToSearch1.replace(' ', '')
+      # print "after ", nameToSearch1
+      if branch.startswith(nameToSearch1) :
+        # print "branch", branch
+        getattr(treeSkimmer, branch)[0] = getattr(itree, branch)
 
 
     if evt == eventsToRun :
       itree.GetEntry(0)
     else :
       itree.GetEntry(evt+1)
+      # print evt+1
 
     ObjList = [key.GetName() for key in  itree.GetListOfBranches()]
     for branch in ObjList:
-      nameToSearch1 = "pho" + str(int(dp1_p2i)) + "_"
-      nameToSearch1.replace(' ', '')
+      nameToSearch1 = "pho" + str(int(dp1_p2i)+1) + "_"
+      # print "before ", nameToSearch1
+      # nameToSearch1.replace(' ', '')
+      # print "after ", nameToSearch1
       if branch.startswith(nameToSearch1) :
+        # print "branch", branch
         getattr(treeSkimmer, branch)[0] = getattr(itree, branch)
 
 
@@ -135,8 +153,9 @@ if __name__ == '__main__':
 
     ObjList = [key.GetName() for key in  itree.GetListOfBranches()]
     for branch in ObjList:
-      nameToSearch1 = "pho" + str(int(dp2_p1i)) + "_"
-      nameToSearch1.replace(' ', '')
+      nameToSearch1 = "pho" + str(int(dp2_p1i)+1) + "_"
+      # nameToSearch1.replace(' ', '')
+      # print "after ", nameToSearch1
       if branch.startswith(nameToSearch1) :
         getattr(treeSkimmer, branch)[0] = getattr(itree, branch)
 
@@ -152,10 +171,13 @@ if __name__ == '__main__':
 
     ObjList = [key.GetName() for key in  itree.GetListOfBranches()]
     for branch in ObjList:
-      nameToSearch1 = "pho" + str(int(dp2_p2i)) + "_"
-      nameToSearch1.replace(' ', '')
+      nameToSearch1 = "pho" + str(int(dp2_p2i)+1) + "_"
+      # nameToSearch1.replace(' ', '')
       if branch.startswith(nameToSearch1) :
         getattr(treeSkimmer, branch)[0] = getattr(itree, branch)
+
+
+
 
     order_photons = {
           1: treeSkimmer.pho1_pt,
@@ -163,16 +185,20 @@ if __name__ == '__main__':
           3: treeSkimmer.pho3_pt,
           4: treeSkimmer.pho4_pt
           }
+    # print "len(order_photons) ", len()
 
     print "treeSkimmer.pho1_pt ", treeSkimmer.pho1_pt
+    print "treeSkimmer.pho2_pt ", treeSkimmer.pho2_pt
+    print "treeSkimmer.pho3_pt ", treeSkimmer.pho3_pt
+    print "treeSkimmer.pho4_pt ", treeSkimmer.pho4_pt
     sorted_order_photons = sorted(order_photons.items(), key=operator.itemgetter(1))
     sorted_order_photons.reverse()   # from high to low
 
-    print " sorted_order_photons = ", sorted_order_photons
-    print treeSkimmer.pho1_pt
-    print treeSkimmer.pho2_pt
-    print treeSkimmer.pho3_pt
-    print treeSkimmer.pho4_pt
+    # print " sorted_order_photons = ", sorted_order_photons
+    # print treeSkimmer.pho1_pt
+    # print treeSkimmer.pho2_pt
+    # print treeSkimmer.pho3_pt
+    # print treeSkimmer.pho4_pt
 
     sPhos = []
     sPhos_mva = []
