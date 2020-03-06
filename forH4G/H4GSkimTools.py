@@ -1060,6 +1060,11 @@ class SkimmedTreeTools:
       arr = [[Dipho1, P1, iP1, P2, iP2], [Dipho2, P3, iP3, P4, iP4]]
       return arr
 
+    # def Preselection(self,Pho1_vec,Pho2_vec):
+    #     isPreselected = false
+    #     if ()
+
+
    #
    # def HelicityCosTheta(self, Booster, Boosted):
    #     BoostVector = TVector3(Booster.BoostVector())
