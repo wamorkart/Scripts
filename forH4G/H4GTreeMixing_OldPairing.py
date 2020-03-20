@@ -14,19 +14,20 @@ if __name__ == '__main__':
   parser = OptionParser()
   parser.add_option(   "-i", "--inputFile",   dest="inputFile",    default="input.root",       type="string",  help="Input file" )
   parser.add_option(   "-o", "--outputFile",  dest="outputFile",   default="output.root",      type="string",  help="Output file")
-
+  parser.add_option(   "-t", "--tree",  dest="tree",   default="tree",      type="string",  help="tree")
   #/afs/cern.ch/user/a/amassiro/public/H4G/signal_m_50.root
 
   (options, args) = parser.parse_args()
 
-  itree = ROOT.TChain("SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons")
-
+  # itree = ROOT.TChain("SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons")
+  itree = ROOT.TChain(str(options.tree))
   itree.AddFile(options.inputFile)
 
   print "Total number of events to be analyzed:", itree.GetEntries()
 
   outRoot = ROOT.TFile(options.outputFile, "RECREATE")
   outtree = itree.CloneTree(0)
+  # outtree = ROOT.TTree("H4GMix","H4GMix")
 
   def getCosThetaStar_CS():
       h_lor = PP1 + PP2
@@ -58,6 +59,30 @@ if __name__ == '__main__':
       helicityThetas.append( helicityCosTheta(Boosted_a2, BoostedLeadingPhoton_a2))
       return helicityThetas
 
+  def Preselection(Pho1_vec,Pho2_vec):
+        isPreselected = False
+        if (
+        (Pho1_vec[1] > 0.8 or Pho1_vec[2] < 20 or (Pho1_vec[2]/Pho1_vec[0].Pt()) < 0.3 )
+        and (Pho2_vec[1] > 0.8 or Pho2_vec[2] < 20 or (Pho2_vec[2]/Pho2_vec[0].Pt() < 0.3))
+        and (Pho1_vec[3] < 0.08 and Pho2_vec[3] < 0.08)
+        and ( ((abs(Pho1_vec[4]) < 1.4442 and Pho1_vec[3] < 0.07)or (abs(Pho1_vec[4]) > 1.566 and Pho1_vec[3] < 0.035)) and ((abs(Pho2_vec[4]) < 1.4442 and  Pho2_vec[3] < 0.07)or(abs(Pho2_vec[4]) > 1.566 and Pho2_vec[3] < 0.035) ) )
+        and ( ((abs(Pho1_vec[4]) < 1.4442) or (abs(Pho1_vec[4]) > 1.566)) and ((abs(Pho2_vec[4]) < 1.4442 )or(abs(Pho2_vec[4]) > 1.566 ) ) )
+        and (Pho1_vec[0].Pt()> 30.0 and Pho2_vec[0].Pt()> 18.0)
+        and (abs(Pho1_vec[4]) < 2.5 and abs(Pho2_vec[4]) < 2.5)
+        and (abs(Pho1_vec[4]) < 1.4442 or abs(Pho2_vec[4]) > 1.566 )
+        and (abs(Pho1_vec[4]) < 1.4442 or abs(Pho2_vec[4]) > 1.566)
+        and ( (abs(Pho1_vec[4]) < 1.4442 and abs(Pho2_vec[4]) < 1.4442)
+        or (abs(Pho1_vec[4]) < 1.4442 and Pho1_vec[1]>0.85 and abs(Pho2_vec[4]) > 1.566 and Pho2_vec[1]>0.90 )
+        or (abs(Pho1_vec[4]) > 1.566 and Pho1_vec[1]>0.90 and abs(Pho2_vec[4]) < 1.4442 and Pho2_vec[1]>0.85 )
+        or (abs(Pho1_vec[4]) > 1.566 and Pho1_vec[1]>0.90 and abs(Pho2_vec[4]) > 1.566 and Pho2_vec[1]>0.90 ) )
+        and ((Pho1_vec[0]+Pho2_vec[0])).M() > 55
+        and (Pho1_vec[0].Pt() > 0.47*Pho1_vec[0].M() and Pho2_vec[0].Pt() > 0.28*Pho2_vec[0].M())
+        and (Pho1_vec[5] == 0) and (Pho2_vec[5]==0)
+        ):
+         isPreselected = True
+
+        return isPreselected
+
   pho1_pt_mix = array('f', [0])
   pho2_pt_mix = array('f', [0])
   pho3_pt_mix = array('f', [0])
@@ -66,6 +91,10 @@ if __name__ == '__main__':
   pho2_eta_mix = array('f', [0])
   pho3_eta_mix = array('f', [0])
   pho4_eta_mix = array('f', [0])
+  pho1_electronveto_mix = array('f',[0])
+  pho2_electronveto_mix = array('f',[0])
+  pho3_electronveto_mix = array('f',[0])
+  pho4_electronveto_mix = array('f',[0])
   pho1_MVA_mix = array('f', [0])
   pho2_MVA_mix = array('f', [0])
   pho3_MVA_mix = array('f', [0])
@@ -83,6 +112,7 @@ if __name__ == '__main__':
   pho14_M_mix = array('f', [0])
   pho23_M_mix = array('f', [0])
   pho24_M_mix = array('f', [0])
+  isPresel = array('i',[0])
   pho34_M_mix = array('f', [0])
   a1_mass_mix = array('f',[0])
   a2_mass_mix = array('f',[0])
@@ -124,6 +154,10 @@ if __name__ == '__main__':
   _pho2_eta_mix = outtree.Branch('pho2_eta_mix',pho2_eta_mix,'pho2_eta_mix/F')
   _pho3_eta_mix = outtree.Branch('pho3_eta_mix',pho3_eta_mix,'pho3_eta_mix/F')
   _pho4_eta_mix = outtree.Branch('pho4_eta_mix',pho4_eta_mix,'pho4_eta_mix/F')
+  _pho1_electronveto_mix = outtree.Branch('pho1_electronveto_mix',pho1_electronveto_mix,'pho1_electronveto_mix/F')
+  _pho2_electronveto_mix = outtree.Branch('pho2_electronveto_mix',pho2_electronveto_mix,'pho2_electronveto_mix/F')
+  _pho3_electronveto_mix = outtree.Branch('pho3_electronveto_mix',pho3_electronveto_mix,'pho3_electronveto_mix/F')
+  _pho4_electronveto_mix = outtree.Branch('pho4_electronveto_mix',pho4_electronveto_mix,'pho4_electronveto_mix/F')
   _pho1_MVA_mix = outtree.Branch('pho1_MVA_mix',pho1_MVA_mix,'pho1_MVA_mix/F')
   _pho2_MVA_mix = outtree.Branch('pho2_MVA_mix',pho2_MVA_mix,'pho2_MVA_mix/F')
   _pho3_MVA_mix = outtree.Branch('pho3_MVA_mix',pho3_MVA_mix,'pho3_MVA_mix/F')
@@ -142,6 +176,7 @@ if __name__ == '__main__':
   _pho23_M_mix = outtree.Branch('pho23_M_mix',pho23_M_mix,'pho23_M_mix/F')
   _pho24_M_mix = outtree.Branch('pho24_M_mix',pho24_M_mix,'pho24_M_mix/F')
   _pho34_M_mix = outtree.Branch('pho34_M_mix',pho34_M_mix,'pho34_M_mix/F')
+  _isPresel = outtree.Branch('isPresel',isPresel,'isPresel/I')
   _a1_mass_mix = outtree.Branch('a1_mass_mix',a1_mass_mix,'a1_mass_mix/F')
   _a2_mass_mix = outtree.Branch('a2_mass_mix',a2_mass_mix,'a2_mass_mix/F')
   _avg_a_mass_mix = outtree.Branch('avg_a_mass_mix',avg_a_mass_mix,'avg_a_mass_mix/F')
@@ -195,7 +230,7 @@ if __name__ == '__main__':
   for evt in range(0, eventsToRun):
   # for evt in range(0,100):
 
-    if evt%1 == 0: print "## Analyzing event ", evt
+    if evt%1000 == 0: print "## Analyzing event ", evt
     tempPhos = []
     itree.GetEntry(evt)
 
@@ -206,8 +241,8 @@ if __name__ == '__main__':
     dp2_p1i = itree.dp2_p1i
     dp2_p2i = itree.dp2_p2i
 
-    print "original photon mva "
-    print itree.pho1_MVA, "  ", itree.pho2_MVA, "  ", itree.pho3_MVA, "  ", itree.pho4_MVA
+    # print "original photon mva "
+    # print itree.pho1_MVA, "  ", itree.pho2_MVA, "  ", itree.pho3_MVA, "  ", itree.pho4_MVA
     if evt == eventsToRun :
       itree.GetEntry(0)
     else :
@@ -280,6 +315,15 @@ if __name__ == '__main__':
     sPhos = []
     sPhos_mva = []
     sPhos_full5x5_r9 = []
+    sPhos_chHadIso = []
+    sPhos_HoE = []
+    sPhos_SCEta = []
+    sPhos_PSV = []
+    sPhos_EV = []
+    pho1_vec = []
+    pho2_vec = []
+    pho3_vec = []
+    pho4_vec = []
 
     #for iphoton in range(0, 4):  # 4 photons
     for iphoton in sorted_order_photons:
@@ -289,18 +333,65 @@ if __name__ == '__main__':
       name_phi = "pho" + str( int(iphoton [0] ) ) + "_phi"
       name_mva = "pho" + str( int(iphoton [0] ) ) + "_MVA"
       name_full5x5_r9 = "pho" + str( int(iphoton [0] ) ) + "_full5x5_r9"
+      name_chHadIso = "pho" + str(int(iphoton [0])) + "_ChHadIso"
+      name_HoE = "pho" + str(int(iphoton [0])) + "_HoE"
+      name_SCEta = "pho" + str(int(iphoton [0])) + "_SC_eta"
+      name_PSV = "pho" + str(int(iphoton [0])) + "_pixelseed"
+      name_EV = "pho" + str(int(iphoton [0])) + "_electronveto"
 
       p4.SetPtEtaPhiM( getattr(treeSkimmer, name_pt),  getattr(treeSkimmer, name_eta),    getattr(treeSkimmer, name_phi) , 0 )
       sPhos.append(p4)
       sPhos_mva.append(getattr(treeSkimmer, name_mva))
       sPhos_full5x5_r9.append(getattr(treeSkimmer, name_full5x5_r9))
+      sPhos_chHadIso.append(getattr(treeSkimmer, name_chHadIso))
+      sPhos_HoE.append(getattr(treeSkimmer, name_HoE))
+      sPhos_SCEta.append(getattr(treeSkimmer, name_SCEta))
+      sPhos_PSV.append(getattr(treeSkimmer, name_PSV))
+      sPhos_EV.append(getattr(treeSkimmer,name_EV))
+
+    pho1_vec.append(sPhos[0])
+    pho1_vec.append(sPhos_full5x5_r9[0])
+    pho1_vec.append(sPhos_chHadIso[0])
+    pho1_vec.append(sPhos_HoE[0])
+    pho1_vec.append(sPhos_SCEta[0])
+    pho1_vec.append(sPhos_PSV[0])
+
+    pho2_vec.append(sPhos[1])
+    pho2_vec.append(sPhos_full5x5_r9[1])
+    pho2_vec.append(sPhos_chHadIso[1])
+    pho2_vec.append(sPhos_HoE[1])
+    pho2_vec.append(sPhos_SCEta[1])
+    pho2_vec.append(sPhos_PSV[1])
+
+    pho3_vec.append(sPhos[2]) ## 0
+    pho3_vec.append(sPhos_full5x5_r9[2]) ## 1
+    pho3_vec.append(sPhos_chHadIso[2]) ## 2
+    pho3_vec.append(sPhos_HoE[2]) ## 3
+    pho3_vec.append(sPhos_SCEta[2]) ## 4
+    pho3_vec.append(sPhos_PSV[2]) ## 5
+
+    pho4_vec.append(sPhos[3])
+    pho4_vec.append(sPhos_full5x5_r9[3])
+    pho4_vec.append(sPhos_chHadIso[3])
+    pho4_vec.append(sPhos_HoE[3])
+    pho4_vec.append(sPhos_SCEta[3])
+    pho4_vec.append(sPhos_PSV[3])
 
 
-    print "pt ", sPhos[0].Pt()
-    print sPhos[1].Pt()
-    print sPhos[2].Pt()
-    print sPhos[3].Pt()
-    print sPhos_mva[0], "  ", sPhos_mva[1], "  ", sPhos_mva[2], "  ", sPhos_mva[3]
+    Pho12_presel = Preselection(pho1_vec, pho2_vec)
+    Pho13_presel = Preselection(pho1_vec, pho3_vec)
+    Pho14_presel = Preselection(pho1_vec, pho4_vec)
+    Pho23_presel = Preselection(pho2_vec, pho3_vec)
+    Pho24_presel = Preselection(pho2_vec, pho4_vec)
+    Pho34_presel = Preselection(pho3_vec, pho4_vec)
+
+    isPresel_res =  Pho12_presel or Pho13_presel or Pho14_presel or Pho23_presel or Pho24_presel or Pho34_presel
+
+    # print "pt ", sPhos[0].Pt()
+    # print sPhos[1].Pt()
+    # print sPhos[2].Pt()
+    # print sPhos[3].Pt()
+    # print sPhos_mva[0], "  ", sPhos_mva[1], "  ", sPhos_mva[2], "  ", sPhos_mva[3]
 
     pho1_pt_mix[0] = sPhos[0].Pt()
     pho2_pt_mix[0] = sPhos[1].Pt()
@@ -310,6 +401,10 @@ if __name__ == '__main__':
     pho2_eta_mix[0] = sPhos[1].Eta()
     pho3_eta_mix[0] = sPhos[2].Eta()
     pho4_eta_mix[0] = sPhos[3].Eta()
+    pho1_electronveto_mix[0] = sPhos_EV[0]
+    pho2_electronveto_mix[0] = sPhos_EV[1]
+    pho3_electronveto_mix[0] = sPhos_EV[2]
+    pho4_electronveto_mix[0] = sPhos_EV[3]
     pho1_MVA_mix[0] = sPhos_mva[0]
     pho2_MVA_mix[0] = sPhos_mva[1]
     pho3_MVA_mix[0] = sPhos_mva[2]
@@ -328,6 +423,7 @@ if __name__ == '__main__':
     pho23_M_mix[0] = (sPhos[1]+sPhos[2]).M()
     pho24_M_mix[0] = (sPhos[1]+sPhos[3]).M()
     pho34_M_mix[0] = (sPhos[2]+sPhos[3]).M()
+    isPresel[0] = isPresel_res
 
 
     pairedDiphos = treeSkimmer.MakePairing(sPhos)
