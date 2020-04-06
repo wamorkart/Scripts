@@ -28,8 +28,10 @@ void optimize_cats_new(const int NCAT){
 	TString s;
 	// TString date = "OldPairing_M60";
 	TString date = "20201501";
-        TString path_sig = s.Format("/eos/user/t/twamorka/21March2020_Mixing/hadd/OldPairing/catMVA_Medium_wMVA/");
-        TString path_bkg_data = s.Format("/eos/user/t/twamorka/21March2020_Mixing/hadd/OldPairing/catMVA_Medium_wMVA/");
+	      TString path_sig = s.Format("/eos/home-t/twamorka/1April2020_CatTrainign/vLoose_limKinPlusPhotonID/");
+				TString path_bkg_data = s.Format("/eos/home-t/twamorka/1April2020_CatTrainign/vLoose_limKinPlusPhotonID/");
+        // TString path_sig = s.Format("/eos/user/t/twamorka/21March2020_Mixing/hadd/OldPairing/catMVA_Medium_wMVA/");
+        // TString path_bkg_data = s.Format("/eos/user/t/twamorka/21March2020_Mixing/hadd/OldPairing/catMVA_Medium_wMVA/");
 	// cout << "date" << date << endl;
 	// TString path=s.Format("/afs/cern.ch/work/n/nchernya/ETH/DiHiggs/optimization_files/%s/",date.Data());
 	// TString path_sig=s.Format("/eos/user/t/twamorka/Jan2020/2016Samples/OldDiphoPairing/wCatMVA_20Jan2020/m_60/");
@@ -45,17 +47,17 @@ void optimize_cats_new(const int NCAT){
 	// const int NCAT=4;
 	// const int NC
 
-	TString what_to_opt = "cat_MVA_value";
+	TString what_to_opt = "bdt";
 	double xmin = -1.0;
 	double xmax = 1.0;
 	Double_t precision=0.01;  //0.01 for MVA, 5 for MX
 
 	TString Mgg_window = "*((tp_mass>115)&&(tp_mass<135))";
-        TString Mgg_window_mix = "*((tp_mass_mix>115)&&(tp_mass_mix<135))";
+        TString Mgg_window_mix = "*((tp_mass>115)&&(tp_mass<135))";
 	TString Mgg_sideband = "*((tp_mass<=115)||(tp_mass>=135))";
-        TString Mgg_sideband_mix = "*((tp_mass_mix<=115)||(tp_mass_mix>=135))";
-	TString selection_sig = "weight*36*((1>0&& pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.2 && pho2_MVA > -0.4 && pho3_MVA > -0.75 && pho4_MVA > -0.75&& tp_mass > 110 && tp_mass < 180))";
-        TString selection_bg_data = "(pho1_pt_mix > 30 && pho2_pt_mix > 18 && pho3_pt_mix > 15 && pho4_pt_mix > 15 && abs(pho1_eta_mix) < 2.5 && abs(pho2_eta_mix) < 2.5 && abs(pho3_eta_mix) < 2.5 && abs(pho4_eta_mix) < 2.5 && (abs(pho1_eta_mix) < 1.4442 || abs(pho1_eta_mix) > 1.566) && (abs(pho2_eta_mix) < 1.4442 || abs(pho2_eta_mix) > 1.566) && (abs(pho3_eta_mix) < 1.4442 || abs(pho3_eta_mix) > 1.566) && (abs(pho4_eta_mix) < 1.4442 || abs(pho4_eta_mix) > 1.566) && pho1_electronveto_mix==1 && pho2_electronveto_mix==1 && pho3_electronveto_mix==1 && pho4_electronveto_mix==1&& pho1_MVA_mix > -0.2 && pho2_MVA_mix > -0.4 && pho3_MVA_mix > -0.75 && pho4_MVA_mix > -0.75&& tp_mass_mix > 110 && tp_mass_mix < 180 && isPresel==1  )*(91/347)";
+        TString Mgg_sideband_mix = "*((tp_mass<=115)||(tp_mass>=135))";
+	TString selection_sig = "weight*36*((1>0&& pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9&& tp_mass > 110 && tp_mass < 180 ))";
+        TString selection_bg_data = "(pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9 && tp_mass > 110 && tp_mass < 180 )*(467/5162)";
 	// TString Mgg_sideband = "*((Mgg<=115)||(Mgg>=135))";
 	// TString selection_sig = "weight*lumi*2*eventTrainedOn*0.587*normalization/SumWeight";
 	//TString selection_bg_dipho40to80 = "weight*36*((1>0&& pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_pixelseed==0 && pho2_pixelseed==0 && pho3_pixelseed==0 && pho4_pixelseed==0&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9&& tp_mass > 110 && tp_mass < 180))";
@@ -90,7 +92,7 @@ void optimize_cats_new(const int NCAT){
 
 
 	// TFile *file_s =  TFile::Open(path+"Total_runII_20191126.root");
-	TFile *file_s =  TFile::Open(path_sig+"signal_m_60_skim.root");
+	TFile *file_s =  TFile::Open(path_sig+"signal_m_60.root");
 	TTree *tree_sig = (TTree*)file_s->Get("SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
 	TH1F *hist_S = new TH1F("hist_S","hist_S",int((xmax-xmin)/precision),xmin,xmax);
   s.Form("%s>>hist_S",what_to_opt.Data());
