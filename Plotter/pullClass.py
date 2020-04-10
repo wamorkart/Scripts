@@ -80,22 +80,26 @@ class myStack:
 		pullE = pullHandE[1]
 		LowEdge = pullHandE[2]
 		UpEdge = pullHandE[3]
+                chi2_hist = pullHandE[4]
+                chi2_ratio = pullHandE[5]
 		self.SUM = self.tStack.GetStack().Last().Clone("SUM")
 		self.SUM.SetLineWidth(0)
-		self.SUM.SetFillColorAlpha(kGray+2, 0.5)
+		# self.SUM.SetFillColor(kGray+2)
+		self.SUM.SetFillColor(kGray+2)
 		self.SUM.SetMarkerColorAlpha(0,0)
 #		self.SUM.SetLineColorAlpha(kGray+2,0.5)
-		self.SUM.SetFillStyle(1001)
+		# self.SUM.SetFillStyle(1001)
+		self.SUM.SetFillStyle(3001)
 		legend = MakeLegend(self.myHistograms, self.myData, self.lumi, self.mySignals, self.SUM)
-		ControlRegion = ""
-		if self.isPhoCR == 1:
-			ControlRegion = "Fake Photon CR"
-		if self.isJetCR == 1:
-			ControlRegion = "Light Jets CR"
+		# ControlRegion = ""
+		# if self.isPhoCR == 1:
+		# 	ControlRegion = "Fake Photon CR"
+		# if self.isJetCR == 1:
+		# 	ControlRegion = "Light Jets CR"
 		print self.tStack.GetNhists()
 		# DrawNoPull(self.myData, self.tStack, legend, fileName, self.varName, self.dirName, self.lumi, self.mySignals, self.SUM, ControlRegion, self.hideData_, self.year)
 
 
 		# SaveWithoutPull(self.myData, self.tStack, legend, fileName, self.varName, self.dirName, self.lumi, self.mySignals, self.SUM, ControlRegion, self.hideData_, self.year)
-		SaveWithPull(self.myData, self.tStack, legend, pullH, pullE, fileName, self.varName, self.dirName, self.lumi, self.mySignals, self.SUM, ControlRegion, self.hideData_, self.year)
+		SaveWithPull(self.myData, self.tStack, legend, pullH, pullE, fileName, self.varName, self.dirName, self.lumi, self.mySignals, self.SUM, self.hideData_, self.year, chi2_hist, chi2_ratio)
 #		gROOT.EndOfProcessCleanups()

@@ -2,13 +2,16 @@ from ROOT import *
 from copy import deepcopy
 from math import *
 from array import array
-from flashgg.H4GFlash.MyCMSStyle import *
+from MyCMSStyle import *
 
 # c1 = TCanvas('c1', 'c1', 800, 700)
 def getRatio(hist1, hist2):
 	c1 = TCanvas('c1', 'c1', 800, 700)
+        ratio_list = []
 	graph = TGraphAsymmErrors(hist1)
 	npoint = 0
+        chi2_hist = 0
+        chi2_ratio = 0
 	for i in xrange(0, hist1.GetNbinsX()):
 		Bin = i+1
 		b1 = hist1.GetBinContent(Bin)
@@ -18,8 +21,10 @@ def getRatio(hist1, hist2):
 			continue
 
 		ratio = b1/b2
-		# print "ratio", ratio
-
+                #print "ratio: ", ratio
+		chi2_hist += ((b1-b2)*(b1-b2))/b2
+		chi2_ratio += (ratio - 1)*(ratio-1)
+                #print ((b1-b2)*(b1-b2))/b2, "  " , (ratio - 1)*(ratio-1)
 		b1sq = b1*b1
 		b2sq = b2*b2
 
@@ -37,9 +42,51 @@ def getRatio(hist1, hist2):
 		npoint += 1
 	graph.Set(npoint)
 	graph.Draw()
+        ratio_list.append(graph)
+        ratio_list.append(chi2_hist)
+        ratio_list.append(chi2_ratio)
+	#print "chi2_hist: ", chi2_hist
+	#print "chi2_ratio: ", chi2_ratio
 	# c1.SaveAs("ratio.pdf")
-	return graph
+	#return graph
+        return ratio_list
 
+# def getRatio_pull(hist1, hist2):
+# 	c1 = TCanvas('c1', 'c1', 800, 700)
+# 	graph = TGraph(hist1)
+# 	npoint = 0
+# 	for i in xrange(0, hist1.GetNbinsX()):
+# 		Bin = i+1
+# 		b1 = hist1.GetBinContent(Bin)
+# 		b2 = hist2.GetBinContent(Bin)
+#
+# 		if b1 == 0 or b2 == 0:
+# 			continue
+#
+# 		# ratio = b1/b2
+# 		ratio = (b1-b2)/b2
+# 		print "ratio_withpull ", ratio
+# 		# print "ratio", ratio
+#
+# 		# b1sq = b1*b1
+# 		# b2sq = b2*b2
+# 		#
+# 		# e1sq_up = hist1.GetBinErrorUp(Bin)*hist1.GetBinErrorUp(Bin)
+# 		# e2sq_up = hist2.GetBinErrorUp(Bin)*hist2.GetBinErrorUp(Bin)
+# 		#
+# 		# e1sq_low = hist1.GetBinErrorLow(Bin)*hist1.GetBinErrorLow(Bin)
+# 		# e2sq_low = hist2.GetBinErrorLow(Bin)*hist2.GetBinErrorLow(Bin)
+# 		#
+# 		# error_up = sqrt((e1sq_up * b2sq + e2sq_up * b1sq) / (b2sq * b2sq))
+# 		# error_low = sqrt((e1sq_low * b2sq + e2sq_low * b1sq) / (b2sq * b2sq))
+#
+# 		graph.SetPoint(npoint, hist1.GetBinCenter(Bin), ratio)
+# 		# graph.SetPointError(npoint, 0, 0, error_low, error_up)
+# 		npoint += 1
+# 	graph.Set(npoint)
+# 	graph.Draw()
+# 	# c1.SaveAs("ratio.pdf")
+# 	return graph
 #
 # The following function was copied (with permission) from the Latino's GitHub:
 # https://github.com/latinos/LatinoAnalysis/blob/master/ShapeAnalysis/scripts/mkPlot.py#L437
@@ -56,7 +103,7 @@ def GetPoissError(numberEvents, down, up):
 		L = Math.gamma_quantile (alpha/2,numberEvents,1.)
 	U = 0
 	if numberEvents==0 :
-		U = Math.gamma_quantile_c (alpha,numberEvents+1,1.)
+		U = Math.gamma_quantile_c (alpha/2,numberEvents+1,1.)
 	else :
 		U = Math.gamma_quantile_c (alpha/2,numberEvents+1,1.)
 
@@ -145,24 +192,38 @@ def doPull(bkg, data, stack):
 	pEY = array('d', pey)
 	pEX = array('d', pex)
 #	pullData = TGraphAsymmErrors(len(pX), pX, pY, pXL, pXH, pYL, pYH) #points
-	pullData = getRatio(data, bkg) #TGraphAsymmErrors(len(pX), pX, pY, pXL, pXH, pYL, pYH) #points
+	# pullData = getRatio(data, bkg) #TGraphAsymmErrors(len(pX), pX, pY, pXL, pXH, pYL, pYH) #points
+	#pullData = getRatio(bkg,data)
+        pullData = getRatio(bkg,data)[0]
+        chi2_hist =  getRatio(bkg,data)[1]
+        chi2_ratio =  getRatio(bkg,data)[2]
+	# getRatio_pull(datas,bkg)
 	pullError = TGraphErrors(len(pX), pX, pEY, pEX, pE) #bars
 	Largest = ceil(largest*1.2)
-	pullError.SetMaximum(1.99)
-	pullError.SetMinimum(0.01)
-	pullData.SetMaximum(1.99)
-	pullData.SetMinimum(0.01)
+	# pullError.SetMaximum(1.99)
+	# pullError.SetMinimum(0.01)
+	# pullData.SetMaximum(1.99)
+	# pullData.SetMinimum(0.01)
+	pullError.SetMaximum(5)
+	pullError.SetMinimum(0.001)
+	pullData.SetMaximum(5)
+	pullData.SetMinimum(0.001)
 	pullError.SetTitle("")
 	pullData.SetTitle("")
-#	pullError.SetFillColorAlpha(kRed, 0.5)
+	pullData.SetMarkerColor(kBlack)
+	pullError.SetMarkerColor(kBlack)
+	pullError.SetMarkerStyle(20)
 	pullError.SetFillColorAlpha(kGray+2, 0.5)
+	# pullError.SetFillColorAlpha(kGray+2, 0.5)
 	pullError.SetFillStyle(1001)
 #	pullError.SetLineWidth(0)
-#	pullError.SetLineColor(0)
-#	pullData.SetMarkerStyle(8)
-#	pullData.SetMarkerColorAlpha(0,0)
-	pullAll = [pullData, pullError, LowEdge - bWidth*0.18, UpEdge+bWidth*0.18]
-	print LowEdge, UpEdge
+	pullError.SetLineColor(kBlack)
+	pullData.SetMarkerStyle(20)
+	pullData.SetLineColor(kBlack)
+
+	# pullData.SetMarkerColorAlpha(0,0)
+	pullAll = [pullData, pullError, LowEdge - bWidth*0.18, UpEdge+bWidth*0.18, chi2_hist, chi2_ratio]
+	#print LowEdge, UpEdge
 	return pullAll
 
 def SaveNoPull(data, bkg, fileName):
@@ -170,10 +231,11 @@ def SaveNoPull(data, bkg, fileName):
 	c0.cd()
 	data.Draw()
 	bkg.Draw('histsame')
+	c0.SaveAs("sample.png")
 
 
 
-def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lumi, signals, SUM, ControlRegion, hideData, year):
+def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lumi, signals, SUM, hideData, year, chi2_hist, chi2_ratio):
 	gStyle.SetHatchesLineWidth(5)
 	data.SetStats(0)
 	Font = 43
@@ -183,7 +245,7 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	bkg.Draw('hist')
 	bkg.SetTitle("")
 	bkg.SetMinimum(0.01)
-	print bkg.GetNhists()
+	print "number of background histograms ",bkg.GetNhists()
 #	bkg.GetYaxis().SetTitle("Events")
 #	if "GeV" in varName:
 	nbins = bkg.GetXaxis().GetNbins()
@@ -196,8 +258,6 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	if "GeV" in varName:
 		thisLabel = "Events/("+str(perbin)+"GeV)"
 
-	print "Hello World"
-
 	bkg.GetYaxis().SetTitleOffset(1.75)
 
 	#### Configure thstack
@@ -207,9 +267,9 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	bkg.Draw('hist')
 	bkg.GetHistogram().GetXaxis().SetTitle(varName)
 	bkg.GetHistogram().GetYaxis().SetTitleOffset(1.25)
-	# GenMax = max(data.GetMaximum(), bkg.GetMaximum())*1.65
-	GenMax = max(data.GetMaximum(), bkg.GetMaximum())
-	#bkg.SetMaximum(GenMax)
+	GenMax = max(data.GetMaximum(), bkg.GetMaximum())*1.65
+	# GenMax = max(data.GetMaximum(), bkg.GetMaximum())
+	bkg.SetMaximum(GenMax)
 	bkg.SetTitle("")
 	bkg.SetMinimum(0.001)
 	SUM.Draw("E2 same")
@@ -223,6 +283,8 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	tlatex.SetTextFont(63)
 	tlatex.SetTextAlign(11)
 	tlatex.SetTextSize(25)
+        #print "I am here" , chi2_hist
+        #tlatex.DrawLatex(0.11, 0.91, str(chi2_hist))
 	tlatex.DrawLatex(0.11, 0.91, "CMS")
 	tlatex.SetTextFont(53)
 	tlatex.DrawLatex(0.18, 0.91, "Work in progress")
@@ -239,9 +301,6 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	# tlatex.DrawLatex(0.9, 0.91, Lumi)
 	# tlatex.SetTextAlign(11)
 
-	if ControlRegion != "":
-		tlatex.SetTextFont(63)
-		tlatex.DrawLatex(0.14, 0.78, ControlRegion)
 
 	for leg in legend:
 		leg.Draw('same')
@@ -254,6 +313,8 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	if hideData:
 		cs.SetLogy()
 		bkg.SetMinimum(0.01)
+		bkg.SetMaximum(bkg.GetMaximum()*1000)
+		print "maximum background" , bkg.GetMaximum()
 	        cs.SaveAs(dirName+"/LOG_" + fileName + ".pdf")
 	        cs.SaveAs(dirName+"/LOG_" + fileName + ".png")
 		return
@@ -311,7 +372,10 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	pullE.GetXaxis().SetNdivisions(515)
 	pullE.GetXaxis().SetTickLength(0.15)
 
-	pullE.GetYaxis().SetTitle("Data/MC")
+	# pullE.GetYaxis().SetTitle("Data/MC")
+	pullE.GetYaxis().SetTitle("MC/Data")
+	pullE.SetMarkerStyle(20)
+	pullE.SetMarkerColor(kBlack)
 	pullE.GetYaxis().SetTitleFont(Font)
 	pullE.GetYaxis().SetTitleSize(18)
 	pullE.GetYaxis().SetTitleOffset(1.5)
@@ -325,9 +389,15 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 
 	p1.Update()
 	gStyle.SetHatchesLineWidth(15)
-	SUM.SetFillStyle(1001)
+	SUM.SetFillStyle(3001)
 	SUM.Draw("E2 same")
 	# SUM.Draw("a3 same")
+	print "Data integral  = ",data.Integral()
+	print "Background integral = ",SUM.Integral()
+	scale = data.Integral()/SUM.Integral()
+	# SUM.Scale(scale)
+	# SUM.Draw("E1 same")
+
 	if(hideData == False):
 		data.Draw('E same')
 	tlatex = TLatex()
@@ -341,8 +411,10 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	tlatex.DrawLatex(0.11, 0.91, "CMS")
 	tlatex.SetTextFont(53)
 	tlatex.DrawLatex(0.18, 0.91, "Work in Progress")
-	tlatex.SetTextFont(43)
+       	tlatex.SetTextFont(43)
 	tlatex.SetTextSize(23)
+        #tlatex.DrawLatex(0.13, 0.78, "#chi^{2}(Ratio) = " +str(round(chi2_ratio,3)))
+        #tlatex.DrawLatex(0.13, 0.73, "#chi^{2}(Hist) = " +str(round(chi2_hist,3)))
 #	tlatex.DrawLatex(0.65, 0.91,"L = 2.70 fb^{-1} (13 TeV)")
 	# Lumi = "L = " + str(lumi) + " pb^{-1} (13 TeV)"#, "+ year + ")"
 	# if lumi > 1000:
@@ -353,9 +425,6 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	# tlatex.DrawLatex(0.9, 0.91, Lumi)
 	# tlatex.SetTextAlign(11)
 
-	if ControlRegion != "":
-		tlatex.SetTextFont(63)
-		tlatex.DrawLatex(0.14, 0.78, ControlRegion)
 
 	for leg in legend:
 		leg.Draw('same')
@@ -367,8 +436,10 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 #	pullE.GetYaxis().SetNdivisions(4, False)
 	if(hideData==False):
 		pullE.Draw("AF2")
+		# pullE.Draw("E2")
 	if(hideData):
-		pullE.Draw("A")
+		pullE.Draw("E2")
+		# pullE.Draw("A")
 	Line = TLine(bkg.GetHistogram().GetXaxis().GetXmin(), 1., bkg.GetHistogram().GetXaxis().GetXmax(), 1.)
 	Line.SetLineColor(kRed)
 	if(hideData==False):
