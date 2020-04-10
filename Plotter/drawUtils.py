@@ -2,7 +2,7 @@ from ROOT import *
 from copy import deepcopy
 from math import *
 from array import array
-from flashgg.H4GFlash.MyCMSStyle import *
+from MyCMSStyle import *
 # from pullUtils import *
 
 
@@ -51,7 +51,6 @@ def DrawNoPull(data, bkg, legend, fileName, varName, dirName, lumi, signals, SUM
   bkg.Draw("hist same")
   SUM.Draw("E2 same")
 
-
   if hideData==False:
     nbins = data.GetNbinsX()
     gData = TGraphErrors(nbins)
@@ -78,40 +77,7 @@ def DrawNoPull(data, bkg, legend, fileName, varName, dirName, lumi, signals, SUM
   for ll in legend:
     ll.Draw("same")
 
-  Lumi = str(lumi/1000.)
-  # getRatio(data,SUM)
-  # c1 = TCanvas('c1', 'c1', 800, 700)
-  # graph = TGraphAsymmErrors(data)
-  # npoint = 0
-  # for i in xrange(0, data.GetNbinsX()):
-  #     Bin = i+1
-  #     b1 = data.GetBinContent(Bin)
-  #     b2 = SUM.GetBinContent(Bin)
-  #
-  #     if b1 == 0 or b2 == 0:
-  #         continue
-  #
-  #     ratio = b1/b2
-  #     print "ratio", ratio
-  #
-  #     b1sq = b1*b1
-  #     b2sq = b2*b2
-  #
-  #     e1sq_up = data.GetBinErrorUp(Bin)*data.GetBinErrorUp(Bin)
-  #     e2sq_up = SUM.GetBinErrorUp(Bin)*SUM.GetBinErrorUp(Bin)
-  #
-  #     e1sq_low = data.GetBinErrorLow(Bin)*data.GetBinErrorLow(Bin)
-  #     e2sq_low = SUM.GetBinErrorLow(Bin)*SUM.GetBinErrorLow(Bin)
-  #
-  #     error_up = sqrt((e1sq_up * b2sq + e2sq_up * b1sq) / (b2sq * b2sq))
-  #     error_low = sqrt((e1sq_low * b2sq + e2sq_low * b1sq) / (b2sq * b2sq))
-  #
-  #     graph.SetPoint(npoint, data.GetBinCenter(Bin), ratio)
-  #     graph.SetPointError(npoint, 0, 0, error_low, error_up)
-  #     npoint += 1
-  #
-  # graph.Set(npoint)
-  # graph.Draw()
+  Lumi = str(lumi)
 
   l1 = DrawCMSLabels(tc, Lumi, 0, 0.08)
   tc.Update()
