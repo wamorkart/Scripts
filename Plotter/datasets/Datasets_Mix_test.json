@@ -19,7 +19,7 @@
           "color":"#2B74BA",
           "files":[
              {
-                "file":"data_mixing_transformedMVA.root",
+                "file":"test_addweight.root",
                 "treeName":"Data_13TeV_4photons",
                 "cut":"1>0"
              }
