@@ -105,8 +105,7 @@ for plot in plots:
     varName = plot[2]
     thisStack = 0
     thisHist = 0
-    # thisStack = myStack('test'+plot[0], varName, varName, dirName, lumi)
-    thisStack = myStack('test'+plot[0], plot[6], plot[6], dirName, lumi)
+    thisStack = myStack('test'+plot[0], varName, varName, dirName, lumi)
     dataintegral = 0
     if hideData == True:
         thisStack.hideData()
@@ -125,38 +124,36 @@ for plot in plots:
         for i,fi in enumerate(datasets["background"][background]["files"]):
             thisTreeLoc = fi["file"]
             if thisTreeLoc not in Trees:
-                # Trees[thisTreeLoc] = TChain("h4gCandidateDumper/trees/"+str(fi["treeName"]))
                 Trees[thisTreeLoc] = TChain(str(fi["treeName"]))
                 Trees[thisTreeLoc].AddFile(bkgLocation+thisTreeLoc)
                 SetOwnership( Trees[thisTreeLoc], True )
             locName = thisName+str(i)
             print "name ", locName
             locHist = thisHist.Clone(locName)
-            thisWeightedCut =  "(" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
-
-            # thisWeightedCut =  "weight* (" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
+            thisWeightedCut = "(mix)* (" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
+            # thisWeightedCut =  "(weight_VBF*weight)*(" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
             print "Background cut: ", thisWeightedCut
-            # print fi["cut"]
-            # thisWeightedCut = weightedCut * TCut( fi["cut"])
-
-            # thisWeightedCut = weightedCut * TCut( Cut + '&&' + fi["cut"] + '&&' +Cut_MVA)
-
-            # print "Cut on background: ", thisWeightedCut
-            # if 'DataDriven' in locName:
-                # thisWeightedCut = weightedCut * TCut( Cut_DataDriven + '&&' + fi["cut"])
-            # print "cut on background = ", thisWeightedCut
-            # Cut_mix = " pho1_pt_mix > 30 && pho2_pt_mix > 18 && pho3_pt_mix > 15 && pho4_pt_mix > 15 && abs(pho1_eta_mix) < 2.5 && abs(pho2_eta_mix) < 2.5 && abs(pho3_eta_mix) < 2.5 && abs(pho4_eta_mix) < 2.5 && (abs(pho1_eta_mix) < 1.4442 || abs(pho1_eta_mix) > 1.566) && (abs(pho2_eta_mix) < 1.4442 || abs(pho2_eta_mix) > 1.566) && (abs(pho3_eta_mix) < 1.4442 || abs(pho3_eta_mix) > 1.566) && (abs(pho4_eta_mix) < 1.4442 || abs(pho4_eta_mix) > 1.566) && pho1_electronveto_mix==1 && pho2_electronveto_mix==1 && pho3_electronveto_mix==1 && pho4_electronveto_mix==1  && tp_mass_mix > 110 && tp_mass_mix < 180  && (isPresel==1) && !((tp_mass_mix > 115 && tp_mass_mix < 135)) && " + str(Cut_MVA_mix)
-            # print "Cut_mix: ", Cut_mix
-            # Cut_mix = " pho1_pt_mix > 30 && pho2_pt_mix > 18 && pho3_pt_mix > 15 && pho4_pt_mix > 15 && abs(pho1_eta_mix) < 2.5 && abs(pho2_eta_mix) < 2.5 && abs(pho3_eta_mix) < 2.5 && abs(pho4_eta_mix) < 2.5 && (abs(pho1_eta_mix) < 1.4442 || abs(pho1_eta_mix) > 1.566) && (abs(pho2_eta_mix) < 1.4442 || abs(pho2_eta_mix) > 1.566) && (abs(pho3_eta_mix) < 1.4442 || abs(pho3_eta_mix) > 1.566) && (abs(pho4_eta_mix) < 1.4442 || abs(pho4_eta_mix) > 1.566) && pho1_electronveto_mix==1 && pho2_electronveto_mix==1 && pho3_electronveto_mix==1 && pho4_electronveto_mix==1 && pho1_MVA_mix > -0.2 && pho2_MVA_mix > -0.2 && pho3_MVA_mix > -0.75 && pho4_MVA_mix > -0.75 && tp_mass_mix > 110 && tp_mass_mix < 180  && (isPresel==1) "
-
-            # # Cut_sculpt = "&&  (pho4_pt_mix+pho3_pt_mix+pho2_pt_mix+pho1_pt_mix)/(tp_mass_mix) > 0.75"
             Trees[thisTreeLoc].Draw(plot[1]+">>"+locName, thisWeightedCut)
             # print "Cut_mix + Cut_sculpt : ", Cut_mix + Cut_sculpt
             # Cut_VBF = ""
+            # thisWeightedCut = ""
             # if 'DataDriven' in locName:
             #     print "Data driven background"
+            #     thisWeightedCut =  "(weight_VBF)*( !((tp_mass > 115 && tp_mass < 135)))"
+            # else:
+            #     thisWeightedCut = "(weight_VBF*weight)*(" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
+
+            # Trees[thisTreeLoc].Draw(plot[1]+">>"+locName, thisWeightedCut)
+            # if 'DataDriven' in locName:
+            #     print "Data driven background"
+            #     locHist.Scale(lumi)
+            # else:
+            #     locHist.Scale(lumi)
+
+                # locHist.Scale(lumi)
             #     Cut_VBF = "weight_VBF"
             # else:
+                # locHist.Scale(lumi)
             #     Cut_VBF =  "weight*(" + str(Cut_Signal) + "&& !((tp_mass > 115 && tp_mass < 135)))"
             # print "Cut_VBF: ", Cut_VBF
             # Trees[thisTreeLoc].Draw(plot[6]+">>"+locName, Cut_VBF)
@@ -174,18 +171,7 @@ for plot in plots:
                 #locHist.Scale(lumi)
             # locHist.Scale(lumi)
             locHist.Scale(467/locHist.Integral())
-            # locHist.Scale(91/locHist.Integral()) ## -0.2,-0.4,-0.75,-0.75
-            #locHist.Scale(195/locHist.Integral()) ## -0.9,-0.9,-0.75,-0.75
-            # locHist.Scale(291/locHist.Integral())
-            # if 'DataDriven' in locName:
-            #      print "DATA DRIVEN BACKGROUND"
-            #      locHist.Scale(159.94566/locHist.Integral())
-            #      # locHist.Scale(322.878526241/locHist.Integral())
-            #      # print "Scale factor ", 322.878526241/locHist.Integral()
-            # else:
-            #      print "MC BACKGROUND"
-            #      locHist.Scale(lumi)
-            # print "cut on background = ", thisWeightedCut
+
             print locHist.Integral()
             thisHist.Add(locHist)
             Histos.append(locHist)
@@ -216,20 +202,11 @@ for plot in plots:
             SetOwnership( Trees[thisTreeLoc], True )
         locName = thisName+str(isi)
         locHist = thisHist.Clone(locName)
-        # thisWeightedCut = weightedCut*TCut(Cut)
-        # weightedCut += TCut(Cut_Signal)
-        # thisWeightedCut = weightedCut * TCut( Cut_Signal)
-        # thisWeightedCut = TCut(Cut_Signal)
-        # print "cut on Signal = ", thisWeightedCut
         weightedCut = "weight* (" + str(Cut_Signal) +")"
         print "Signal weightedCut ", weightedCut
         Trees[thisTreeLoc].Draw(plot[1]+">>"+locName,weightedCut )
 
-        # Trees[thisTreeLoc].Draw(plot[1]+">>"+locName,thisWeightedCut )
-        # locHist.Scale(lumi)
         locHist.Scale(467/locHist.Integral())
-        # print "Signal before scale: ", locHist.Integral()
-        # locHist.Scale(lumi)
         print "Signal : ", locHist.Integral()
         thisHist.Add(locHist)
         Histos.append(locHist)
@@ -250,8 +227,7 @@ for plot in plots:
     Cut_data = "pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1  && tp_mass > 110 && tp_mass < 180 && !((tp_mass > 115 && tp_mass < 135)) && " + str(Cut_MVA)
 
     print "Cut_data: ", Cut_data
-    # Cut_sculpt_data = "&& (pho4_pt+pho3_pt+pho2_pt+pho1_pt)/(tp_mass) > 0.75"
-    # Trees[datasets['data']].Draw(plot[1]+">>"+dataName, Cut_data+Cut_sculpt_data)
+
     Trees[datasets['data']].Draw(plot[1]+">>"+dataName, TCut(Cut_data))
     #Trees[datasets['data']].Draw("pho1_pt >> h",TCut(Cut))
     # print "cut on data ", Cut
