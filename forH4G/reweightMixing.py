@@ -40,7 +40,7 @@ def findVal(trre,var):
 
 if __name__ == '__main__':
 
- nbin = 5
+ nbin = 10
  plots = []
  #plots.append(["CTStarCS","CTStarCS","Cos #theta*",nbin,0,1])
  #plots.append(["CT_a1Pho1","CT_a1Pho1","Cos #theta_{#gamma a_{1}}",nbin,0,1])
@@ -68,10 +68,10 @@ if __name__ == '__main__':
  plots.append(["pho2_pt","pho2_pt","#gamma2 pT [GeV]",nbin,18,100])
  plots.append(["pho3_pt","pho3_pt","#gamma3 pT [GeV]",nbin,15,100])
  plots.append(["pho4_pt","pho4_pt","#gamma4 pT [GeV]",nbin,15,70])
- plots.append(["pho1_eta","pho1_eta","#gamma1 #eta",nbin,-2.5,2.5])
- plots.append(["pho2_eta","pho2_eta","#gamma2 #eta",nbin,-2.5,2.5])
- plots.append(["pho3_eta","pho3_eta","#gamma3 #eta",nbin,-2.5,2.5])
- plots.append(["pho4_eta","pho4_eta","#gamma4 #eta",nbin,-2.5,2.5])
+ #plots.append(["pho1_eta","pho1_eta","#gamma1 #eta",nbin,-2.5,2.5])
+ #plots.append(["pho2_eta","pho2_eta","#gamma2 #eta",nbin,-2.5,2.5])
+ #plots.append(["pho3_eta","pho3_eta","#gamma3 #eta",nbin,-2.5,2.5])
+ #plots.append(["pho4_eta","pho4_eta","#gamma4 #eta",nbin,-2.5,2.5])
 
  fin_datamix = ROOT.TFile.Open('/eos/user/t/twamorka/1April2020_CatTrainign/8April2020_onlyKin_vLoose/data_mixing_transformedMVA.root')
  tree_datamix = fin_datamix.Get('Data_13TeV_4photons')
@@ -102,8 +102,11 @@ if __name__ == '__main__':
     if tree_datamix.pho1_pt > 30 and tree_datamix.pho2_pt > 18 and tree_datamix.pho3_pt > 15 and tree_datamix.pho4_pt > 15 and  abs(tree_datamix.pho1_eta) < 2.5 and abs(tree_datamix.pho2_eta) < 2.5 and abs(tree_datamix.pho3_eta) < 2.5 and abs(tree_datamix.pho4_eta) < 2.5 and (abs(tree_datamix.pho1_eta) < 1.4442 or abs(tree_datamix.pho1_eta) > 1.566) and (abs(tree_datamix.pho2_eta) < 1.4442 or abs(tree_datamix.pho2_eta) > 1.566) and (abs(tree_datamix.pho3_eta) < 1.4442 or abs(tree_datamix.pho3_eta) > 1.566) and (abs(tree_datamix.pho4_eta) < 1.4442 or abs(tree_datamix.pho4_eta) > 1.566) and tree_datamix.pho1_electronveto==1 and tree_datamix.pho2_electronveto==1 and tree_datamix.pho3_electronveto==1 and tree_datamix.pho4_electronveto==1 and tree_datamix.tp_mass > 110 and tree_datamix.tp_mass < 180 and (tree_datamix.tp_mass <= 115 or tree_datamix.tp_mass >= 135) and tree_datamix.pho1_MVA > -0.9 and tree_datamix.pho2_MVA > -0.9 and tree_datamix.pho3_MVA > -0.9 and tree_datamix.pho4_MVA > -0.9: 
        iVar=0
        subset = []
-       for plot in plots:             
-          subset.append(Histos[iVar].FindBin(findVal(tree_datamix,plot[0])))
+       for plot in plots:       
+          ibin = Histos[iVar].FindBin(findVal(tree_datamix,plot[0]))
+          if ibin==0: ibin=1
+          if ibin==Histos[iVar].GetNbinsX()+1: ibin=Histos[iVar].GetNbinsX()       
+          subset.append(ibin)
           iVar+=1
        if tuple(subset) in weight_datamix:
           weight_datamix[tuple(subset)]+=1
@@ -118,8 +121,11 @@ if __name__ == '__main__':
     if tree_data.pho1_pt > 30 and tree_data.pho2_pt > 18 and tree_data.pho3_pt > 15 and tree_data.pho4_pt > 15 and  abs(tree_data.pho1_eta) < 2.5 and abs(tree_data.pho2_eta) < 2.5 and abs(tree_data.pho3_eta) < 2.5 and abs(tree_data.pho4_eta) < 2.5 and (abs(tree_data.pho1_eta) < 1.4442 or abs(tree_data.pho1_eta) > 1.566) and (abs(tree_data.pho2_eta) < 1.4442 or abs(tree_data.pho2_eta) > 1.566) and (abs(tree_data.pho3_eta) < 1.4442 or abs(tree_data.pho3_eta) > 1.566) and (abs(tree_data.pho4_eta) < 1.4442 or abs(tree_data.pho4_eta) > 1.566) and tree_data.pho1_electronveto==1 and tree_data.pho2_electronveto==1 and tree_data.pho3_electronveto==1 and tree_data.pho4_electronveto==1 and tree_data.tp_mass > 110 and tree_data.tp_mass < 180 and (tree_data.tp_mass <= 115 or tree_data.tp_mass >= 135) and tree_data.pho1_MVA > -0.9 and tree_data.pho2_MVA > -0.9 and tree_data.pho3_MVA > -0.9 and tree_data.pho4_MVA > -0.9: 
        iVar=0
        subset = []
-       for plot in plots:             
-          subset.append(Histos[iVar].FindBin(findVal(tree_data,plot[0])))
+       for plot in plots:        
+          ibin = Histos[iVar].FindBin(findVal(tree_data,plot[0]))
+          if ibin==0: ibin=1
+          if ibin==Histos[iVar].GetNbinsX()+1: ibin=Histos[iVar].GetNbinsX()        
+          subset.append(ibin)
           iVar+=1
        if tuple(subset) in weight_data:
           weight_data[tuple(subset)]+=1
@@ -138,8 +144,11 @@ if __name__ == '__main__':
     if tree_datamix.pho1_pt > 30 and tree_datamix.pho2_pt > 18 and tree_datamix.pho3_pt > 15 and tree_datamix.pho4_pt > 15 and  abs(tree_datamix.pho1_eta) < 2.5 and abs(tree_datamix.pho2_eta) < 2.5 and abs(tree_datamix.pho3_eta) < 2.5 and abs(tree_datamix.pho4_eta) < 2.5 and (abs(tree_datamix.pho1_eta) < 1.4442 or abs(tree_datamix.pho1_eta) > 1.566) and (abs(tree_datamix.pho2_eta) < 1.4442 or abs(tree_datamix.pho2_eta) > 1.566) and (abs(tree_datamix.pho3_eta) < 1.4442 or abs(tree_datamix.pho3_eta) > 1.566) and (abs(tree_datamix.pho4_eta) < 1.4442 or abs(tree_datamix.pho4_eta) > 1.566) and tree_datamix.pho1_electronveto==1 and tree_datamix.pho2_electronveto==1 and tree_datamix.pho3_electronveto==1 and tree_datamix.pho4_electronveto==1 and tree_datamix.tp_mass > 110 and tree_datamix.tp_mass < 180 and (tree_datamix.tp_mass <= 115 or tree_datamix.tp_mass >= 135) and tree_datamix.pho1_MVA > -0.9 and tree_datamix.pho2_MVA > -0.9 and tree_datamix.pho3_MVA > -0.9 and tree_datamix.pho4_MVA > -0.9: 
        iVar=0
        subset = []
-       for plot in plots:             
-          subset.append(Histos[iVar].FindBin(findVal(tree_datamix,plot[0])))
+       for plot in plots:    
+          ibin = Histos[iVar].FindBin(findVal(tree_datamix,plot[0]))
+          if ibin==0: ibin=1
+          if ibin==Histos[iVar].GetNbinsX()+1: ibin=Histos[iVar].GetNbinsX()             
+          subset.append(ibin)
           iVar+=1
        if (tuple(subset) in weight_data) and weight_datamix[tuple(subset)]!=0:
           weight=float(weight_data[tuple(subset)])/float(weight_datamix[tuple(subset)])*1./scale
