@@ -28,15 +28,20 @@ void optimize_cats_new(const int NCAT){
 	TString s;
 	// TString date = "OldPairing_M60";
 	TString date = "20201501";
-	      TString path_sig = s.Format("/eos/home-t/twamorka/1April2020_CatTrainign/vLoose_limKinPlusPhotonID/");
-				TString path_bkg_data = s.Format("/eos/home-t/twamorka/1April2020_CatTrainign/vLoose_limKinPlusPhotonID/");
+	TString path_sig = s.Format("/eos/user/t/twamorka/1April2020_CatTrainign/15April2020_onlyPhotonID_reweight_mix_vLoose/");
+	TString path_bkg_data = s.Format("/eos/user/t/twamorka/1April2020_CatTrainign/15April2020_onlyPhotonID_reweight_mix_vLoose/");
+
+	// TString path_sig = s.Format("/eos/user/t/twamorka/1April2020_CatTrainign/12April2020_VBFTraining_withsamplewithoutBlindCut/VBF_Train_Applied/");
+	// TString path_bkg_data = s.Format("/eos/user/t/twamorka/1April2020_CatTrainign/12April2020_VBFTraining_withsamplewithoutBlindCut/VBF_Train_Applied/");
+	      // TString path_sig = s.Format("/eos/user/t/twamorka/1April2020_CatTrainign/8April2020_PhoVarsPlusHiggsVars_vLoose/");
+				// TString path_bkg_data = s.Format("/eos/user/t/twamorka/1April2020_CatTrainign/8April2020_PhoVarsPlusHiggsVars_vLoose/");
         // TString path_sig = s.Format("/eos/user/t/twamorka/21March2020_Mixing/hadd/OldPairing/catMVA_Medium_wMVA/");
         // TString path_bkg_data = s.Format("/eos/user/t/twamorka/21March2020_Mixing/hadd/OldPairing/catMVA_Medium_wMVA/");
 	// cout << "date" << date << endl;
 	// TString path=s.Format("/afs/cern.ch/work/n/nchernya/ETH/DiHiggs/optimization_files/%s/",date.Data());
 	// TString path_sig=s.Format("/eos/user/t/twamorka/Jan2020/2016Samples/OldDiphoPairing/wCatMVA_20Jan2020/m_60/");
-	// TString path_bkg_dipho40to80=s.Format("/eos/user/t/twamorka/Jan2020/2016Samples/OldDiphoPairing/wCatMVA_20Jan2020/m_60/");
-	// TString path_bkg_dipho80toInf=s.Format("/eos/user/t/twamorka/Jan2020/2016Samples/OldDiphoPairing/wCatMVA_20Jan2020/m_60/");
+	// TString path_bkg_dipho40to80=s.Format("/eos/user/t/twamorka/1April2020_CatTrainign/12April2020_VBFTraining_withsamplewithoutBlindCut/VBF_Train_Applied/");
+	// TString path_bkg_dipho80toInf=s.Format("/eos/user/t/twamorka/1April2020_CatTrainign/12April2020_VBFTraining_withsamplewithoutBlindCut/VBF_Train_Applied/");
 	// TString path_bkg_data=s.Format("/eos/user/t/twamorka/Jan2020/2016Samples/OldDiphoPairing/wCatMVA_20Jan2020/m_60/");
 	//TString path_sig=s.Format("/eos/user/t/twamorka/Jan2020/2016Samples/BDTPairing/m_%d/wCatMVA/",mass);
 	//TString path_bkg_dipho40to80=s.Format("/eos/user/t/twamorka/Jan2020/2016Samples/BDTPairing/m_%d/wCatMVA/",mass);
@@ -56,13 +61,13 @@ void optimize_cats_new(const int NCAT){
         TString Mgg_window_mix = "*((tp_mass>115)&&(tp_mass<135))";
 	TString Mgg_sideband = "*((tp_mass<=115)||(tp_mass>=135))";
         TString Mgg_sideband_mix = "*((tp_mass<=115)||(tp_mass>=135))";
-	TString selection_sig = "weight*36*((1>0&& pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9&& tp_mass > 110 && tp_mass < 180 ))";
-        TString selection_bg_data = "(pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9 && tp_mass > 110 && tp_mass < 180 )*(467/5162)";
+	TString selection_sig = "weight*36*((1>0&& pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9 && tp_mass > 110 && tp_mass < 180 ))";
+        TString selection_bg_data = "(mix_weight)*(pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9 && tp_mass > 110 && tp_mass < 180  )*(467/5162)";
 	// TString Mgg_sideband = "*((Mgg<=115)||(Mgg>=135))";
 	// TString selection_sig = "weight*lumi*2*eventTrainedOn*0.587*normalization/SumWeight";
-	//TString selection_bg_dipho40to80 = "weight*36*((1>0&& pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_pixelseed==0 && pho2_pixelseed==0 && pho3_pixelseed==0 && pho4_pixelseed==0&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9&& tp_mass > 110 && tp_mass < 180))";
-	//TString selection_bg_dipho80toInf = "weight*36*((1>0&& pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_pixelseed==0 && pho2_pixelseed==0 && pho3_pixelseed==0 && pho4_pixelseed==0&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9&& tp_mass > 110 && tp_mass < 180))";
-	//TString selection_bg_data = "((pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_pixelseed==0 && pho2_pixelseed==0 && pho3_pixelseed==0 && pho4_pixelseed==0 && tp_mass > 110 && tp_mass < 180 &&((pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA < -0.9 && pho4_MVA < -0.9) || (pho1_MVA > -0.9 && pho3_MVA > -0.9 && pho2_MVA < -0.9 && pho4_MVA < -0.9) || (pho1_MVA > -0.9 && pho4_MVA > -0.9 && pho2_MVA < -0.9 && pho3_MVA < -0.9) || (pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho1_MVA < -0.9 && pho4_MVA < -0.9) || (pho2_MVA > -0.9 && pho4_MVA > -0.9 && pho1_MVA < -0.9 && pho3_MVA < -0.9) || (pho3_MVA > -0.9 && pho4_MVA > -0.9 && pho1_MVA < -0.9 && pho2_MVA < -0.9))))*(509.30470/1807)";
+	// TString selection_bg_dipho40to80 = "weight*36*((1>0&& pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1 && pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.75 && pho4_MVA > -0.75 && tp_mass > 110 && tp_mass < 180 ))";
+	// TString selection_bg_dipho80toInf = "weight*36*((1>0&& pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1 && pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.75 && pho4_MVA > -0.75 && tp_mass > 110 && tp_mass < 180 ))";
+	// TString selection_bg_data = "(weight_VBF)";
 	// TString selection_bg = "weight*lumi*overlapSave*normalization/SumWeight";
 	// TString selection_diphoton = "*1.5"; //SF needed to match data normalization
 
@@ -92,7 +97,7 @@ void optimize_cats_new(const int NCAT){
 
 
 	// TFile *file_s =  TFile::Open(path+"Total_runII_20191126.root");
-	TFile *file_s =  TFile::Open(path_sig+"signal_m_60.root");
+	TFile *file_s =  TFile::Open(path_sig+"signal_m_60_skim.root");
 	TTree *tree_sig = (TTree*)file_s->Get("SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
 	TH1F *hist_S = new TH1F("hist_S","hist_S",int((xmax-xmin)/precision),xmin,xmax);
   s.Form("%s>>hist_S",what_to_opt.Data());
@@ -100,108 +105,96 @@ void optimize_cats_new(const int NCAT){
 	tree_sig->Draw(s,sel,"goff");
 	cout << "signal tree entries: " << tree_sig->GetEntries() << endl;
 
-	//TFile *file_bg_dipho40to80 =  TFile::Open(path_bkg_dipho40to80+"DiPho40to80_skim.root");
-	//TTree *tree_bg_dipho40to80 = (TTree*)file_bg_dipho40to80->Get("DiPhotonJetsBox_M40_80_Sherpa_13TeV_4photons");
+	// TFile *file_bg_dipho40to80 =  TFile::Open(path_bkg_dipho40to80+"DiPho40to80_skim.root");
+	// TTree *tree_bg_dipho40to80 = (TTree*)file_bg_dipho40to80->Get("DiPhotonJetsBox_M40_80_Sherpa_13TeV_4photons");
 
-	//TFile *file_bg_dipho80toInf =  TFile::Open(path_bkg_dipho80toInf+"DiPho80toInf_skim.root");
-	//TTree *tree_bg_dipho80toInf = (TTree*)file_bg_dipho80toInf->Get("DiPhotonJetsBox_MGG_80toInf_13TeV_Sherpa_13TeV_4photons");
+	// TFile *file_bg_dipho80toInf =  TFile::Open(path_bkg_dipho80toInf+"DiPho80toInf_skim.root");
+	// TTree *tree_bg_dipho80toInf = (TTree*)file_bg_dipho80toInf->Get("DiPhotonJetsBox_MGG_80toInf_13TeV_Sherpa_13TeV_4photons");
 
-	//TFile *file_bg_data =  TFile::Open(path_bkg_data+"data_all_2016_wCollTree_skim.root");
-	//TTree *tree_bg_data = (TTree*)file_bg_data->Get("Data_13TeV_4photons");
-        TFile *file_bg_data =  TFile::Open(path_bkg_data+"data_mix.root");
-        TTree *tree_bg_data = (TTree*)file_bg_data->Get("Data_13TeV_4photons");
+	TFile *file_bg_data =  TFile::Open(path_bkg_data+"data_mix_reweight_phoMVAVars_withSel.root");
+	TTree *tree_bg_data = (TTree*)file_bg_data->Get("Data_13TeV_4photons");
+        // TFile *file_bg_data =  TFile::Open(path_bkg_data+"data_mixing_transformedMVA.root");
+        // TTree *tree_bg_data = (TTree*)file_bg_data->Get("Data_13TeV_4photons");
 
 
-	//TH1F *hist_B_dipho40to80 = new TH1F("hist_B_dipho40to80","hist_B_dipho40to80",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-   //s.Form("%s>>hist_B_dipho40to80",what_to_opt.Data());
-   /*sel.Form("%s",(selection_bg_dipho40to80+Mgg_window).Data());
-	tree_bg_dipho40to80->Draw(s,sel,"goff");
-	cout << "dipho40to80 entries: " << tree_bg_dipho40to80->GetEntries() << endl;
+	// TH1F *hist_B_dipho40to80 = new TH1F("hist_B_dipho40to80","hist_B_dipho40to80",int((xmax-xmin)/precision),xmin,xmax); //200 bins
+   // s.Form("%s>>hist_B_dipho40to80",what_to_opt.Data());
+   // sel.Form("%s",(selection_bg_dipho40to80+Mgg_window).Data());
+	// tree_bg_dipho40to80->Draw(s,sel,"goff");
+	// cout << "dipho40to80 entries: " << tree_bg_dipho40to80->GetEntries() << endl;
+	// cout << "dipho40to80 mgg window: " <<  hist_B_dipho40to80->Integral() << endl;
 
-	TH1F *hist_B_dipho80toInf = new TH1F("hist_B_dipho80toInf","hist_B_dipho80toInf",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-   s.Form("%s>>hist_B_dipho80toInf",what_to_opt.Data());
-   sel.Form("%s",(selection_bg_dipho80toInf+Mgg_window).Data());
-	tree_bg_dipho80toInf->Draw(s,sel,"goff");
-	cout << "dipho80toInf entries: " << tree_bg_dipho80toInf->GetEntries() << endl; */
+	// TH1F *hist_B_dipho80toInf = new TH1F("hist_B_dipho80toInf","hist_B_dipho80toInf",int((xmax-xmin)/precision),xmin,xmax); //200 bins
+  //  s.Form("%s>>hist_B_dipho80toInf",what_to_opt.Data());
+  //  sel.Form("%s",(selection_bg_dipho80toInf+Mgg_window).Data());
+	// tree_bg_dipho80toInf->Draw(s,sel,"goff");
+	// cout << "dipho80toInf entries: " << tree_bg_dipho80toInf->GetEntries() << endl;
+	// cout << "dipho80toinf mgg window: " << hist_B_dipho80toInf->Integral() << endl;
 
 	TH1F *hist_B_data = new TH1F("hist_B_data","hist_B_data",int((xmax-xmin)/precision),xmin,xmax); //200 bins
    s.Form("%s>>hist_B_data",what_to_opt.Data());
    sel.Form("%s",(selection_bg_data+Mgg_window_mix).Data());
 	tree_bg_data->Draw(s,sel,"goff");
 	cout << "data bkg entries: " << tree_bg_data->GetEntries() << endl;
+	cout << "CR mgg window: "<< hist_B_data->Integral() << endl;
 
 	TH1F *hist_B = new TH1F("hist_B","hist_B",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-	//hist_B->Add(hist_B_dipho40to80);
-	//hist_B->Add(hist_B_dipho80toInf);
+	// hist_B->Add(hist_B_dipho40to80);
+	// hist_B->Add(hist_B_dipho80toInf);
 	hist_B->Add(hist_B_data);
 
-	/*TH1F *hist_B_sideband_dipho40to80 = new TH1F("hist_B_sideband_dipho40to80","hist_B_sideband_dipho40to80",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-   s.Form("%s>>hist_B_sideband_dipho40to80",what_to_opt.Data());
-   sel.Form("%s",(selection_bg_dipho40to80+Mgg_sideband).Data());
-	 cout << "sel " << sel << endl;
-	tree_bg_dipho40to80->Draw(s,sel,"goff");
-	cout << "dipho40to80 sideband entries: " << tree_bg_dipho40to80->GetEntries() << endl;
+	cout << "hist_B_->Integral(): " <<  hist_B->Integral() << endl;
 
-	TH1F *hist_B_sideband_dipho80toInf = new TH1F("hist_B_sideband_dipho80toInf","hist_B_sideband_dipho80toInf",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-   s.Form("%s>>hist_B_sideband_dipho80toInf",what_to_opt.Data());
-   sel.Form("%s",(selection_bg_dipho80toInf+Mgg_sideband).Data());
-	 cout << "sel " << sel << endl;
-	tree_bg_dipho80toInf->Draw(s,sel,"goff");
-	cout << "dipho80toInf sideband entries: " << tree_bg_dipho80toInf->GetEntries() << endl;
-*/
+
+	// TH1F *hist_B_sideband_dipho40to80 = new TH1F("hist_B_sideband_dipho40to80","hist_B_sideband_dipho40to80",int((xmax-xmin)/precision),xmin,xmax); //200 bins
+  //  s.Form("%s>>hist_B_sideband_dipho40to80",what_to_opt.Data());
+  //  sel.Form("%s",(selection_bg_dipho40to80+Mgg_sideband).Data());
+	//  cout << "sel " << sel << endl;
+	// tree_bg_dipho40to80->Draw(s,sel,"goff");
+	// hist_B_sideband_dipho40to80->SaveAs("saveroot.root");
+	// cout << hist_B_sideband_dipho40to80->Integral() << endl;
+	// cout << "dipho40to80 sideband entries: " << tree_bg_dipho40to80->GetEntries() << endl;
+	// cout << "dipho40to80 side window: " <<  hist_B_sideband_dipho40to80->Integral() << endl;
+	//
+	// TH1F *hist_B_sideband_dipho80toInf = new TH1F("hist_B_sideband_dipho80toInf","hist_B_sideband_dipho80toInf",int((xmax-xmin)/precision),xmin,xmax); //200 bins
+  //  s.Form("%s>>hist_B_sideband_dipho80toInf",what_to_opt.Data());
+  //  sel.Form("%s",(selection_bg_dipho80toInf+Mgg_sideband).Data());
+	//  cout << "sel " << sel << endl;
+	// tree_bg_dipho80toInf->Draw(s,sel,"goff");
+	// cout << hist_B_sideband_dipho80toInf->Integral() << endl;
+	// cout << "dipho80toInf sideband entries: " << tree_bg_dipho80toInf->GetEntries() << endl;
+	// cout << "dipho80toInf side window: " <<  hist_B_sideband_dipho80toInf->Integral() << endl;
+
+
 	TH1F *hist_B_sideband_data = new TH1F("hist_B_sideband_data","hist_B_sideband_data",int((xmax-xmin)/precision),xmin,xmax); //200 bins
    s.Form("%s>>hist_B_sideband_data",what_to_opt.Data());
    sel.Form("%s",(selection_bg_data+Mgg_sideband_mix).Data());
 	 cout << "sel " << sel << endl;
+	 cout << hist_B_sideband_data->Integral() << endl;
 	tree_bg_data->Draw(s,sel,"goff");
+
 	cout << "data sideband entries: " << tree_bg_data->GetEntries() << endl;
+	cout << "CR side window: " <<  hist_B_sideband_data->Integral() << endl;
+
 
 	TH1F *hist_B_sideband = new TH1F("hist_B_sideband","hist_B_sideband",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-	//hist_B_sideband->Add(hist_B_sideband_dipho40to80);
-	//hist_B_sideband->Add(hist_B_sideband_dipho80toInf);
+	// hist_B_sideband->Add(hist_B_sideband_dipho40to80);
+	// hist_B_sideband->Add(hist_B_sideband_dipho80toInf);
 	hist_B_sideband->Add(hist_B_sideband_data);
 
-	// TH1F *hist_B_ttH = new TH1F("hist_B_ttH","hist_B_ttH",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-  //  s.Form("%s>>hist_B_ttH",what_to_opt.Data());
-  //  sel.Form("%s",(selection_bg+Mgg_window).Data());
-	// tree_bg_ttH->Draw(s,sel,"goff");
-	// TH1F *hist_B_TTGJets = new TH1F("hist_B_TTGJets","hist_B_TTGJets",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-  //  s.Form("%s>>hist_B_TTGJets",what_to_opt.Data());
-  //  sel.Form("%s",(selection_bg+Mgg_window).Data());
-	// tree_bg_TTGJets->Draw(s,sel,"goff");
-	// TH1F *hist_B_TTTo2L2Nu = new TH1F("hist_B_TTTo2L2Nu","hist_B_TTTo2L2Nu",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-  //  s.Form("%s>>hist_B_TTTo2L2Nu",what_to_opt.Data());
-  //  sel.Form("%s",(selection_bg+Mgg_window).Data());
-	// tree_bg_TTTo2L2Nu->Draw(s,sel,"goff");
-	// TH1F *hist_B_TTGG_0Jets = new TH1F("hist_B_TTGG_0Jets","hist_B_TTGG_0Jets",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-  //  s.Form("%s>>hist_B_TTGG_0Jets",what_to_opt.Data());
-  //  sel.Form("%s",(selection_bg+Mgg_window).Data());
-	// tree_bg_TTGG_0Jets->Draw(s,sel,"goff");
+	cout << "hist_B_sideband->Integral(): " <<  hist_B_sideband->Integral() << endl;
 
-
-//
 	double END = hist_B->GetBinCenter(hist_B->FindLastBinAbove(-1.))+hist_B->GetBinWidth(1)/2.; //right end of BDT distibution
 	double START = hist_B->GetBinCenter(hist_B->FindFirstBinAbove(-1.))-hist_B->GetBinWidth(1)/2.; //right end of BDT distibution
 	cout<<"start = "<<START<<" , end = "<<END<<endl;
-//
-//
+
 	hist_S->SetLineColor(kRed);
 	hist_S->SetFillColor(kRed-7);
 	hist_S->SetLineWidth(2);
 	hist_B->SetLineColor(kBlue+1);
 	hist_B->SetFillColor(kBlue-10);
 	hist_B->SetLineWidth(2);
-	// hist_B_ttH->SetLineColor(kGreen+1);
-	// hist_B_ttH->SetLineWidth(2);
-	// hist_B_TTGJets->SetLineColor(kOrange+1);
-	// hist_B_TTGJets->SetLineWidth(2);
-	// hist_B_TTTo2L2Nu->SetLineColor(kMagenta+1);
-	// hist_B_TTTo2L2Nu->SetLineWidth(2);
-	// hist_B_TTGG_0Jets->SetLineColor(kViolet+1);
-	// hist_B_TTGG_0Jets->SetLineWidth(2);
-//
-//
-//
+
 // // CMS info
 	float left2 = gStyle->GetPadLeftMargin();
 	float right2 = gStyle->GetPadRightMargin();
@@ -324,57 +317,53 @@ for (int index=0;index<NCAT;index++)
    sel.Form("%s",(selection_sig+Mgg_window).Data());
 	tree_sig->Draw(s,sel,"goff");
 
-/*	TH1F *hist_B_cut_dipho40to80 = new TH1F("hist_B_cut_dipho40to80","hist_B_cut_dipho40to80",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-   s.Form("%s>>hist_B_cut_dipho40to80",what_to_opt.Data());
-   sel.Form("%s",(selection_bg_dipho40to80+Mgg_window).Data());
-	tree_bg_dipho40to80->Draw(s,sel,"goff");
+	// TH1F *hist_B_cut_dipho40to80 = new TH1F("hist_B_cut_dipho40to80","hist_B_cut_dipho40to80",int((xmax-xmin)/precision),xmin,xmax); //200 bins
+  //  s.Form("%s>>hist_B_cut_dipho40to80",what_to_opt.Data());
+  //  sel.Form("%s",(selection_bg_dipho40to80+Mgg_window).Data());
+	// tree_bg_dipho40to80->Draw(s,sel,"goff");
+	// // cout << sel << endl;
+	// cout << "hist_B_cut_dipho40to80->Integral() " << hist_B_cut_dipho40to80->Integral() << endl;
+	//
+	// TH1F *hist_B_cut_dipho80toInf = new TH1F("hist_B_cut_dipho80toInf","hist_B_cut_dipho80toInf",int((xmax-xmin)/precision),xmin,xmax); //200 bins
+	//  s.Form("%s>>hist_B_cut_dipho80toInf",what_to_opt.Data());
+	//  sel.Form("%s",(selection_bg_dipho80toInf+Mgg_window).Data());
+	// tree_bg_dipho40to80->Draw(s,sel,"goff");
+	// cout << "hist_B_cut_dipho80toInf->Integral() " << hist_B_cut_dipho80toInf->Integral() << endl;
 
-	TH1F *hist_B_cut_dipho80toInf = new TH1F("hist_B_cut_dipho80toInf","hist_B_cut_dipho80toInf",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-	 s.Form("%s>>hist_B_cut_dipho80toInf",what_to_opt.Data());
-	 sel.Form("%s",(selection_bg_dipho80toInf+Mgg_window).Data());
-	tree_bg_dipho40to80->Draw(s,sel,"goff");
-*/
 	TH1F *hist_B_cut_data = new TH1F("hist_B_cut_data","hist_B_cut_data",int((xmax-xmin)/precision),xmin,xmax); //200 bins
 	 s.Form("%s>>hist_B_cut_data",what_to_opt.Data());
-	 sel.Form("%s",(selection_bg_data+Mgg_window_mix).Data());
+	 sel.Form("%s",(selection_bg_data+Mgg_window).Data());
 	tree_bg_data->Draw(s,sel,"goff");
+	cout << "hist_B_cut_data->Integral() " << hist_B_cut_data->Integral() << endl;
 
 	TH1F *hist_B_cut = new TH1F("hist_B_cut","hist_B_cut",int((xmax-xmin)/precision),xmin,xmax); //200 bins
  // hist_B_cut->Add(hist_B_cut_dipho40to80);
-	//hist_B_cut->Add(hist_B_cut_dipho80toInf);
+	// hist_B_cut->Add(hist_B_cut_dipho80toInf);
 	hist_B_cut->Add(hist_B_cut_data);
 
-/*	TH1F *hist_B_cut_sideband_dipho40to80 = new TH1F("hist_B_cut_sideband_dipho40to80","hist_B_cut_sideband_dipho40to80",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-   s.Form("%s>>hist_B_cut_sideband_dipho40to80",what_to_opt.Data());
-   sel.Form("%s",(selection_bg_dipho40to80+Mgg_sideband).Data());
-	tree_bg_dipho40to80->Draw(s,sel,"goff");
+	cout << "hist_B_cut " << hist_B_cut->Integral() << endl;
 
-	TH1F *hist_B_cut_sideband_dipho80toInf = new TH1F("hist_B_cut_sideband_dipho80toInf","hist_B_cut_sideband_dipho80toInf",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-	 s.Form("%s>>hist_B_cut_sideband_dipho80toInf",what_to_opt.Data());
-	 sel.Form("%s",(selection_bg_dipho80toInf+Mgg_sideband).Data());
-	tree_bg_dipho80toInf->Draw(s,sel,"goff");
-*/
+	// TH1F *hist_B_cut_sideband_dipho40to80 = new TH1F("hist_B_cut_sideband_dipho40to80","hist_B_cut_sideband_dipho40to80",int((xmax-xmin)/precision),xmin,xmax); //200 bins
+  //  s.Form("%s>>hist_B_cut_sideband_dipho40to80",what_to_opt.Data());
+  //  sel.Form("%s",(selection_bg_dipho40to80+Mgg_sideband).Data());
+	// tree_bg_dipho40to80->Draw(s,sel,"goff");
+	//
+	// TH1F *hist_B_cut_sideband_dipho80toInf = new TH1F("hist_B_cut_sideband_dipho80toInf","hist_B_cut_sideband_dipho80toInf",int((xmax-xmin)/precision),xmin,xmax); //200 bins
+	//  s.Form("%s>>hist_B_cut_sideband_dipho80toInf",what_to_opt.Data());
+	//  sel.Form("%s",(selection_bg_dipho80toInf+Mgg_sideband).Data());
+	// tree_bg_dipho80toInf->Draw(s,sel,"goff");
+	//
 	TH1F *hist_B_cut_sideband_data = new TH1F("hist_B_cut_sideband_data","hist_B_cut_sideband_data",int((xmax-xmin)/precision),xmin,xmax); //200 bins
 	 s.Form("%s>>hist_B_cut_sideband_data",what_to_opt.Data());
-	 sel.Form("%s",(selection_bg_data+Mgg_sideband_mix).Data());
+	 sel.Form("%s",(selection_bg_data+Mgg_sideband).Data());
 	tree_bg_data->Draw(s,sel,"goff");
 
 	TH1F *hist_B_cut_sideband = new TH1F("hist_B_cut_sideband","hist_B_cut_sideband",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-  //hist_B_cut_sideband->Add(hist_B_cut_sideband_dipho40to80);
-	//hist_B_cut_sideband->Add(hist_B_cut_sideband_dipho80toInf);
+  // hist_B_cut_sideband->Add(hist_B_cut_sideband_dipho40to80);
+	// hist_B_cut_sideband->Add(hist_B_cut_sideband_dipho80toInf);
 	hist_B_cut_sideband->Add(hist_B_cut_sideband_data);
+	cout << "hist_B_cut_sideband " << hist_B_cut_sideband->Integral() << endl;
 
-//
-// 	TH1F *hist_B_cut_tth = new TH1F("hist_B_cut_tth","hist_B_cut_tth",int((xmax-xmin)/precision),xmin,xmax); //200 bins
-//    s.Form("%s>>+hist_B_cut",what_to_opt.Data());
-//    sel.Form("%s",(selection_bg+Mgg_window+tth_cut_s).Data());
-// 	tree_bg_ttH->Draw(s,sel,"goff");
-// 	tree_bg_TTGJets->Draw(s,sel,"goff");
-// 	tree_bg_TTTo2L2Nu->Draw(s,sel,"goff");
-// 	tree_bg_TTGG_0Jets->Draw(s,sel,"goff");
-//
-//
-//
 	do {
 		max_n[0]=0;
 		sig_n[0] = hist_S_cut->Integral(1,hist_S_cut->FindBin(start_n[0])-1);
@@ -396,12 +385,14 @@ for (int index=0;index<NCAT;index++)
 			do{
 				max_n[2]=0;
 				if (NCAT<=2) {
+					cout << "Here 1" << endl;
 					sig_n[2] = 0;
 					bkg_n[2] = 1;
 					// bkg_n_tth[2] = 1;
 					bkg_sideband_n[2] = 1;
 				} else {
-					sig_n[2] = hist_S_cut->Integral(hist_S_cut->FindBin(start_n[1]),hist_S_cut->FindBin(start_n[2])-1);
+					cout << "Here 2" << endl;
+ 					sig_n[2] = hist_S_cut->Integral(hist_S_cut->FindBin(start_n[1]),hist_S_cut->FindBin(start_n[2])-1);
 					bkg_n[2] = hist_B_cut->Integral(hist_B_cut->FindBin(start_n[1]),hist_B_cut->FindBin(start_n[2])-1);
 // 					bkg_n_tth[2] = hist_B_cut_tth->Integral(hist_B_cut_tth->FindBin(start_n[1]),hist_B_cut_tth->FindBin(start_n[2])-1);
 					bkg_sideband_n[2] = hist_B_cut_sideband->Integral(hist_B_cut_sideband->FindBin(start_n[1]),hist_B_cut_sideband->FindBin(start_n[2])-1);
@@ -565,40 +556,6 @@ cout << "NCAT " << NCAT << endl;
 	gPad->RedrawAxis();
 	c1->Print(s.Format("plots/%s/%s.png",date.Data(),outname.Data()));
 	c1->Print(s.Format("plots/%s/%s.pdf",date.Data(),outname.Data()));
-//
-//
-// 	double* cat_scan = &categories_scans_tth[0];
-// 	double* sign_scan = &significance_scans_tth[0];
-// 	int counter = significance_scans_tth.size();
-// 	TGraph *gr =new TGraph(counter,cat_scan,sign_scan);
-// 	ymin = *std::max_element(sign_scan,sign_scan+counter) * 0.5;
-// 	ymax = *std::max_element(sign_scan,sign_scan+counter) * 1.1;
-// 	int max_pos = std::distance(sign_scan, std::max_element(sign_scan,sign_scan+counter));
-// //
-// 	TCanvas *c2 = new TCanvas("B","",800,800);
-// 	c2->cd();
-// 	TH1F *frame3 = new TH1F("frame3","",50,xmin,xmax);
-// 	frame3->GetXaxis()->SetNdivisions(505);
-//    frame3->SetStats(0);
-// // //	frame3->SetYTitle("S/#sqrt{B_{#gamma#gamma}+B_{ttH}}");
-// 	frame3->SetYTitle("S/#sqrt{B}");
-// 	frame3->GetYaxis()->SetTitleOffset(1.32);
-// 	frame3->SetXTitle(s.Format("%s",what_to_opt.Data()));
-// 	frame3->SetMinimum(ymin);
-// 	frame3->SetMaximum(ymax);
-// 	frame3->Draw();
-// 	gr->Draw("Psame");
-// 	gPad->Update();
-// // 	pCMS1.Draw("same");
-// // 	pCMS2.Draw("same");
-// // 	pCMS12.Draw("same");
-// // 	pave22.Draw("same");
-// // 	pave33.Draw("same");
-// 	gPad->RedrawAxis();
-// 	c2->Print(s.Format("plots/%s/significance_tth_%s.pdf",date.Data(),outname.Data()));
-// 	c2->Print(s.Format("plots/%s/significance_tth_%s.png",date.Data(),outname.Data()));
-// 	cout<<counter<<endl;
-//
-// return 0;
+
 
 }

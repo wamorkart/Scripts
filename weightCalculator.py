@@ -4,7 +4,7 @@ import json, os
 eosOutput = '/eos/cms/store/user/twamorka/'
 
 GJets20to40 = ['GJets20to40',
-'/GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCUETP8M1_13TeV_Pythia8/sethzenz-RunIISummer16-2_4_1-25ns_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-PUMoriond17_backup_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1-17c645750168c82731e0bcef4523b51c/USER'
+'/TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/spigazzi-Era2016_RR-17Jul2018_v2-legacyRun2FullV1-v0-RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2-735d6f5d6752834cf1de64ba6920599a/USER'
 ]
 
 GJets20toInf = ['GJets20toInf',
@@ -74,32 +74,58 @@ TTJets = ['TTJets',
 ttHJetToGG = ['ttHJetToGG',
 '/ttHJetToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8_v2/sethzenz-RunIISummer16-2_4_1-25ns_Moriond17-2_4_1-v0-RunIISummer16MiniAODv2-BS2016_BSandPUSummer16_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1-a441a93bb50ffde2d33d432edd33f748/USER'
 ]
-bkgSample = QCD30toInf
+
+Data_2016 = ['Data_2016',
+'/DoubleEG/sethzenz-ReMiniAOD-03Feb2017-2_5_5-2_5_5-v0-Run2016C-03Feb2017-v1-a56cd34be537fa6f2c9a0e455e52bfcd/USER'
+]
+
+h4g_60 = ['h4g_60',
+'/SUSYGluGluToHToAA_AToGG_M-50_TuneCUETP8M1_13TeV_pythia8/twamorka-H4GandHH4G_2016_27Sep2019-RunIIFall18-4_0_0-119-g2d54185d-v0-RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2-c60eef5306655b117af710f8d72accc3/USER'
+
+]
+bkgSample = GJets20to40
 
 #localDir = os.getcwd()
 
-data_file_location = '/afs/cern.ch/work/t/twamorka/CMSSW_8_0_26_patch1/src/flashgg//MetaData/data/RunIISummer16-2_4_1-25ns_Moriond17/datasets.json'
+for i in range(1,34):
+	print i
+	data_file_location = '/afs/cern.ch/work/t/twamorka/5Sep2019/CMSSW_10_5_0/src/flashgg/MetaData/data/Era2016_RR-17Jul2018_v2/datasets_'+str(i)+'.json'
+	data_file = open(data_file_location)
+	data = json.load(data_file)
+	try:
+	    dataFiles = data[bkgSample[1]]['files']
+		for files in dataFiles:
+			    if int(files['nevents']) == 0: continue
+			# print files['name'], files['nevents']#, files['weights']
+			    totalWeight += float(files['weights'])
+			    totalEvents += float(files['nevents'])
+	except KeyError:
+		pass	
+# data_file_location = '/afs/cern.ch/work/t/twamorka/CMSSW_8_0_26_patch1/src/flashgg//MetaData/data/RunIISummer16-2_4_1-25ns_Moriond17/datasets.json'
+# data_file_location = '/afs/cern.ch/work/t/twamorka/5Sep2019/CMSSW_10_5_0/src/flashgg/MetaData/data/Era2016_RR-17Jul2018_v2/datasets_13.json'
+
+# data_file_location = '/afs/cern.ch/work/t/twamorka/5Sep2019/CMSSW_10_5_0/src/flashgg/MetaData/data/H4GandHH4G_2016_27Sep2019/datasets_20.json'
 # if 'crovelli' in bkgSample[1] or 'musella' in bkgSample[1]:
 # 	data_file_location = localDir + '/../MetaData/data/microAODdatasets/Spring15BetaV2_MetaV3/bkgPasquale.json'
 #data_file_location = '/afs/cern.ch/work/t/twamorka/CMSSW_8_0_26_patch1/src/flashgg//MetaData/data/ReMiniAOD-03Feb2017-2_5_Y/datasets_7.json'
 
-data_file = open(data_file_location)
-data = json.load(data_file)
-
-dataFiles = data[bkgSample[1]]['files']
-
-totalWeight = 0
-totalEvents = 0
-
-for files in dataFiles:
-	if int(files['nevents']) == 0: continue
-	# print files['name'], files['nevents']#, files['weights']
-	totalWeight += float(files['weights'])
-	totalEvents += float(files['nevents'])
-
-
-
-print "#################################################################"
-print "## Dataset        ## Sum of events        ## Sum of Weights    ##"
-print "## ",bkgSample[0],"    ##", totalEvents, "    ##", format(totalWeight, 'f'), " ##"
-print "#################################################################"
+# data_file = open(data_file_location)
+# data = json.load(data_file)
+#
+# dataFiles = data[bkgSample[1]]['files']
+#
+# totalWeight = 0
+# totalEvents = 0
+#
+# for files in dataFiles:
+# 	if int(files['nevents']) == 0: continue
+# 	# print files['name'], files['nevents']#, files['weights']
+# 	totalWeight += float(files['weights'])
+# 	totalEvents += float(files['nevents'])
+#
+#
+#
+# print "#################################################################"
+# print "## Dataset        ## Sum of events        ## Sum of Weights    ##"
+# print "## ",bkgSample[0],"    ##", totalEvents, "    ##", format(totalWeight, 'f'), " ##"
+# print "#################################################################"

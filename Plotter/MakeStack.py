@@ -130,6 +130,11 @@ for plot in plots:
             locName = thisName+str(i)
             print "name ", locName
             locHist = thisHist.Clone(locName)
+<<<<<<< Updated upstream
+=======
+            # thisWeightedCut = "(1)* (" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
+
+>>>>>>> Stashed changes
             thisWeightedCut = "(mix_weight)* (" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
             # thisWeightedCut =  "(weight_VBF*weight)*(" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
             print "Background cut: ", thisWeightedCut
@@ -142,8 +147,9 @@ for plot in plots:
             #     thisWeightedCut =  "(weight_VBF)*( !((tp_mass > 115 && tp_mass < 135)))"
             # else:
             #     thisWeightedCut = "(weight_VBF*weight)*(" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
-
-            # Trees[thisTreeLoc].Draw(plot[1]+">>"+locName, thisWeightedCut)
+            #
+            Trees[thisTreeLoc].Draw(plot[1]+">>"+locName, thisWeightedCut)
+            locHist.Scale(467/locHist.Integral())
             # if 'DataDriven' in locName:
             #     print "Data driven background"
             #     locHist.Scale(lumi)
@@ -170,7 +176,7 @@ for plot in plots:
                 #print "MC BACKGROUND"
                 #locHist.Scale(lumi)
             # locHist.Scale(lumi)
-            locHist.Scale(467/locHist.Integral())
+            # locHist.Scale(467/locHist.Integral())
 
             print locHist.Integral()
             thisHist.Add(locHist)
@@ -207,6 +213,7 @@ for plot in plots:
         Trees[thisTreeLoc].Draw(plot[1]+">>"+locName,weightedCut )
 
         locHist.Scale(467/locHist.Integral())
+        # locHist.Scale(195/locHist.Integral())
         print "Signal : ", locHist.Integral()
         thisHist.Add(locHist)
         Histos.append(locHist)

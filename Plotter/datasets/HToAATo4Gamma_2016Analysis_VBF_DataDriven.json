@@ -1,0 +1,47 @@
+{
+   "data":"data_all_skim.root",
+   "signal":[
+
+         {
+            "name":"Pseudoscalar",
+            "treeName":"SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons",
+            "legend":"m_{a} = 60 GeV",
+            "color":300,
+            "style":1,
+            "file":"signal_m_60_skim.root"
+         }
+   ],
+
+     "background":{
+
+       "DataDriven":{
+          "position":1,
+          "legend":"(#gammaJets+QCD) Data driven",
+          "color":"#2B74BA",
+          "files":[
+             {
+                "file":"data_CR.root",
+                "treeName":"Data_13TeV_4photons",
+                "cut" : "1>0"
+             }
+          ]
+       },
+        "DiPhoJets":{
+           "position":2,
+           "legend":"#gamma#gamma+Jets",
+           "color":"#D0F1D8",
+           "files":[
+              {
+                 "file":"DiPho40to80_skim.root",
+                 "treeName":"DiPhotonJetsBox_M40_80_Sherpa_13TeV_4photons",
+                 "cut": "1>0"
+              },
+              {
+                 "file":"DiPho80toInf_skim.root",
+                 "treeName":"DiPhotonJetsBox_MGG_80toInf_13TeV_Sherpa_13TeV_4photons",
+                 "cut": "1>0"
+              }
+           ]
+        }
+     }
+     }

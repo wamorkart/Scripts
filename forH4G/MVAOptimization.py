@@ -9,7 +9,9 @@ parser.add_argument('-s', '--signal', dest='sig', required=True, type=str)
 parser.add_argument('-b', '--background', dest='bac', required=True, type=str)
 parser.add_argument('-v', '--var', dest='var', required=True, type=str)
 parser.add_argument('-c', '--cut', dest='cut', required=True, type=str)
+parser.add_argument('-n', '--name', dest='name', required=True, type=str)
 parser.add_argument('-o', '--outputLoc', dest='outputLoc', required=True, type=str)
+
 
 opt = parser.parse_args()
 sigMass = opt.sig
@@ -17,9 +19,9 @@ bkg = opt.bac
 var = opt.var
 cut = opt.cut
 outputLoc = opt.outputLoc
+name = opt.name
 
-print "here"
-print opt.cut
+# print opt.cut
 f_sig = TFile('/eos/user/t/twamorka/newCatalog_fixVtx_3Oct2019/hadd_Tree/signal_m_'+str(sigMass)+'.root')
 t_sig = f_sig.Get('h4gCandidateDumper/trees/SUSYGluGluToHToAA_AToGG_M_'+str(sigMass)+'_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons')
 
@@ -30,6 +32,7 @@ if bkg == 'QCD':
    bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/QCD40toInf.root','QCD_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons','QCD 40toInf'])
 
 elif bkg == 'GJet':
+   bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/GJet20to40.root','GJet_Pt_20to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons','GJet 20to40'])
    bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/GJet20toInf.root','GJet_Pt_20toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons','GJet 20toInf'])
    bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/GJet40toInf.root','GJet_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons','GJet 40toInf'])
 
@@ -37,20 +40,30 @@ elif bkg == 'DiPho':
    bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/DiPho40to80.root','DiPhotonJetsBox_M40_80_Sherpa_13TeV_4photons','DiPho 40to80'])
    bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/DiPho80toInf.root','DiPhotonJetsBox_MGG_80toInf_13TeV_Sherpa_13TeV_4photons','DiPho 80toInf'])
 
-
+elif bkg == 'All':
+   bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/QCD30to40.root','QCD_Pt_30to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons','QCD 30to40'])
+   bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/QCD30toInf.root','QCD_Pt_30toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons','QCD 30toInf'])
+   bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/QCD40toInf.root','QCD_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons','QCD 40toInf'])
+   bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/GJet20to40.root','GJet_Pt_20to40_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons','GJet 20to40'])
+   bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/GJet20toInf.root','GJet_Pt_20toInf_DoubleEMEnriched_MGG_40to80_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons','GJet 20toInf'])
+   bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/GJet40toInf.root','GJet_Pt_40toInf_DoubleEMEnriched_MGG_80toInf_TuneCUETP8M1_13TeV_Pythia8_13TeV_4photons','GJet 40toInf'])
+   bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/DiPho40to80.root','DiPhotonJetsBox_M40_80_Sherpa_13TeV_4photons','DiPho 40to80'])
+   bkgFiles.append(['/eos/user/t/twamorka/2016Ntuples/DiPho80toInf.root','DiPhotonJetsBox_MGG_80toInf_13TeV_Sherpa_13TeV_4photons','DiPho 80toInf'])
+    
 
 Cut_Cat = []
 i = -0.9
 while i<1:
-    # print i
     Cut_Cat.append(['pho1_MVA > '+str(i)+' && pho2_MVA >'+str(i)+'&&'+cut, 'pho1_MVA > '+str(i)+' && pho2_MVA >'+str(i)+' && pho3_MVA >' + str(i) +' && pho4_MVA >'+str(i)+'&&'+cut,'pho1_MVA > -0.9 && pho2_MVA > -0.9'+' && pho3_MVA >'+str(i)+' && pho4_MVA >'+str(i)+'&&'+cut] )
     i += 0.1
 
+# print Cut_Cat
 t_bkg = TChain()
+# print bkgFiles
 for file in bkgFiles:
     t_bkg.Add(str(file[0])+'/h4gCandidateDumper/trees/'+str(file[1]))
 
-print t_bkg.GetEntries()
+# print t_bkg.GetEntries()
 
 
 t_sig.Draw(var + '>> h_sig')
@@ -79,6 +92,7 @@ for cut in Cut_Cat:
     bkgEff_Cat2.append(1-(h2_bkg.Integral()/tot_bkg))
 
 
+# print bkgEff_Cat0
 gr1 = TGraph(len(sigEff_Cat0),sigEff_Cat0,bkgEff_Cat0)
 gr1.SetMarkerColor(kBlack)
 gr1.SetMarkerStyle(20)
@@ -112,5 +126,5 @@ leg.AddEntry(gr3,"Cut 3","lp")
 graphs.SetTitle(";Signal Efficiency; 1- Background Efficiency")
 graphs.Draw("AP")
 leg.Draw("same")
-c0.SaveAs(outputLoc+'Eff_'+str(bkg)+'_'+str(opt.cut)+'.pdf')
-c0.SaveAs(outputLoc+'Eff_'+str(bkg)+'_'+str(opt.cut)+'.png')
+c0.SaveAs(outputLoc+'Eff_'+str(bkg)+'_'+str(opt.name)+'.pdf')
+c0.SaveAs(outputLoc+'Eff_'+str(bkg)+'_'+str(opt.name)+'.png')

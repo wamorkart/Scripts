@@ -1,5 +1,5 @@
 {
-   "data":"data_all_skim_transformedMVA.root",
+   "data":"data_all_skim.root",
    "signal":[
 
          {
@@ -8,7 +8,7 @@
             "legend":"m_{a} = 60 GeV",
             "color":300,
             "style":1,
-            "file":"signal_m_60_transformedMVA.root"
+            "file":"signal_m_60_skim.root"
          }
    ],
 
@@ -19,7 +19,11 @@
           "color":"#2B74BA",
           "files":[
              {
+<<<<<<< Updated upstream
                 "file":"test_addweight_16April2020_aptvarsvars.root",
+=======
+                "file":"data_mix_reweight_phoMVAVars_withSel.root",
+>>>>>>> Stashed changes
                 "treeName":"Data_13TeV_4photons",
                 "cut":"1>0"
              }

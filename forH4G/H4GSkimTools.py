@@ -218,6 +218,14 @@ class SkimmedTreeTools:
       self.a2_Pho1PtOvera2Mass= n.zeros(1,dtype=float)
       self.a2_Pho2PtOvera2Mass = n.zeros(1,dtype=float)
       self.cat_MVA_value= n.zeros(1,dtype=float)
+      self.pho1_ChHadIso = n.zeros(1,dtype=float)
+      self.pho2_ChHadIso = n.zeros(1,dtype=float)
+      self.pho3_ChHadIso = n.zeros(1,dtype=float)
+      self.pho4_ChHadIso = n.zeros(1,dtype=float)
+      self.pho1_HoE = n.zeros(1,dtype=float)
+      self.pho2_HoE = n.zeros(1,dtype=float)
+      self.pho3_HoE = n.zeros(1,dtype=float)
+      self.pho4_HoE = n.zeros(1,dtype=float)
    #    self.p0_npho = n.zeros(1, dtype=float)
    #    self.p0_pt = n.zeros(1, dtype=float)
    #    self.p0_eta = n.zeros(1, dtype=float)
@@ -1060,9 +1068,30 @@ class SkimmedTreeTools:
       arr = [[Dipho1, P1, iP1, P2, iP2], [Dipho2, P3, iP3, P4, iP4]]
       return arr
 
-    # def Preselection(self,Pho1_vec,Pho2_vec):
-    #     isPreselected = false
-    #     if ()
+   # def Preselection(self,Pho1_vec,Pho2_vec):
+   #      isPreselected = False
+   #      if (
+   #      (Pho1_vec[1] > 0.8 or Pho1_vec[2] < 20 or (Pho1_vec[2]/Pho1_vec[0].Pt()) < 0.3 )
+   #      and (Pho2_vec[1] > 0.8 or Pho2_vec[2] < 20 or (Pho2_vec[2]/Pho2_vec[0].Pt() < 0.3))
+   #      and (Pho1_vec[3] < 0.08 and Pho2_vec[3] < 0.08)
+   #      and ( ((abs(Pho1_vec[4]) < 1.4442 and Pho1_vec[3] < 0.07)or (abs(Pho1_vec[4]) > 1.566 and Pho1_vec[3] < 0.035)) and ((abs(Pho2_vec[4]) < 1.4442 and  Pho2_vec[3] < 0.07)or(abs(Pho2_vec[4]) > 1.566 and Pho2_vec[3] < 0.035) ) )
+   #      and ( ((abs(Pho1_vec[4]) < 1.4442) or (abs(Pho1_vec[4]) > 1.566)) and ((abs(Pho2_vec[4]) < 1.4442 )or(abs(Pho2_vec[4]) > 1.566 ) ) )
+   #      and (Pho1_vec[0].Pt()> 30.0 and Pho2_vec[0].Pt()> 18.0)
+   #      and (abs(Pho1_vec[4]) < 2.5 and abs(Pho2_vec[4]) < 2.5)
+   #      and (abs(Pho1_vec[4]) < 1.4442 or abs(Pho2_vec[4]) > 1.566 )
+   #      and (abs(Pho1_vec[4]) < 1.4442 or abs(Pho2_vec[4]) > 1.566)
+   #      and ( (abs(Pho1_vec[4]) < 1.4442 and abs(Pho2_vec[4]) < 1.4442)
+   #      or (abs(Pho1_vec[4]) < 1.4442 and Pho1_vec[1]>0.85 and abs(Pho2_vec[4]) > 1.566 and Pho2_vec[1]>0.90 )
+   #      or (abs(Pho1_vec[4]) > 1.566 and Pho1_vec[1]>0.90 and abs(Pho2_vec[4]) < 1.4442 and Pho2_vec[1]>0.85 )
+   #      or (abs(Pho1_vec[4]) > 1.566 and Pho1_vec[1]>0.90 and abs(Pho2_vec[4]) > 1.566 and Pho2_vec[1]>0.90 ) )
+   #      and ((Pho1_vec[0]+Pho2_vec[0])).M() > 55
+   #      and (Pho1_vec[0].Pt() > 0.47*Pho1_vec[0].M() and Pho2_vec[0].Pt() > 0.28*Pho2_vec[0].M())
+   #      and (Pho1_vec[5] == 0) and (Pho2_vec[5]==0)
+   #      ):
+   #       isPreselected = True
+   #
+   #      return isPreselected
+
 
 
    #

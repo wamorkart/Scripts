@@ -31,7 +31,7 @@ def DrawCMSLabels(obj, lumi=''):
   lat.SetTextSize(0.045)
   lat.SetTextAlign(11)
   lat.SetTextFont(42)
-  cmsTag = "#bf{CMS}"
+  cmsTag = "#bf{CMS} Preliminary"
   lumiTag = lumi+' fb^{-1} (13 TeV)'
   if lumi == '':
     cmsTag = "#bf{CMS} #it{Simulation}"
@@ -39,4 +39,3 @@ def DrawCMSLabels(obj, lumi=''):
   lat.DrawLatexNDC(l+0.01, 1-t+0.02, cmsTag)
   lat.SetTextAlign(31)
   lat.DrawLatexNDC(1-r-0.001, 1-t+0.02, lumiTag)
-

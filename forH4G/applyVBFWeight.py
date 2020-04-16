@@ -10,8 +10,8 @@ parser.add_option(   "-o", "--outputFile",  dest="outputFile",   default="output
 
 (options, args) = parser.parse_args()
 
-file = '/eos/user/t/twamorka/SWAN_projects/vbf-learn/examples/h4g_24March2020_Photon34_Loose.txt'
-
+#file = '/eos/user/t/twamorka/SWAN_projects/vbf-learn/examples/h4g_24March2020_Photon34_Loose.txt'
+file = '/eos/user/t/twamorka/SWAN_projects/vbf-learn/examples/TEST_12April2020_Gamma34_Loose.txt'
 f=open(file,"r")
 lines=f.readlines()
 

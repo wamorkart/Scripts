@@ -112,7 +112,7 @@ if __name__ == '__main__':
   pho14_M_mix = array('f', [0])
   pho23_M_mix = array('f', [0])
   pho24_M_mix = array('f', [0])
-  isPresel = array('i',[0])
+  isPresel = array('b',[0])
   pho34_M_mix = array('f', [0])
   a1_mass_mix = array('f',[0])
   a2_mass_mix = array('f',[0])
@@ -176,7 +176,7 @@ if __name__ == '__main__':
   _pho23_M_mix = outtree.Branch('pho23_M_mix',pho23_M_mix,'pho23_M_mix/F')
   _pho24_M_mix = outtree.Branch('pho24_M_mix',pho24_M_mix,'pho24_M_mix/F')
   _pho34_M_mix = outtree.Branch('pho34_M_mix',pho34_M_mix,'pho34_M_mix/F')
-  _isPresel = outtree.Branch('isPresel',isPresel,'isPresel/I')
+  _isPresel = outtree.Branch('isPresel',isPresel,'isPresel/B')
   _a1_mass_mix = outtree.Branch('a1_mass_mix',a1_mass_mix,'a1_mass_mix/F')
   _a2_mass_mix = outtree.Branch('a2_mass_mix',a2_mass_mix,'a2_mass_mix/F')
   _avg_a_mass_mix = outtree.Branch('avg_a_mass_mix',avg_a_mass_mix,'avg_a_mass_mix/F')
@@ -246,7 +246,8 @@ if __name__ == '__main__':
     if evt == eventsToRun :
       itree.GetEntry(0)
     else :
-      itree.GetEntry(evt)
+      # itree.GetEntry(evt)
+      itree.GetEntry(evt+20)
       # print "evt", evt
 
     ObjList = [key.GetName() for key in  itree.GetListOfBranches()]
@@ -259,7 +260,8 @@ if __name__ == '__main__':
     if evt == eventsToRun :
       itree.GetEntry(0)
     else :
-      itree.GetEntry(evt+1)
+      # itree.GetEntry(evt+1)
+      itree.GetEntry(evt+21)
 
     ObjList = [key.GetName() for key in  itree.GetListOfBranches()]
     for branch in ObjList:
@@ -273,7 +275,8 @@ if __name__ == '__main__':
     elif evt == (eventsToRun-1) :
       itree.GetEntry(0)
     else :
-      itree.GetEntry(evt+2)
+      # itree.GetEntry(evt+2)
+      itree.GetEntry(evt+22)
 
     ObjList = [key.GetName() for key in  itree.GetListOfBranches()]
     for branch in ObjList:
@@ -289,7 +292,8 @@ if __name__ == '__main__':
     elif evt == (eventsToRun-2) :
       itree.GetEntry(0)
     else :
-      itree.GetEntry(evt+3)
+      # itree.GetEntry(evt+3)
+      itree.GetEntry(evt+23)
 
     ObjList = [key.GetName() for key in  itree.GetListOfBranches()]
     for branch in ObjList:
@@ -385,8 +389,10 @@ if __name__ == '__main__':
     Pho24_presel = Preselection(pho2_vec, pho4_vec)
     Pho34_presel = Preselection(pho3_vec, pho4_vec)
 
-    isPresel_res =  Pho12_presel or Pho13_presel or Pho14_presel or Pho23_presel or Pho24_presel or Pho34_presel
+    isPresel[0] = Pho12_presel or Pho13_presel or Pho14_presel or Pho23_presel or Pho24_presel or Pho34_presel
 
+    # isPresel_res =  Pho12_presel or Pho13_presel or Pho14_presel or Pho23_presel or Pho24_presel or Pho34_presel
+    # print "ispresel ", isPresel_res
     # print "pt ", sPhos[0].Pt()
     # print sPhos[1].Pt()
     # print sPhos[2].Pt()
@@ -423,7 +429,7 @@ if __name__ == '__main__':
     pho23_M_mix[0] = (sPhos[1]+sPhos[2]).M()
     pho24_M_mix[0] = (sPhos[1]+sPhos[3]).M()
     pho34_M_mix[0] = (sPhos[2]+sPhos[3]).M()
-    isPresel[0] = isPresel_res
+    # isPresel[0] = isPresel_res
 
 
     pairedDiphos = treeSkimmer.MakePairing(sPhos)
@@ -469,9 +475,9 @@ if __name__ == '__main__':
     tp_eta_mix[0] = Pgggg.Eta()
     tp_phi_mix[0] = Pgggg.Phi()
 
-
-    outtree.Fill()
-
+    if (isPresel[0] == 1):
+        outtree.Fill()
+    # else: print "Failed preselection"
   outRoot.cd()
   outtree.Write()
   outRoot.Close()

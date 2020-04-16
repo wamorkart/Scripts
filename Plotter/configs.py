@@ -45,6 +45,7 @@ nbin = 10
 prefix = ""
 
 # dirName = '14April_Mix_Reweight'
+<<<<<<< Updated upstream
 dirName = '16April2020_Mix_reweight_aptvars'
 # dirName = '11April2020_TESTVBFPlot_wBDT'
 
@@ -53,13 +54,31 @@ bkgLocation = '/afs/cern.ch/work/t/twamorka/Scripts/forH4G/'
 signalLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/8April2020_onlyKin_vLoose/'
 dataLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/8April2020_onlyKin_vLoose/'
 
+=======
+# dirName = '14April2020_TESTVBFPlot_wBDT'
+# dirName = '15April2020_TestReweighting_lessSel'
+# dirName = '15April2020_looseSel_aptoverhmassvars_15bins'
+dirName = '15April2020_looseSel_phomvavars_15bins_wBDT'
+bkgLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/15April2020_onlyPhotonID_reweight_mix_vLoose/'
+signalLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/15April2020_onlyPhotonID_reweight_mix_vLoose/'
+dataLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/15April2020_onlyPhotonID_reweight_mix_vLoose/'
+# bkgLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/Input_Ntuple/'
+# signalLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/Input_Ntuple/'
+# dataLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/Input_Ntuple/'
+# bkgLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/8April2020_onlyKin_vLoose/'
+# signalLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/vLoose_OnlyPhotonID/'
+# dataLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/vLoose_OnlyPhotonID/'
+# bkgLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/8April2020_onlyKin_vLoose/'
+# bkgLocation = '/afs/cern.ch/work/t/twamorka/Scripts/forH4G/'
+>>>>>>> Stashed changes
 # bkgLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/11April2020_VBFTraining_LooseWP/VBF_Train_Applied/'
 # signalLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/11April2020_VBFTraining_LooseWP/VBF_Train_Applied/'
 # dataLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/11April2020_VBFTraining_LooseWP/VBF_Train_Applied/'
 
-#bkgLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/12April2020_VBFTraining_withsamplewithoutBlindCut/VBF_Train_Applied/'
-#signalLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/12April2020_VBFTraining_withsamplewithoutBlindCut/VBF_Train_Applied/'
-#dataLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/12April2020_VBFTraining_withsamplewithoutBlindCut/VBF_Train_Applied/'
+# bkgLocation = '/afs/cern.ch/work/t/twamorka/Scripts/forH4G/'
+# bkgLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/12April2020_VBFTraining_withsamplewithoutBlindCut/VBF_Train_Applied/'
+# signalLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/12April2020_VBFTraining_withsamplewithoutBlindCut/VBF_Train_Applied/'
+# dataLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/12April2020_VBFTraining_withsamplewithoutBlindCut/VBF_Train_Applied/'
 
 #plots to be made
 plots = []
@@ -67,7 +86,7 @@ plots.append(["CTStarCS","CTStarCS","Cos #theta*",nbin,0,1])
 plots.append(["CT_a1Pho1","CT_a1Pho1","Cos #theta_{#gamma a_{1}}",nbin,0,1])
 plots.append(["CT_a2Pho1","CT_a2Pho1","Cos #theta_{#gamma a_{2}}",nbin,0,1])
 plots.append(["a1ptoverhmass","(a1_Pt/tp_mass)","a1 (pT)/ h (mass)",nbin,0,1])
-plots.append(["a2ptoverhmass","(a2_Pt/tp_mass)","a1 (pT) / h (mass)",nbin,0,1])
+plots.append(["a2ptoverhmass","(a2_Pt/tp_mass)","a2 (pT) / h (mass)",nbin,0,1])
 plots.append(["a1_Pho1PtOvera1Mass","a1_Pho1PtOvera1Mass","#gamma1 (pT) / a1 (mass)",nbin,0,5])
 plots.append(["a2_Pho1PtOvera2Mass","a2_Pho1PtOvera2Mass","#gamma3 (pT) / a2 (mass)",nbin,0,3])
 # plots.append(["bdt","bdt","BDT",nbin,-1,1])
