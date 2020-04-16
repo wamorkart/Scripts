@@ -130,7 +130,7 @@ for plot in plots:
             locName = thisName+str(i)
             print "name ", locName
             locHist = thisHist.Clone(locName)
-            thisWeightedCut = "(mix)* (" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
+            thisWeightedCut = "(mix_weight)* (" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
             # thisWeightedCut =  "(weight_VBF*weight)*(" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
             print "Background cut: ", thisWeightedCut
             Trees[thisTreeLoc].Draw(plot[1]+">>"+locName, thisWeightedCut)

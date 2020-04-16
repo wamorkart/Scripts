@@ -19,7 +19,7 @@
           "color":"#2B74BA",
           "files":[
              {
-                "file":"test_addweight.root",
+                "file":"test_addweight_16April2020_aptvarsvars.root",
                 "treeName":"Data_13TeV_4photons",
                 "cut":"1>0"
              }

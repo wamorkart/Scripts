@@ -39,15 +39,17 @@ data_file = open('datasets/Datasets_Mix_test.json')
 # data_file = open('datasets/HToAATo4Gamma_2016Analysis_VBF_DataDriven.json')
 # data_file = open('datasets/Datasets_2016_flashgg_March2020_4Photons.json')
 #number of bins in histograms
-nbin = 20
+nbin = 10
 
 #plots will be saved in dirName
 prefix = ""
 
-dirName = '14April_Mix_Reweight'
+# dirName = '14April_Mix_Reweight'
+dirName = '16April2020_Mix_reweight_aptvars'
 # dirName = '11April2020_TESTVBFPlot_wBDT'
 
-bkgLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/8April2020_onlyKin_vLoose/'
+bkgLocation = '/afs/cern.ch/work/t/twamorka/Scripts/forH4G/'
+# bkgLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/8April2020_onlyKin_vLoose/'
 signalLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/8April2020_onlyKin_vLoose/'
 dataLocation = '/eos/user/t/twamorka/1April2020_CatTrainign/8April2020_onlyKin_vLoose/'
 
@@ -68,7 +70,7 @@ plots.append(["a1ptoverhmass","(a1_Pt/tp_mass)","a1 (pT)/ h (mass)",nbin,0,1])
 plots.append(["a2ptoverhmass","(a2_Pt/tp_mass)","a1 (pT) / h (mass)",nbin,0,1])
 plots.append(["a1_Pho1PtOvera1Mass","a1_Pho1PtOvera1Mass","#gamma1 (pT) / a1 (mass)",nbin,0,5])
 plots.append(["a2_Pho1PtOvera2Mass","a2_Pho1PtOvera2Mass","#gamma3 (pT) / a2 (mass)",nbin,0,3])
-plots.append(["bdt","bdt","BDT",nbin,-1,1])
+# plots.append(["bdt","bdt","BDT",nbin,-1,1])
 # plots.append(["bdtTransformed","bdtTransformed","Transformed MVA",nbin,0,1])
 plots.append(["a1_a2_DR","a1_a2_DR","#Delta R (a1,a2)",nbin,0,7])
 plots.append(["a1_DR","a1_DR","#Delta R (#gamma1, #gamma2)",nbin,0,7])
