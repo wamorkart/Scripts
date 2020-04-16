@@ -130,26 +130,20 @@ for plot in plots:
             locName = thisName+str(i)
             print "name ", locName
             locHist = thisHist.Clone(locName)
-<<<<<<< Updated upstream
-=======
-            # thisWeightedCut = "(1)* (" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
-
->>>>>>> Stashed changes
-            thisWeightedCut = "(mix_weight)* (" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
+            # thisWeightedCut = "(mix_weight)* (" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
             # thisWeightedCut =  "(weight_VBF*weight)*(" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
-            print "Background cut: ", thisWeightedCut
-            Trees[thisTreeLoc].Draw(plot[1]+">>"+locName, thisWeightedCut)
+            # print "Background cut: ", thisWeightedCut
+            # Trees[thisTreeLoc].Draw(plot[1]+">>"+locName, thisWeightedCut)
             # print "Cut_mix + Cut_sculpt : ", Cut_mix + Cut_sculpt
             # Cut_VBF = ""
-            # thisWeightedCut = ""
-            # if 'DataDriven' in locName:
-            #     print "Data driven background"
-            #     thisWeightedCut =  "(weight_VBF)*( !((tp_mass > 115 && tp_mass < 135)))"
-            # else:
-            #     thisWeightedCut = "(weight_VBF*weight)*(" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
-            #
+            thisWeightedCut = ""
+            if 'DataDriven' in locName:
+                print "Data driven background"
+                thisWeightedCut =  "(weight_VBF)*( !((tp_mass > 115 && tp_mass < 135)))"
+            else:
+                thisWeightedCut = "(weight_VBF*weight)*(" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
+
             Trees[thisTreeLoc].Draw(plot[1]+">>"+locName, thisWeightedCut)
-            locHist.Scale(467/locHist.Integral())
             # if 'DataDriven' in locName:
             #     print "Data driven background"
             #     locHist.Scale(lumi)
@@ -164,10 +158,10 @@ for plot in plots:
             # print "Cut_VBF: ", Cut_VBF
             # Trees[thisTreeLoc].Draw(plot[6]+">>"+locName, Cut_VBF)
             # locHist.Scale(lumi)
-            # if 'DataDriven' in locName:
-            #     locHist.Scale(1)
-            # else:
-            #     locHist.Scale(lumi)
+            if 'DataDriven' in locName:
+                locHist.Scale(1)
+            else:
+                locHist.Scale(lumi)
             # locHist.Scale(lumi)
             #if 'DiPhoJets0' in locName:
                 #print "DiPhoJets0"
@@ -212,8 +206,7 @@ for plot in plots:
         print "Signal weightedCut ", weightedCut
         Trees[thisTreeLoc].Draw(plot[1]+">>"+locName,weightedCut )
 
-        locHist.Scale(467/locHist.Integral())
-        # locHist.Scale(195/locHist.Integral())
+        locHist.Scale(195/locHist.Integral())
         print "Signal : ", locHist.Integral()
         thisHist.Add(locHist)
         Histos.append(locHist)
@@ -264,3 +257,4 @@ for plot in plots:
 
 dummyTFile.Close()
 os.system("rm dummy.root")
+                                                                                                                                                                                                                                                                 
