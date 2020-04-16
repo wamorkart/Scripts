@@ -40,13 +40,13 @@ def findVal(trre,var):
 
 if __name__ == '__main__':
 
- nbin = 15
+ nbin = 10
  plots = []
  #plots.append(["CTStarCS","CTStarCS","Cos #theta*",nbin,0,1])
  #plots.append(["CT_a1Pho1","CT_a1Pho1","Cos #theta_{#gamma a_{1}}",nbin,0,1])
  #plots.append(["CT_a2Pho1","CT_a2Pho1","Cos #theta_{#gamma a_{2}}",nbin,0,1])
- # plots.append(["a1_PtOverMass","(a1_Pt/tp_mass)","a1 (pT)/ h (mass)",nbin,0,5])
- # plots.append(["a2_PtOverMass","(a2_Pt/tp_mass)","a1 (pT) / h (mass)",nbin,0,1])
+ #plots.append(["a1_PtOverMass","(a1_Pt/tp_mass)","a1 (pT)/ h (mass)",nbin,0,1])
+ #plots.append(["a2_PtOverMass","(a2_Pt/tp_mass)","a1 (pT) / h (mass)",nbin,0,1])
  #plots.append(["a1_Pho1PtOvera1Mass","a1_Pho1PtOvera1Mass","#gamma1 (pT) / a1 (mass)",nbin,0,5])
  #plots.append(["a2_Pho1PtOvera2Mass","a2_Pho1PtOvera2Mass","#gamma3 (pT) / a2 (mass)",nbin,0,3])
  #plots.append(["bdt","bdt","BDT",nbin,-1,1])
@@ -54,27 +54,26 @@ if __name__ == '__main__':
  #plots.append(["a1_a2_DR","a1_a2_DR","#Delta R (a1,a2)",nbin,0,7])
  #plots.append(["a1_DR","a1_DR","#Delta R (#gamma1, #gamma2)",nbin,0,7])
  #plots.append(["a2_DR","a2_DR","#Delta R (#gamma3, #gamma4)",nbin,0,7])
- plots.append(["a1_Pt","a1_Pt","a1 (pT) [GeV]",nbin,0,200])
- plots.append(["a2_Pt","a2_Pt","a2 (pT) [GeV]",nbin,0,200])
+ #plots.append(["a1_Pt","a1_Pt","a1 (pT) [GeV]",nbin,0,200])
+ #plots.append(["a2_Pt","a2_Pt","a2 (pT) [GeV]",nbin,0,200])
  #plots.append(["a1_Energy","a1_Energy","a1 (Energy) [GeV]",nbin,0,60])
  #plots.append(["a2_Energy","a2_Energy","a2 (Energy) [GeV]",nbin,0,60])
  #plots.append(["tp_pt","tp_pt","Higgs pT [GeV]",nbin,0,200])
  #plots.append(["tp_eta","tp_eta","Higgs #eta",nbin,-4,4])
- # plots.append(["pho1_MVA","pho1_MVA","#gamma1 MVA",nbin,-1,1])
- # plots.append(["pho2_MVA","pho2_MVA","#gamma2 MVA",nbin,-1,1])
- # plots.append(["pho3_MVA","pho3_MVA","#gamma3 MVA",nbin,-1,1])
- # plots.append(["pho4_MVA","pho4_MVA","#gamma4 MVA",nbin,-1,1])
- # plots.append(["pho1_pt","pho1_pt","#gamma1 pT [GeV]",nbin,30,100])
- # plots.append(["pho3_pt","pho3_pt","#gamma3 pT [GeV]",nbin,15,100])
- # plots.append(["pho4_pt","pho4_pt","#gamma4 pT [GeV]",nbin,15,70])
+ #plots.append(["pho1_MVA","pho1_MVA","#gamma1 MVA",nbin,-1,1])
+ #plots.append(["pho2_MVA","pho2_MVA","#gamma2 MVA",nbin,-1,1])
+ #plots.append(["pho3_MVA","pho3_MVA","#gamma3 MVA",nbin,-1,1])
+ #plots.append(["pho4_MVA","pho4_MVA","#gamma4 MVA",nbin,-1,1])
+ plots.append(["pho1_pt","pho1_pt","#gamma1 pT [GeV]",nbin,30,100])
+ plots.append(["pho2_pt","pho2_pt","#gamma2 pT [GeV]",nbin,18,100])
+ plots.append(["pho3_pt","pho3_pt","#gamma3 pT [GeV]",nbin,15,100])
+ plots.append(["pho4_pt","pho4_pt","#gamma4 pT [GeV]",nbin,15,70])
  #plots.append(["pho1_eta","pho1_eta","#gamma1 #eta",nbin,-2.5,2.5])
  #plots.append(["pho2_eta","pho2_eta","#gamma2 #eta",nbin,-2.5,2.5])
  #plots.append(["pho3_eta","pho3_eta","#gamma3 #eta",nbin,-2.5,2.5])
  #plots.append(["pho4_eta","pho4_eta","#gamma4 #eta",nbin,-2.5,2.5])
 
- # fin_datamix = ROOT.TFile.Open('/eos/user/t/twamorka/1April2020_CatTrainign/8April2020_onlyKin_vLoose/data_mixing_transformedMVA.root')
- # tree_datamix = fin_datamix.Get('Data_13TeV_4photons')
- fin_datamix = ROOT.TFile.Open('/eos/user/t/twamorka/1April2020_CatTrainign/Input_Ntuple/data_mix_add.root')
+ fin_datamix = ROOT.TFile.Open('/eos/user/t/twamorka/1April2020_CatTrainign/8April2020_onlyKin_vLoose/data_mixing_transformedMVA.root')
  tree_datamix = fin_datamix.Get('Data_13TeV_4photons')
 
  fin_data = ROOT.TFile.Open('/eos/user/t/twamorka/1April2020_CatTrainign/vLoose_OnlyPhotonID/data_all.root')
@@ -133,7 +132,7 @@ if __name__ == '__main__':
        else:
           weight_data[tuple(subset)]=1
 
- outfile = ROOT.TFile('test_addweight_16April2020_aptvarsvars.root', "RECREATE")
+ outfile = ROOT.TFile('test_addweight.root', "RECREATE")
  outtree = tree_datamix.CloneTree(0)
  mix_weight = array('f', [0])
  _mix_weight = outtree.Branch('mix_weight', mix_weight, 'mix_weight/F')
