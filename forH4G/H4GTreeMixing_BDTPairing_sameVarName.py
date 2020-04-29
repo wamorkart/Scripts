@@ -19,10 +19,10 @@ if __name__ == '__main__':
   parser.add_argument(   "-t", "--tree",  dest="tree",   default="tree",      type=str,  help="tree")
   parser.add_argument(   "-w", "--weight", dest="weight", default="", type=str, help="weight")
   parser.add_argument(   "-m", "--Mass", dest="Mass", default="", type=str, help="mass")
-  # parser.add_argument(   "-i1", "--i1",  dest="i1",   default=0,      type=int,  help="p1")
-  # parser.add_argument(   "-i2", "--i2",  dest="i2",   default=0,      type=int,  help="p2")
-  # parser.add_argument(   "-i3", "--i3",  dest="i3",   default=0,      type=int,  help="p3")
-  # parser.add_argument(   "-i4", "--i4",  dest="i4",   default=0,      type=int,  help="p4")
+  parser.add_argument(   "-i1", "--i1",  dest="i1",   default=0,      type=int,  help="p1")
+  parser.add_argument(   "-i2", "--i2",  dest="i2",   default=0,      type=int,  help="p2")
+  parser.add_argument(   "-i3", "--i3",  dest="i3",   default=0,      type=int,  help="p3")
+  parser.add_argument(   "-i4", "--i4",  dest="i4",   default=0,      type=int,  help="p4")
 
 
   #/afs/cern.ch/user/a/amassiro/public/H4G/signal_m_50.root
@@ -289,9 +289,11 @@ if __name__ == '__main__':
     if evt == eventsToRun :
       itree.GetEntry(0)
     else :
-        itree.GetEntry(evt+20)
+       # print "1st photon from event#: ", options.i1
+       itree.GetEntry(evt+(options.i1))
+        # itree.GetEntry(evt+20)
         # print "evt1: ", evt
-      # itree.GetEntry(evt+(options.i1))
+
       # print "evt1: ", evt+options.i1
 
     ObjList = [key.GetName() for key in  itree.GetListOfBranches()]
@@ -304,9 +306,11 @@ if __name__ == '__main__':
     if evt == eventsToRun :
       itree.GetEntry(0)
     else :
-        itree.GetEntry(evt+21)
+      # print "2nd photon from event#: ", options.i2
+      itree.GetEntry(evt+options.i2)
+        # itree.GetEntry(evt+21)
         # print "evt2: ", evt+1
-      # itree.GetEntry(evt+options.i2)
+
       # print "evt2: ", evt+options.i2
 
     ObjList = [key.GetName() for key in  itree.GetListOfBranches()]
@@ -321,7 +325,8 @@ if __name__ == '__main__':
     elif evt == (eventsToRun-1) :
       itree.GetEntry(0)
     else :
-        itree.GetEntry(evt+22)
+        # print "3rd photon from event#: ", options.i3
+        itree.GetEntry(evt+options.i3)
         # print "evt2: ", evt+2
       # itree.GetEntry(evt+options.i3)
       # print "evt3: ", evt+options.i3
@@ -340,7 +345,8 @@ if __name__ == '__main__':
     elif evt == (eventsToRun-2) :
       itree.GetEntry(0)
     else :
-      itree.GetEntry(evt+23)
+      # print "4th photon from event#: ", options.i4
+      itree.GetEntry(evt+options.i4)
       # print "evt3: ", evt+3
       # itree.GetEntry(evt+options.i4)
       # print "evt4: ", evt+options.i4
