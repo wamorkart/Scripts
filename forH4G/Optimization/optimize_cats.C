@@ -22,8 +22,7 @@ using namespace std;
 
 //g++ optimize_cats.C -g -o opt `root-config --cflags --glibs` -lMLP -lXMLIO
 
-// int main(int argc, char* argv[]){
-	// gROOT->ProcessLine(".x /afs/cern.ch/work/n/nchernya/setTDRStyle.C");
+
 
 void optimize_cats(const int NCAT) {
 	TString path="/eos/user/t/twamorka/2May2020_CommonBDTPairing/CatTrain_phoMVA/";
@@ -37,7 +36,7 @@ void optimize_cats(const int NCAT) {
 */
 
 	TString what_to_opt = "bdtTransformed";
-	double xmin = 0.;
+	double xmin = -1.0;
 	double xmax = 1.0;
 	Double_t precision=0.01;  //0.01 for MVA, 5 for MX
 
@@ -52,30 +51,61 @@ void optimize_cats(const int NCAT) {
 	TString Mgg_window = "*((tp_mass>115)&&(tp_mass<135))";
 	TString Mgg_sideband = "*((tp_mass<=115)||(tp_mass>=135))";
 	TString selection_sig = "weight*36*(pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9&& tp_mass > 110 && tp_mass < 180)";
-	TString selection_bg = "(0.265)*(pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9 && tp_mass > 110 && tp_mass < 180 )";
+	TString selection_bg = "(pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9 && tp_mass > 110 && tp_mass < 180 )";
 	TString selection_data = "pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9 && tp_mass > 110 && tp_mass < 180 ";
+
 
 	// TString subcategory = "*((MVAOutputT ransformed>0.3)&&(MVAOutputTransformed<.54))*(ttHScore>0.2)";
 	TString outstr = "_MVA2";
 	double minevents = 6; //
-
-
-
 
 	TString date = "12_05_2020_test";
 	TString s; TString sel;
 	TString outname = s.Format("output_SB_%s_cat%d_minevents%.0f_%s",what_to_opt.Data(),NCAT,minevents,outstr.Data());
 
 
-	TFile *file_s =  TFile::Open(path+"signal_m_60_transformedMVA.root");
-	TTree *tree_sig = (TTree*)file_s->Get("SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
+	TChain *file_s =  new TChain("file_s");
+	file_s->Add(path+"signal_m_60_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
+	file_s->Add(path+"signal_m_55_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_55_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
+	file_s->Add(path+"signal_m_50_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_50_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
+	file_s->Add(path+"signal_m_45_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_45_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
+	file_s->Add(path+"signal_m_40_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_40_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
+	file_s->Add(path+"signal_m_35_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_35_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
+	file_s->Add(path+"signal_m_30_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_30_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
+	file_s->Add(path+"signal_m_25_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_25_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
+	file_s->Add(path+"signal_m_20_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_20_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
+	file_s->Add(path+"signal_m_15_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_15_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
+
 	TH1F *hist_S = new TH1F("hist_S","hist_S",int((xmax-xmin)/precision),xmin,xmax);
    s.Form("%s>>hist_S",what_to_opt.Data());
    sel.Form("%s",(selection_sig+Mgg_window).Data());
-	tree_sig->Draw(s,sel,"goff");
+	file_s->Draw(s,sel,"goff");
 
 	TFile *file_bg =  TFile::Open(path+"data_mix_transformedMVA.root");
 	TTree *tree_bg = (TTree*)file_bg->Get("Data_13TeV_4photons");
+
+	TFile *file_data =  TFile::Open(path+"data_all_transformedMVA.root");
+	TTree *tree_data = (TTree*)file_data->Get("Data_13TeV_4photons");
+
+	// Get the scale factor; the data mix needs to be scaled by this factor to match data sideband
+	TH1F* hist_datamix = new TH1F("hist_datamix","hist_datamix",100,-1,1);
+	TH1F* hist_data = new TH1F("hist_data","hist_data",100,-1,1);
+
+	s.Form("pho1_MVA >> hist_datamix");
+	sel.Form("%s",(selection_bg+Mgg_sideband).Data());
+	tree_bg->Draw(s,sel,"goff");
+
+
+	s.Form("pho1_MVA >> hist_data");
+	sel.Form("%s",(selection_data+Mgg_sideband).Data());
+	tree_data->Draw(s,sel,"goff");
+
+	cout << "Background sideband Integral: " << hist_datamix->Integral() << endl;
+	cout << "Data sideband Integral: " << hist_data->Integral() << endl;
+	double scale = 1;
+	scale = hist_data->Integral() / hist_datamix->Integral();
+	cout << "Scale: " << scale << endl;
+
 	TH1F *hist_B = new TH1F("hist_B","hist_B",int((xmax-xmin)/precision),xmin,xmax); //200 bins
    s.Form("%s>>hist_B",what_to_opt.Data());
    sel.Form("%s",(selection_bg+Mgg_window).Data());
@@ -86,10 +116,10 @@ void optimize_cats(const int NCAT) {
    s.Form("%s>>hist_B_sideband",what_to_opt.Data());
    sel.Form("%s",(selection_bg+Mgg_sideband).Data());
 	tree_bg->Draw(s,sel,"goff");
+	hist_B_sideband->Scale(scale);
 	cout<<"BG integral sidebands "<<hist_B_sideband->Integral()<<endl;
 
-	TFile *file_data =  TFile::Open(path+"data_all_transformedMVA.root");
-	TTree *tree_data = (TTree*)file_data->Get("Data_13TeV_4photons");
+
 
 	TH1F *hist_D_sideband = new TH1F("hist_D_sideband","hist_D_sideband",int((xmax-xmin)/precision),xmin,xmax); //200 bins
    s.Form("%s>>hist_D_sideband",what_to_opt.Data());
@@ -114,8 +144,10 @@ void optimize_cats(const int NCAT) {
 
 	TH1F *hist_B2 = (TH1F*)hist_B->Clone("b_new");
 	hist_B2->Rebin(1); //4
+	// hist_B2->GetXaxis()->SetRange(0,1);
 	TH1F *hist_S2 = (TH1F*)hist_S->Clone("s_new");
 	hist_S2->Rebin(1); //4
+	// hist_S2->GetXaxis()->SetRange(0,1);
 	hist_S2->Scale();
 
 
@@ -229,6 +261,7 @@ std::vector<double> significance_scans3;
 
 		bkg_sideband_n[1] = hist_B_sideband->Integral(hist_B_sideband->FindBin(start_n[0]),hist_B_sideband->GetNbinsX()+1);
 		data_sideband_n[1] = hist_D_sideband->Integral(hist_D_sideband->FindBin(start_n[0]),hist_D_sideband->GetNbinsX()+1);
+		// cout << "#1 BIN " << start_n[0] << endl;
 		if (bkg_n[1]!=0) max_n[1]=pow(sig_n[1],2)/bkg_n[1];
 
 		if (1>0) {
@@ -242,6 +275,7 @@ std::vector<double> significance_scans3;
 			bkg_n[1] = hist_B->Integral(hist_B->FindBin(start_n[0]),hist_B->FindBin(start_n[1])-1);
 			bkg_sideband_n[1] = hist_B_sideband->Integral(hist_B_sideband->FindBin(start_n[0]),hist_B_sideband->FindBin(start_n[1])-1);
 			data_sideband_n[1] = hist_D_sideband->Integral(hist_D_sideband->FindBin(start_n[0]),hist_D_sideband->FindBin(start_n[1])-1);
+			// cout << "#2 BIN " << start_n[0] << endl;
 			if (bkg_n[1]!=0) max_n[1]=pow(sig_n[1],2)/bkg_n[1];
 
 			start_n[2]=start_n[1]+precision;
@@ -258,6 +292,7 @@ std::vector<double> significance_scans3;
 					bkg_n[2] = hist_B->Integral(hist_B->FindBin(start_n[1]),hist_B->FindBin(start_n[2])-1);
 					bkg_sideband_n[2] = hist_B_sideband->Integral(hist_B_sideband->FindBin(start_n[1]),hist_B_sideband->FindBin(start_n[2])-1);
 					data_sideband_n[2] = hist_D_sideband->Integral(hist_D_sideband->FindBin(start_n[1]),hist_D_sideband->FindBin(start_n[2])-1);
+					// cout << "#3 BIN " << start_n[1] << endl;
 				}
 				if (bkg_n[2]!=0) max_n[2]=pow(sig_n[2],2)/bkg_n[2];
 
@@ -274,6 +309,7 @@ std::vector<double> significance_scans3;
 						bkg_n[3] = hist_B->Integral(hist_B->FindBin(start_n[2]),hist_B->FindBin(start_n[3])-1);
 						bkg_sideband_n[3] = hist_B_sideband->Integral(hist_B_sideband->FindBin(start_n[2]),hist_B_sideband->FindBin(start_n[3])-1);
 						data_sideband_n[3] = hist_D_sideband->Integral(hist_D_sideband->FindBin(start_n[2]),hist_D_sideband->FindBin(start_n[3])-1);
+						// cout << "#4 BIN " << start_n[2] << endl;
 					}
 					if (bkg_n[3]!=0) max_n[3]=pow(sig_n[3],2)/bkg_n[3];
 
@@ -288,6 +324,7 @@ std::vector<double> significance_scans3;
 						bkg_n[4] = hist_B->Integral(hist_B->FindBin(start_n[3]),hist_B->GetNbinsX()+1);
 						bkg_sideband_n[4] = hist_B_sideband->Integral(hist_B_sideband->FindBin(start_n[3]),hist_B_sideband->GetNbinsX()+1);
 						data_sideband_n[4] = hist_D_sideband->Integral(hist_D_sideband->FindBin(start_n[3]),hist_D_sideband->GetNbinsX()+1);
+						// cout << "#5 BIN " << start_n[3] << endl;
                }
 					if (bkg_n[4]!=0) max_n[4]=pow(sig_n[4],2)/bkg_n[4];
 
@@ -295,7 +332,7 @@ std::vector<double> significance_scans3;
 					int minevt_cond = 0; //condition is false
 					for (int index=0;index<NCAT;index++){ //start from 1 for tth  only when optimizing separately
 						max_sum+=max_n[index];
-						minevt_cond_n[index] = (bkg_sideband_n[index]>minevents && (data_sideband_n[index] > 4));
+						minevt_cond_n[index] = (bkg_sideband_n[index]>=minevents && (data_sideband_n[index] >= 4));
 					}
 					minevt_cond = std::accumulate(minevt_cond_n, minevt_cond_n + NCAT, 0); // minevt_cond_n+1 for tth only when optimizing separately
 					if (((max_sum)>=max) && (minevt_cond==(NCAT))) { //NCAT-1 for tth
@@ -396,6 +433,8 @@ std::vector<double> significance_scans3;
 	frame2->SetMaximum(ymax);
 	frame2->Draw();
 
+	// hist_B2->GetXaxis()->SetRange(0,1);
+	// hist_S2->GetXaxis()->SetRange(0,1);
 	hist_B2->Draw("HISTsame");
 	hist_S2->Draw("HISTsame");
 //	hist_B_cut_tth->Draw("HISTsame");
