@@ -25,94 +25,131 @@ using namespace std;
 
 
 void optimize_cats(const int NCAT) {
-	TString path="/eos/user/t/twamorka/2May2020_CommonBDTPairing/CatTrain_phoMVA/";
+	TString path="/eos/user/t/twamorka/h4g_fullRun2/noSystematics/";
+	TString outpath="/eos/user/t/twamorka/www/H4Gamma/Jul2020_TaggerPlots/CatBDT_ReducedSignal/";
+	// TString path="/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2017/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2_diffVars/";
+	// TString outpath="/eos/user/t/twamorka/www/H4Gamma/Jul2020_TaggerPlots/CatBDT_ReducedSignal/2017/CatMVA_PhoMVA_KinVars_v2_diffVars/";
+	// TString outpath="/eos/user/t/twamorka/www/H4Gamma/Jul2020_TaggerPlots/CatBDT_ReducedSignal/2018/CatMVA_PhoMVA_KinVars/";
+	// TString outpath = "/afs/cern.ch/work/t/twamorka/Scripts/forH4G/Optimization/";
 
 	// const int NCAT=5; //4 for MVA and MX, 2 for tth
 
-/*	TString what_to_opt = "MVAOutputTransformed";
-	double xmin = 0.;
-	double xmax = 1.;
-	Double_t precision=0.01;  //0.01 for MVA, 5 for MX
-*/
 
-	TString what_to_opt = "bdtTransformed";
+	// TString what_to_opt = "bdtTransformed";
+	// double xmin = 0.0;
+	// double xmax = 1.0;
+	// Double_t precision=0.01;
+	// Double_t nbins= 1000;
+
+	TString what_to_opt = "bdt";
 	double xmin = -1.0;
 	double xmax = 1.0;
-	Double_t precision=0.01;  //0.01 for MVA, 5 for MX
-
-/*
-	TString what_to_opt = "ttHScore";
-	double xmin = 0.;
-	double xmax = 1.;
-	Double_t precision=0.02;
-*/
-
+	Double_t precision=0.01;
+	// Double_t precision = 0.003;
 
 	TString Mgg_window = "*((tp_mass>115)&&(tp_mass<135))";
 	TString Mgg_sideband = "*((tp_mass<=115)||(tp_mass>=135))";
-	TString selection_sig = "weight*36*(pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9&& tp_mass > 110 && tp_mass < 180)";
-	TString selection_bg = "(pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9 && tp_mass > 110 && tp_mass < 180 )";
-	TString selection_data = "pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9 && tp_mass > 110 && tp_mass < 180 ";
+	// TString selection_sig = "weight*36*(pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9&& tp_mass > 110 && tp_mass < 180)";
+	// TString selection_bg = "(pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9 && tp_mass > 110 && tp_mass < 180 )";
+	// TString selection_data = "pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9 && pho4_MVA > -0.9 && tp_mass > 110 && tp_mass < 180 ";
+	TString selection_sig = "weight*36*(pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1 && pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9  && pho4_MVA > -0.9 &&tp_mass > 110 && tp_mass < 180)";
+	TString selection_bg = "(pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1&& pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9&& pho4_MVA > -0.9 && tp_mass > 110  && tp_mass < 180 )";
+	TString selection_data = "pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1 && pho1_MVA > -0.9 && pho2_MVA > -0.9 && pho3_MVA > -0.9&& pho4_MVA > -0.9 && tp_mass > 110 && tp_mass < 180 ";
 
 
 	// TString subcategory = "*((MVAOutputT ransformed>0.3)&&(MVAOutputTransformed<.54))*(ttHScore>0.2)";
-	TString outstr = "_MVA2";
-	double minevents = 6; //
+	TString outstr = "";
+	double minevents = 8; //
 
-	TString date = "12_05_2020_test";
+	TString date = "23_07_2020";
 	TString s; TString sel;
+	TString outnameborder = s.Format("output_SB_%s_cat%d_mineventborders%.0f_borders",what_to_opt.Data(),NCAT,minevents);
 	TString outname = s.Format("output_SB_%s_cat%d_minevents%.0f_%s",what_to_opt.Data(),NCAT,minevents,outstr.Data());
 
 
+
 	TChain *file_s =  new TChain("file_s");
-	file_s->Add(path+"signal_m_60_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
-	file_s->Add(path+"signal_m_55_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_55_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
-	file_s->Add(path+"signal_m_50_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_50_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
-	file_s->Add(path+"signal_m_45_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_45_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
-	file_s->Add(path+"signal_m_40_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_40_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
-	file_s->Add(path+"signal_m_35_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_35_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
-	file_s->Add(path+"signal_m_30_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_30_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
-	file_s->Add(path+"signal_m_25_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_25_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
-	file_s->Add(path+"signal_m_20_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_20_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
-	file_s->Add(path+"signal_m_15_transformedMVA.root/SUSYGluGluToHToAA_AToGG_M_15_TuneCUETP8M1_13TeV_pythia8_13TeV_4photons");
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2018/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_60.root/HAHMHToAA_AToGG_MA_60GeV_TuneCP5_PSweights_13TeV_madgraph_pythia8_13TeV_H4GTag_0");
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2018/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_45.root/HAHMHToAA_AToGG_MA_45GeV_TuneCP5_PSweights_13TeV_madgraph_pythia8_13TeV_H4GTag_0");
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2018/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_35.root/HAHMHToAA_AToGG_MA_35GeV_TuneCP5_PSweights_13TeV_madgraph_pythia8_13TeV_H4GTag_0");
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2018/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_25.root/HAHMHToAA_AToGG_MA_25GeV_TuneCP5_PSweights_13TeV_madgraph_pythia8_13TeV_H4GTag_0");
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2018/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_15.root/HAHMHToAA_AToGG_MA_15GeV_TuneCP5_PSweights_13TeV_madgraph_pythia8_13TeV_H4GTag_0");
+
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2017/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_60.root/SUSYGluGluToHToAA_AToGG_M_60_TuneCP5_13TeV_pythia8_13TeV_H4GTag_0");
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2017/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_45.root/SUSYGluGluToHToAA_AToGG_M_45_TuneCP5_13TeV_pythia8_13TeV_H4GTag_0");
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2017/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_35.root/SUSYGluGluToHToAA_AToGG_M_35_TuneCP5_13TeV_pythia8_13TeV_H4GTag_0");
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2017/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_25.root/SUSYGluGluToHToAA_AToGG_M_25_TuneCP5_13TeV_pythia8_13TeV_H4GTag_0");
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2017/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_15.root/SUSYGluGluToHToAA_AToGG_M_15_TuneCP5_13TeV_pythia8_13TeV_H4GTag_0");
+
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2016/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_60.root/SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_H4GTag_0");
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2016/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_45.root/SUSYGluGluToHToAA_AToGG_M_45_TuneCUETP8M1_13TeV_pythia8_13TeV_H4GTag_0");
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2016/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_35.root/SUSYGluGluToHToAA_AToGG_M_35_TuneCUETP8M1_13TeV_pythia8_13TeV_H4GTag_0");
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2016/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_25.root/SUSYGluGluToHToAA_AToGG_M_25_TuneCUETP8M1_13TeV_pythia8_13TeV_H4GTag_0");
+	file_s->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2016/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/signal_m_15.root/SUSYGluGluToHToAA_AToGG_M_15_TuneCUETP8M1_13TeV_pythia8_13TeV_H4GTag_0");
+
 
 	TH1F *hist_S = new TH1F("hist_S","hist_S",int((xmax-xmin)/precision),xmin,xmax);
+	// TH1F *hist_S = new TH1F("hist_S","hist_S",int(nbins),xmin,xmax);
+
    s.Form("%s>>hist_S",what_to_opt.Data());
    sel.Form("%s",(selection_sig+Mgg_window).Data());
 	file_s->Draw(s,sel,"goff");
 
-	TFile *file_bg =  TFile::Open(path+"data_mix_transformedMVA.root");
-	TTree *tree_bg = (TTree*)file_bg->Get("Data_13TeV_4photons");
+	TChain *tree_bg =  new TChain("tree_bg");
+	tree_bg->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2018/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/data_mix.root/Data_13TeV_H4GTag_0");
+	tree_bg->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2017/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/data_mix.root/Data_13TeV_H4GTag_0");
+	tree_bg->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2016/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/data_mix.root/Data_13TeV_H4GTag_0");
 
-	TFile *file_data =  TFile::Open(path+"data_all_transformedMVA.root");
-	TTree *tree_data = (TTree*)file_data->Get("Data_13TeV_4photons");
+	TChain *tree_data =  new TChain("tree_data");
+	tree_data->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2018/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/data_2018.root/Data_13TeV_H4GTag_0");
+	tree_data->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2017/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/data_2017.root/Data_13TeV_H4GTag_0");
+	tree_data->Add("/eos/user/t/twamorka/h4g_fullRun2/noSystematics/2016/hadd/ReducedSignal_CatMVA/CatMVA_PhoMVA_KinVars_v2/data_2016.root/Data_13TeV_H4GTag_0");
+
+
+
+
+	// TFile *file_bg =  TFile::Open(path+"data_mix.root");
+	// TTree *tree_bg = (TTree*)file_bg->Get("Data_13TeV_H4GTag_0");
+
+	// TFile *file_data =  TFile::Open(path+"data_2017.root");
+	// TTree *tree_data = (TTree*)file_data->Get("Data_13TeV_H4GTag_0");
 
 	// Get the scale factor; the data mix needs to be scaled by this factor to match data sideband
-	TH1F* hist_datamix = new TH1F("hist_datamix","hist_datamix",100,-1,1);
-	TH1F* hist_data = new TH1F("hist_data","hist_data",100,-1,1);
+	// TH1F* hist_datamix = new TH1F("hist_datamix","hist_datamix",100,-1,1);
+	// TH1F* hist_data = new TH1F("hist_data","hist_data",100,-1,1);
+	TH1F* hist_datamix_sideband = new TH1F("hist_datamix_sideband","hist_datamix_sideband",100,-1,1);
+	TH1F* hist_data_sideband = new TH1F("hist_data_sideband","hist_data_sideband",100,-1,1);
 
-	s.Form("pho1_MVA >> hist_datamix");
+	s.Form("pho1_MVA >> hist_datamix_sideband");
 	sel.Form("%s",(selection_bg+Mgg_sideband).Data());
 	tree_bg->Draw(s,sel,"goff");
 
 
-	s.Form("pho1_MVA >> hist_data");
+	s.Form("pho1_MVA >> hist_data_sideband");
 	sel.Form("%s",(selection_data+Mgg_sideband).Data());
 	tree_data->Draw(s,sel,"goff");
 
-	cout << "Background sideband Integral: " << hist_datamix->Integral() << endl;
-	cout << "Data sideband Integral: " << hist_data->Integral() << endl;
+	cout << "Background sideband Integral: " << hist_datamix_sideband->Integral() << endl;
+	cout << "Data sideband Integral: " << hist_data_sideband->Integral() << endl;
 	double scale = 1;
-	scale = hist_data->Integral() / hist_datamix->Integral();
-	cout << "Scale: " << scale << endl;
+	scale = hist_data_sideband->Integral() / hist_datamix_sideband->Integral();
+	// scale = hist_data->Integral() ;
+	// cout << "Scale: " << scale << endl;
 
-	TH1F *hist_B = new TH1F("hist_B","hist_B",int((xmax-xmin)/precision),xmin,xmax); //200 bins
+	TH1F *hist_B = new TH1F("hist_B","hist_B",int((xmax-xmin)/precision),xmin,xmax); //200 bins  -- background signal region
+	// TH1F *hist_B = new TH1F("hist_B","hist_B",int(nbins),xmin,xmax); //200 bins  -- background signal region
+
+
    s.Form("%s>>hist_B",what_to_opt.Data());
    sel.Form("%s",(selection_bg+Mgg_window).Data());
 	tree_bg->Draw(s,sel,"goff");
+	// hist_B->Scale(scale/hist_B->Integral());
 	cout<<"BG integral under Mgg "<<hist_B->Integral()<<endl;
 
-	TH1F *hist_B_sideband = new TH1F("hist_B_sideband","hist_B_sideband",int((xmax-xmin)/precision),xmin,xmax); //200 bins
+	TH1F *hist_B_sideband = new TH1F("hist_B_sideband","hist_B_sideband",int((xmax-xmin)/precision),xmin,xmax); //200 bins -- background sideband region
+	// TH1F *hist_B_sideband = new TH1F("hist_B_sideband","hist_B_sideband",int(nbins),xmin,xmax); //200 bins -- background sideband region
+
+
    s.Form("%s>>hist_B_sideband",what_to_opt.Data());
    sel.Form("%s",(selection_bg+Mgg_sideband).Data());
 	tree_bg->Draw(s,sel,"goff");
@@ -121,7 +158,11 @@ void optimize_cats(const int NCAT) {
 
 
 
-	TH1F *hist_D_sideband = new TH1F("hist_D_sideband","hist_D_sideband",int((xmax-xmin)/precision),xmin,xmax); //200 bins
+	TH1F *hist_D_sideband = new TH1F("hist_D_sideband","hist_D_sideband",int((xmax-xmin)/precision),xmin,xmax); //200 bins -- data sideband region
+	// TH1F *hist_D_sideband = new TH1F("hist_D_sideband","hist_D_sideband",int(nbins),xmin,xmax); //200 bins -- data sideband region
+
+	// TH1F *hist_D_sideband = new TH1F("hist_D_sideband","hist_D_sideband",30,xmin,xmax); //200 bins
+
    s.Form("%s>>hist_D_sideband",what_to_opt.Data());
    sel.Form("%s",(selection_data+Mgg_sideband).Data());
 	tree_data->Draw(s,sel,"goff");
@@ -196,7 +237,7 @@ void optimize_cats(const int NCAT) {
 	leg->SetBorderSize(0);
 	leg->SetTextFont(42);
 	leg->SetTextSize(0.025);
-	leg->AddEntry(hist_S2,"Sig (exp. exclusion)","F");
+	leg->AddEntry(hist_S2,"Sig","F");
 	leg->AddEntry(hist_B2,"BG","F");
 
 
@@ -267,6 +308,7 @@ std::vector<double> significance_scans3;
 		if (1>0) {
 			categories_scans0.push_back(start_n[0]);
 			significance_scans0.push_back(sqrt(max_n[1]));
+			// cout << sqrt(max_n[1]) << endl;
 		}
 
 		do {
@@ -332,7 +374,9 @@ std::vector<double> significance_scans3;
 					int minevt_cond = 0; //condition is false
 					for (int index=0;index<NCAT;index++){ //start from 1 for tth  only when optimizing separately
 						max_sum+=max_n[index];
-						minevt_cond_n[index] = (bkg_sideband_n[index]>=minevents && (data_sideband_n[index] >= 4));
+						// minevt_cond_n[index] = ( (data_sideband_n[index] >= 4));
+						 // minevt_cond_n[index] = (bkg_sideband_n[index]>=minevents );
+						minevt_cond_n[index] = (bkg_sideband_n[index]>=minevents && (data_sideband_n[index] >= 6));
 					}
 					minevt_cond = std::accumulate(minevt_cond_n, minevt_cond_n + NCAT, 0); // minevt_cond_n+1 for tth only when optimizing separately
 					if (((max_sum)>=max) && (minevt_cond==(NCAT))) { //NCAT-1 for tth
@@ -358,9 +402,16 @@ std::vector<double> significance_scans3;
 
 	borders[NCAT] = END;
 
+	ofstream outborder;
+	outborder.open(s.Format("%s%s_fineBinning_combined.txt",path.Data(),outnameborder.Data()));
+	for (int index=0;index<NCAT+1;index++)
+		outborder<<borders[index]<<"\t";
+	outborder<<endl;
+	outborder.close();
+
 
 	ofstream out;
-	out.open(s.Format("output_txt/%s/%s.txt",date.Data(),outname.Data()));
+	out.open(s.Format("%s%s_fineBinning_combined.txt",outpath.Data(),outname.Data()));
 	// out<<"subcategory : "<<subcategory<<endl;
 	out<<"S2/B over all bins, sqrt : "<<max_all<<"  , "<<sqrt(max_all)<<endl;
 	out<<endl;
@@ -400,7 +451,7 @@ std::vector<double> significance_scans3;
 	out.close();
 
   string line;
-  ifstream outfile(s.Format("output_txt/%s/%s.txt",date.Data(),outname.Data()));
+  ifstream outfile(s.Format("%s%s_fineBinning_combined.txt",outpath.Data(),outname.Data()));
   if (outfile.is_open()){
     while ( getline (outfile,line) )
       cout << line << '\n';
@@ -417,13 +468,15 @@ std::vector<double> significance_scans3;
 		lines[index] = new TLine(borders[index+1],ymin,borders[index+1],hist_B2->GetBinContent(hist_B2->FindBin(borders[index+1]))+5);
 		lines[index]->SetLineStyle(9);
 		lines[index]->SetLineColor(1);
-		lines[index]->SetLineWidth(2);
+		lines[index]->SetLineWidth(3);
 	}
 
 	TCanvas *c1 = new TCanvas("Fit","",800,800);
 	c1->SetLogy();
 	c1->cd();
 	TH1F *frame2 = new TH1F("frame2","",50,xmin,xmax);
+
+
 	frame2->GetXaxis()->SetNdivisions(505);
 //	frame2->GetYaxis()->SetRangeUser(80,150);
    frame2->SetStats(0);
@@ -437,7 +490,14 @@ std::vector<double> significance_scans3;
 	// hist_S2->GetXaxis()->SetRange(0,1);
 	hist_B2->Draw("HISTsame");
 	hist_S2->Draw("HISTsame");
-//	hist_B_cut_tth->Draw("HISTsame");
+//	hist_B_cut_tth->Draw("HISTsame")
+  TLatex latex;
+  latex.SetTextSize(0.025);
+  latex.SetTextAlign(13);  //align at top
+	// for (int index=0;index<NCAT;index++)
+		// latex.DrawLatex(-1,100000,std::to_string(sig_yields[index]).c_str());
+  // latex.DrawLatex(-1,100000,"K_{S}");
+	// latex.Draw();
 //	leg->AddEntry(hist_B_cut_tth,"ttH","L");
 
 	gPad->Update();
@@ -450,8 +510,8 @@ std::vector<double> significance_scans3;
 	for (int index=0;index<NCAT-1;index++)
 		lines[index]->Draw("same");
 	gPad->RedrawAxis();
-	c1->Print(s.Format("plots/%s/%s.png",date.Data(),outname.Data()));
-	c1->Print(s.Format("plots/%s/%s.pdf",date.Data(),outname.Data()));
+	c1->Print(s.Format("%s%s_fineBinning_combined.png",outpath.Data(),outname.Data()));
+	c1->Print(s.Format("%s%s_fineBinning_combined.pdf",outpath.Data(),outname.Data()));
 
 
 
@@ -459,8 +519,12 @@ std::vector<double> significance_scans3;
 	double* sign_scan = &significance_scans0[0];
 	int counter = significance_scans0.size();
 	TGraph *gr =new TGraph(counter,cat_scan,sign_scan);
-	ymin = *std::max_element(sign_scan,sign_scan+counter) * 0.5;
+
+	// cout << sign_scan << endl;
+	// cout << "ymin: " << *std::max_element(sign_scan,sign_scan+counter) << endl;
+	ymin = *std::max_element(sign_scan,sign_scan+counter) * 0.01;
 	ymax = *std::max_element(sign_scan,sign_scan+counter) * 1.1;
+	gr->SetMarkerStyle(20);
 	int max_pos = std::distance(sign_scan, std::max_element(sign_scan,sign_scan+counter));
 
 	TCanvas *c2 = new TCanvas("B","",800,800);
@@ -483,8 +547,8 @@ std::vector<double> significance_scans3;
 	// pave22.Draw("same");
 	// pave33.Draw("same");
 	gPad->RedrawAxis();
-	c2->Print(s.Format("plots/%s/significance_%s.pdf",date.Data(),outname.Data()));
-	c2->Print(s.Format("plots/%s/significance_%s.png",date.Data(),outname.Data()));
+	c2->Print(s.Format("%ssignificance_%s_fineBinning_combined.pdf",outpath.Data(),outname.Data()));
+	c2->Print(s.Format("%ssignificance_%s_fineBinning_combined.png",outpath.Data(),outname.Data()));
 	cout<<counter<<endl;
 
 // return 0;
