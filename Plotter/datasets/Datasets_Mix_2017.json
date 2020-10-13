@@ -1,0 +1,32 @@
+{
+   "data":"data_2017.root",
+   "signal":[
+
+         {
+            "name":"Pseudoscalar",
+            "treeName_2017":"tagsDumper/trees/SUSYGluGluToHToAA_AToGG_M_60_TuneCP5_13TeV_pythia8_13TeV_H4GTag_0",
+            "legend":"m_{a} = 60 GeV",
+            "color":300,
+            "style":1,
+            "file_2017":"signal_m_60_2017.root"
+         }
+
+   ],
+
+     "background":{
+       "Mixed Photons":{
+          "position":1,
+          "legend":"Event mixing",
+          "color":"#2B74BA",
+          "style":1,
+          "files":[
+             {
+                "file":"data_mix_2017_transformedMVA.root",
+                "treeName":"Data_13TeV_H4GTag_0",
+                "cut":"1>0"
+             }
+
+          ]
+       }
+     }
+     }

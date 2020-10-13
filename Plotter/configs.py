@@ -17,7 +17,7 @@ doreweight = True
 
 
 doDataDriven = True
-year = 1 ## year == 1 refers to full run 2
+year = 2017 ## year == 1 refers to full run 2
 isPhoCR = False
 hideData = False
 lumi = 1
@@ -26,44 +26,25 @@ doPUweight = False
 doSignal = False
 
 file_json = ''
-dirName = ''
-bkgLocation = ''
-dataLocation = ''
-signalLocation = ''
 
-file_json = 'datasets/Datasets_Mix_FullRun2.json'
-# file_json = 'datasets/Datasets_Mix_2018.json'
-# lumi_2016 = 35.9
-# lumi_2017 = 41.5
-# lumi_2018 = 54.38
-
-# dirName = '/eos/user/t/twamorka/www/H4Gamma/Jul2020_TaggerPlots/CatBDT_ReducedSignal/FullRun2/CatMVA_PhoMVA_KinVars_v2/data_mix_nopreselectionorweightapplied/'
-# dirName = '/eos/home-t/twamorka/www/H4Gamma/withSystematics/1Sep2020/Run2/m15/'
-# dirName = '/eos/home-t/twamorka/www/H4Gamma/withSystematics/1Sep2020/Run2/FullRun2_Datamix_reweight/'
-# dirName = '/eos/home-t/twamorka/www/H4Gamma/withSystematics/1Sep2020/Run2/2018/'
-# SignalLocation = '/eos/user/t/twamorka/h4g_fullRun2/withSystematics/fullRun2/1Sep2020/Run2/m15/'
-# # BkgLocation = '/eos/user/t/twamorka/h4g_fullRun2/withSystematics/fullRun2/1Sep2020/Run2/m15/'
-# BkgLocation = '/eos/user/t/twamorka/h4g_fullRun2/withSystematics/2016/hadd/'
-# DataLocation = '/eos/user/t/twamorka/h4g_fullRun2/withSystematics/fullRun2/1Sep2020/Run2/m15/'
 dirName = '/eos/user/t/twamorka/www/H4G_Training_CombinedMass_PerYear/LowStatDataMix/'
-# SignalLocation = '/eos/user/t/twamorka/h4g_fullRun2/withSystematics/fullRun2/2Sep2020_CombinedMassTraining_peryear/'
-# BkgLocation = '/eos/user/t/twamorka/h4g_fullRun2/withSystematics/fullRun2/2Sep2020_CombinedMassTraining_peryear/'
-# DataLocation = '/eos/user/t/twamorka/h4g_fullRun2/withSystematics/fullRun2/2Sep2020_CombinedMassTraining_peryear/'
-# SignalLocation = '/eos/user/t/twamorka/h4g_fullRun2/withSystematics/Training_CombinedMass_GenInfor_PerYear/'
-# BkgLocation = '/eos/user/t/twamorka/h4g_fullRun2/withSystematics/Training_CombinedMass_GenInfor_PerYear/'
-# DataLocation = '/eos/user/t/twamorka/h4g_fullRun2/withSystematics/Training_CombinedMass_GenInfor_PerYear/'
+
 SignalLocation = '/eos/user/t/twamorka/h4g_fullRun2/withSystematics/Training_CombinedMass_PerYear/'
 BkgLocation = '/eos/user/t/twamorka/h4g_fullRun2/withSystematics/Training_CombinedMass_PerYear/'
 DataLocation = '/eos/user/t/twamorka/h4g_fullRun2/withSystematics/Training_CombinedMass_PerYear/'
 
 if (year==2016):
    lumi = 35.9
+   file_json = 'datasets/Datasets_Mix_2016.json'
 elif (year==2017):
     lumi = 41.5
+    file_json = 'datasets/Datasets_Mix_2017.json'
 elif (year==2018):
     lumi = 54.38
+    file_json = 'datasets/Datasets_Mix_2018.json'
 elif (year==1):
     lumi = 35.9+41.5+54.38
+    file_json = 'datasets/Datasets_Mix_FullRun2.json'
 signalFactor = 1
 
 # print year
@@ -109,8 +90,8 @@ plots.append(["pho2_eta","pho2_eta","#gamma2 #eta",nbin,-2.5,2.5])
 plots.append(["pho3_eta","pho3_eta","#gamma3 #eta",nbin,-2.5,2.5])
 plots.append(["pho4_eta","pho4_eta","#gamma4 #eta",nbin,-2.5,2.5])
 
-plots.append(["bdt_datamixSigRegion","bdt","BDT",nbin,-1,1])
-plots.append(["bdtTransformed_datamixSigRegion","bdtTransformed","Transformed MVA",nbin,0,1])
+# plots.append(["bdt_datamixSigRegion","bdt","BDT",nbin,-1,1])
+# plots.append(["bdtTransformed_datamixSigRegion","bdtTransformed","Transformed MVA",nbin,0,1])
 
 
 #cuts to be used to make plots
