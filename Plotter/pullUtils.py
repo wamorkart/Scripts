@@ -200,14 +200,14 @@ def doPull(bkg, data, stack):
 	# getRatio_pull(datas,bkg)
 	pullError = TGraphErrors(len(pX), pX, pEY, pEX, pE) #bars
 	Largest = ceil(largest*1.2)
-	# pullError.SetMaximum(1.99)
-	# pullError.SetMinimum(0.01)
-	# pullData.SetMaximum(1.99)
-	# pullData.SetMinimum(0.01)
-	pullError.SetMaximum(5)
-	pullError.SetMinimum(0.001)
-	pullData.SetMaximum(5)
-	pullData.SetMinimum(0.001)
+	pullError.SetMaximum(1.99)
+	pullError.SetMinimum(0.01)
+	pullData.SetMaximum(1.99)
+	pullData.SetMinimum(0.01)
+	#pullError.SetMaximum(5)
+	#pullError.SetMinimum(0.001)
+	#pullData.SetMaximum(5)
+	#pullData.SetMinimum(0.001)
 	pullError.SetTitle("")
 	pullData.SetTitle("")
 	pullData.SetMarkerColor(kBlack)
@@ -290,14 +290,14 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	tlatex.DrawLatex(0.18, 0.91, "Work in progress")
 	# tlatex.DrawLatex(0.18, 0.91, "Preliminary")
 	tlatex.SetTextFont(43)
-#	tlatex.SetTextSize(23)
+	tlatex.SetTextSize(23)
 #	tlatex.DrawLatex(0.65, 0.91,"L = 2.70 fb^{-1} (13 TeV)")
 	# Lumi = "" + str(lumi) + " pb^{-1} (13 TeV)"#, "+ year + ")"
 	# if lumi > 1000:
 		# llumi = float(lumi)/1000.
-		# Lumi = "" + str(llumi) + " fb^{-1} (13 TeV)"#, "+year+")"
-#	tlatex.DrawLatex(0.14, 0.82, Lumi)
-	# tlatex.SetTextAlign(31)
+	Lumi = "" + str(lumi) + " fb^{-1} (13 TeV)"#, "+year+")"
+	# tlatex.DrawLatex(0.14, 0.82, Lumi)
+	tlatex.SetTextAlign(31)
 	# tlatex.DrawLatex(0.9, 0.91, Lumi)
 	# tlatex.SetTextAlign(11)
 
@@ -419,11 +419,11 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	# Lumi = "L = " + str(lumi) + " pb^{-1} (13 TeV)"#, "+ year + ")"
 	# if lumi > 1000:
 		# llumi = float(lumi)/1000.
-		# Lumi = "L = " + str(llumi) + " fb^{-1} (13 TeV)"#, "+year+")"
-#	tlatex.DrawLatex(0.14, 0.82, Lumi)
-	# tlatex.SetTextAlign(31)
-	# tlatex.DrawLatex(0.9, 0.91, Lumi)
-	# tlatex.SetTextAlign(11)
+	Lumi = "L = " + str(lumi) + " fb^{-1} (13 TeV)" #+ "(" + str(year) +")"
+	# tlatex.DrawLatex(0.14, 0.82, Lumi)
+	tlatex.SetTextAlign(31)
+	tlatex.DrawLatex(0.9, 0.91, Lumi)
+	tlatex.SetTextAlign(11)
 
 
 	for leg in legend:
