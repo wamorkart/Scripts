@@ -5,6 +5,30 @@ from array import array
 from MyCMSStyle import *
 
 # c1 = TCanvas('c1', 'c1', 800, 700)
+
+# def test():
+	# return 1
+def getSig(hist_B, hist_S):
+
+	c1 = TCanvas('c1', 'c1', 800, 700)
+	graph = TGraph(hist_B)
+	npoint = 0
+	for i in xrange(0, hist_B.GetNbinsX()):
+		Bin = i+1
+		b1 = hist_B.GetBinContent(Bin)
+		b2 = hist_S.GetBinContent(Bin)
+
+		if b1 == 0 or b2 == 0:
+			continue
+
+		ratio = b2/sqrt(b1)
+		print ratio
+		graph.SetPoint(npoint, hist_B.GetBinCenter(Bin), ratio)
+		npoint += 1
+	graph.Set(npoint)
+	# graph.Draw()
+
+        return graph
 def getRatio(hist1, hist2):
 	c1 = TCanvas('c1', 'c1', 800, 700)
         ratio_list = []
@@ -21,7 +45,7 @@ def getRatio(hist1, hist2):
 			continue
 
 		ratio = b1/b2
-                #print "ratio: ", ratio
+                # print "b1: ", b1, " b2: ", b2 , " ratio: ", ratio
 		chi2_hist += ((b1-b2)*(b1-b2))/b2
 		chi2_ratio += (ratio - 1)*(ratio-1)
                 #print ((b1-b2)*(b1-b2))/b2, "  " , (ratio - 1)*(ratio-1)
@@ -51,43 +75,6 @@ def getRatio(hist1, hist2):
 	#return graph
         return ratio_list
 
-# def getRatio_pull(hist1, hist2):
-# 	c1 = TCanvas('c1', 'c1', 800, 700)
-# 	graph = TGraph(hist1)
-# 	npoint = 0
-# 	for i in xrange(0, hist1.GetNbinsX()):
-# 		Bin = i+1
-# 		b1 = hist1.GetBinContent(Bin)
-# 		b2 = hist2.GetBinContent(Bin)
-#
-# 		if b1 == 0 or b2 == 0:
-# 			continue
-#
-# 		# ratio = b1/b2
-# 		ratio = (b1-b2)/b2
-# 		print "ratio_withpull ", ratio
-# 		# print "ratio", ratio
-#
-# 		# b1sq = b1*b1
-# 		# b2sq = b2*b2
-# 		#
-# 		# e1sq_up = hist1.GetBinErrorUp(Bin)*hist1.GetBinErrorUp(Bin)
-# 		# e2sq_up = hist2.GetBinErrorUp(Bin)*hist2.GetBinErrorUp(Bin)
-# 		#
-# 		# e1sq_low = hist1.GetBinErrorLow(Bin)*hist1.GetBinErrorLow(Bin)
-# 		# e2sq_low = hist2.GetBinErrorLow(Bin)*hist2.GetBinErrorLow(Bin)
-# 		#
-# 		# error_up = sqrt((e1sq_up * b2sq + e2sq_up * b1sq) / (b2sq * b2sq))
-# 		# error_low = sqrt((e1sq_low * b2sq + e2sq_low * b1sq) / (b2sq * b2sq))
-#
-# 		graph.SetPoint(npoint, hist1.GetBinCenter(Bin), ratio)
-# 		# graph.SetPointError(npoint, 0, 0, error_low, error_up)
-# 		npoint += 1
-# 	graph.Set(npoint)
-# 	graph.Draw()
-# 	# c1.SaveAs("ratio.pdf")
-# 	return graph
-#
 # The following function was copied (with permission) from the Latino's GitHub:
 # https://github.com/latinos/LatinoAnalysis/blob/master/ShapeAnalysis/scripts/mkPlot.py#L437
 # Thanks Andrea!
@@ -226,12 +213,12 @@ def doPull(bkg, data, stack):
 	#print LowEdge, UpEdge
 	return pullAll
 
-def SaveNoPull(data, bkg, fileName):
-	c0 = TCanvas("c0", "c0", 1000, 800)
-	c0.cd()
-	data.Draw()
-	bkg.Draw('histsame')
-	c0.SaveAs("sample.png")
+# def SaveNoPull(data, bkg, fileName):
+# 	c0 = TCanvas("c0", "c0", 1000, 800)
+# 	c0.cd()
+# 	data.Draw()
+# 	bkg.Draw('histsame')
+# 	c0.SaveAs("sample.png")
 
 
 
@@ -322,18 +309,66 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 
 	ratio = 0.2
 	epsilon = 0.0
+	# Significance = TGraph()
+
+	# for h in signals:
+		# h[0].Draw("same hist")
+		# print "[SIGNAL INTEGRAL]: ", h[0].Integral()
+	# for s in signals:
+		# print s[0]
+	Significance = getSig(SUM, signals[0][0])
+	Significance.GetXaxis().SetLabelFont(Font)
+	Significance.GetXaxis().SetLabelSize(labelSize)
+	Significance.GetXaxis().SetLabelOffset(0.01)
+
+	Significance.GetXaxis().SetTitle(varName)
+	Significance.GetXaxis().SetTitleFont(Font)
+	Significance.GetXaxis().SetTitleSize(titleSize)
+	Significance.GetXaxis().SetTitleOffset(5)
+	Significance.GetXaxis().SetLabelOffset(0.05)
+	Significance.GetXaxis().SetNdivisions(515)
+	Significance.GetXaxis().SetTickLength(0.15)
+
+		# pullE.GetYaxis().SetTitle("Data/MC")
+	Significance.GetYaxis().SetTitle("S/sqrt(B)")
+	Significance.SetMarkerStyle(20)
+	Significance.SetMarkerColor(kBlack)
+	Significance.GetYaxis().SetTitleFont(Font)
+	Significance.GetYaxis().SetTitleSize(18)
+	Significance.GetYaxis().SetTitleOffset(1.5)
+	Significance.GetYaxis().CenterTitle()
+	Significance.GetYaxis().SetLabelFont(Font)
+	Significance.GetYaxis().SetLabelSize(15)
+
+	Significance.GetYaxis().SetNdivisions(504)
+	Significance.GetXaxis().SetRangeUser(bkg.GetHistogram().GetXaxis().GetXmin(), bkg.GetHistogram().GetXaxis().GetXmax())
+	x = Double(0.)
+        y = Double(0.)
+        for i in range(1, Significance.GetN()):
+            Significance.GetPoint(i, x, y)
+            print "================="
+	    print x, y
 	c1 = TCanvas("c2", "c2", 900, 800)
 	SetOwnership(c1,False) #If I don't put this, I get memory leak problems...
 	p1 = TPad("pad1","pad1", 0, float(ratio - epsilon), 1, 1)
 	SetOwnership(p1,False)
 	p1.SetBottomMargin(epsilon)
 	p2 = TPad("pad2","pad2",0,0,1,float(ratio*(1-epsilon)) )
+	print "float(ratio*(1-epsilon))" , float(ratio*(1-epsilon))
 	SetOwnership(p2,False)
 	p2.SetFillColor(0)
 	p2.SetFillStyle(0)
 	p2.SetTopMargin(0.0)
 	p2.SetBottomMargin(0.35)
 	p2.SetGridy()
+	p3 = TPad("pad3","pad3",0,0.05,1,0.1 )
+	SetOwnership(p3,False)
+	p3.SetFillColor(0)
+	p3.SetFillStyle(0)
+	p3.SetTopMargin(0.0)
+	p3.SetBottomMargin(0.35)
+	p3.SetGridy()
+
 	p1.cd()
 	bkg.Draw('hist')
 	bkg.SetTitle("")
@@ -385,6 +420,40 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 
 	pullE.GetYaxis().SetNdivisions(504)
 	pullE.GetXaxis().SetRangeUser(bkg.GetHistogram().GetXaxis().GetXmin(), bkg.GetHistogram().GetXaxis().GetXmax())
+
+	# for h in signals:
+	# 	# h[0].Draw("same hist")
+	# 	# print "[SIGNAL INTEGRAL]: ", h[0].Integral()
+	# 	Significance = getSig(SUM, h[0])
+		# print Significance
+		# Significance.GetXaxis().SetLabelFont(Font)
+		# Significance.GetXaxis().SetLabelSize(labelSize)
+		# Significance.GetXaxis().SetLabelOffset(0.01)
+		#
+		# Significance.GetXaxis().SetTitle(varName)
+		# Significance.GetXaxis().SetTitleFont(Font)
+		# Significance.GetXaxis().SetTitleSize(titleSize)
+		# Significance.GetXaxis().SetTitleOffset(5)
+		# Significance.GetXaxis().SetLabelOffset(0.05)
+		# Significance.GetXaxis().SetNdivisions(515)
+		# Significance.GetXaxis().SetTickLength(0.15)
+		#
+		# # pullE.GetYaxis().SetTitle("Data/MC")
+		# Significance.GetYaxis().SetTitle("MC/Data")
+		# Significance.SetMarkerStyle(20)
+		# Significance.SetMarkerColor(kBlack)
+		# Significance.GetYaxis().SetTitleFont(Font)
+		# Significance.GetYaxis().SetTitleSize(18)
+		# Significance.GetYaxis().SetTitleOffset(1.5)
+		# Significance.GetYaxis().CenterTitle()
+		# Significance.GetYaxis().SetLabelFont(Font)
+		# Significance.GetYaxis().SetLabelSize(15)
+		#
+		# Significance.GetYaxis().SetNdivisions(504)
+		# Significance.GetXaxis().SetRangeUser(bkg.GetHistogram().GetXaxis().GetXmin(), bkg.GetHistogram().GetXaxis().GetXmax())
+		#
+		# print Significance
+
 	### Fin
 
 	p1.Update()
@@ -413,8 +482,8 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	tlatex.DrawLatex(0.18, 0.91, "Work in Progress")
        	tlatex.SetTextFont(43)
 	tlatex.SetTextSize(23)
-        #tlatex.DrawLatex(0.13, 0.78, "#chi^{2}(Ratio) = " +str(round(chi2_ratio,3)))
-        #tlatex.DrawLatex(0.13, 0.73, "#chi^{2}(Hist) = " +str(round(chi2_hist,3)))
+        tlatex.DrawLatex(0.13, 0.78, "#chi^{2}(Ratio) = " +str(round(chi2_ratio,3)))
+        tlatex.DrawLatex(0.13, 0.73, "#chi^{2}(Hist) = " +str(round(chi2_hist,3)))
 #	tlatex.DrawLatex(0.65, 0.91,"L = 2.70 fb^{-1} (13 TeV)")
 	# Lumi = "L = " + str(lumi) + " pb^{-1} (13 TeV)"#, "+ year + ")"
 	# if lumi > 1000:
@@ -432,22 +501,42 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	for h in signals:
 		h[0].Draw("same hist")
 
+
+
+
 	p2.cd()
 #	pullE.GetYaxis().SetNdivisions(4, False)
 	if(hideData==False):
 		pullE.Draw("AF2")
+		print 'HERE I AM'
+		# print Significance
+		# Significance.Draw("E2 same")
+		# p2.Update()
 		# pullE.Draw("E2")
 	if(hideData):
 		pullE.Draw("E2")
+
+
 		# pullE.Draw("A")
 	Line = TLine(bkg.GetHistogram().GetXaxis().GetXmin(), 1., bkg.GetHistogram().GetXaxis().GetXmax(), 1.)
 	Line.SetLineColor(kRed)
 	if(hideData==False):
+		print 'HERE I AM 2'
 		Line.Draw()
 		pullH.Draw("PE0same")
+		# print Significance
+		#Significance.Draw("E2 same")
+		# p2.Update()
 	c1.cd()
 	p2.Draw()
+        c1.cd()
+	p3.cd()
+	Significance.Draw("E2")
+	p3.Draw()
+        c1.SaveAs(dirName+"/test.pdf")
+        c1.cd()
 	p1.Draw()
+        c1.cd()
 	c1.Update()
 	c1.SaveAs(dirName+"/" + fileName + ".pdf")
 	c1.SaveAs(dirName+"/" + fileName + ".png")
@@ -485,12 +574,12 @@ def SavePull(pullH, pullE, LowEdge, UpEdge, dirName):
 	pullE.GetXaxis().SetTitle
 	ca.Update()
 	pullH.Draw("Psame")
-#		pullH.Draw("A*")
-#		pullH.GetXaxis().SetRangeUser(LowEdge,UpEdge)
-#		pullE.Draw("same2")
-#	ca.SaveAs(dirName + "/pull.pdf")
-#	ca.SaveAs(dirName + "/pull.png")
-#	ca.Delete()
+	# 	pullH.Draw("A*")
+	# 	pullH.GetXaxis().SetRangeUser(LowEdge,UpEdge)
+	# 	pullE.Draw("same2")
+	# ca.SaveAs(dirName + "/pull.pdf")
+	# ca.SaveAs(dirName + "/pull.png")
+	# ca.Delete()
 
 def MakeLegend(HistList, DataHist, lumi, Signals, SUM):
 	newList = []
