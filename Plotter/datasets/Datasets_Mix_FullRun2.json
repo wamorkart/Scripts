@@ -1,18 +1,20 @@
 {
-   "data":"data_Run2_transformedMVA.root",
+   "data_2016":"data_60_2016.root",
+   "data_2017":"data_60_2017.root",
+   "data_2018":"data_60_2018.root",
    "signal":[
 
          {
             "name":"Pseudoscalar",
-            "treeName_2016":"SUSYGluGluToHToAA_AToGG_M_15_TuneCUETP8M1_13TeV_pythia8_13TeV_H4GTag_0",
-            "treeName_2017":"SUSYGluGluToHToAA_AToGG_M_15_TuneCP5_13TeV_pythia8_13TeV_H4GTag_0",
-            "treeName_2018":"HAHMHToAA_AToGG_MA_15GeV_TuneCP5_PSweights_13TeV_madgraph_pythia8_13TeV_H4GTag_0",
-            "legend":"m_{a} = 15 GeV",
+            "treeName_2016":"SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_H4GTag_0",
+            "treeName_2017":"SUSYGluGluToHToAA_AToGG_M_60_TuneCP5_13TeV_pythia8_13TeV_H4GTag_0",
+            "treeName_2018":"HAHMHToAA_AToGG_MA_60GeV_TuneCP5_PSweights_13TeV_madgraph_pythia8_13TeV_H4GTag_0",
+            "legend":"m_{a} = 60 GeV",
             "color":300,
             "style":1,
-            "file_2016":"signal_m_15_2016_transformedMVA.root",
-            "file_2017":"signal_m_15_2017_transformedMVA.root",
-            "file_2018":"signal_m_15_2018_transformedMVA.root"
+            "file_2016":"signal_m_60_2016.root",
+            "file_2017":"signal_m_60_2017.root",
+            "file_2018":"signal_m_60_2018.root"
 
          }
 
@@ -27,8 +29,12 @@
           "style":1,
           "files":[
              {
-                "file":"data_mix_Run2_transformedMVA.root",
-                "treeName":"Data_13TeV_H4GTag_0",
+                "file_2016":"data_mix_weight_PhoMVA_60_2016.root",
+                "treeName_2016":"Data_13TeV_H4GTag_0",
+                "file_2017":"data_mix_weight_PhoMVA_60_2017.root",
+                "treeName_2017":"Data_13TeV_H4GTag_0",
+                "file_2018":"data_mix_weight_PhoMVA_60_2018.root",
+                "treeName_2018":"Data_13TeV_H4GTag_0",
                 "cut":"1>0"
              }
 
