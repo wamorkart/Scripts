@@ -139,6 +139,9 @@ if __name__ == '__main__':
     sPhos_SCEta = []
     sPhos_PSV = []
     sPhos_EV = []
+    sPhos_pfPhoIso = []
+    sPhos_trkSumPt = []
+    sPhos_full5x5_iEta = []
     pho1_vec = []
     pho2_vec = []
     pho3_vec = []
@@ -156,6 +159,9 @@ if __name__ == '__main__':
       name_SCEta = "pho" + str(int(iphoton [0])) + "_SC_Eta"
       name_PSV = "pho" + str(int(iphoton [0])) + "_pixelseed"
       name_EV = "pho" + str(int(iphoton [0])) + "_electronveto"
+      name_pfPhoIso03 = "pho" + str(int(iphoton [0])) + "_pfPhoIso03"
+      name_trkSumPtHollowConeDR03 = "pho" + str(int(iphoton [0])) + "_trkSumPtHollowConeDR03"
+      name_full5x5_sigmaIetaIeta = "pho" + str(int(iphoton [0])) + "_full5x5_sigmaIetaIeta"
 
       p4.SetPtEtaPhiM( getattr(treeSkimmer, name_pt),  getattr(treeSkimmer, name_eta),    getattr(treeSkimmer, name_phi) , 0 )
       sPhos.append(p4)
@@ -166,13 +172,19 @@ if __name__ == '__main__':
       sPhos_SCEta.append(getattr(treeSkimmer, name_SCEta))
       sPhos_PSV.append(getattr(treeSkimmer, name_PSV))
       sPhos_EV.append(getattr(treeSkimmer,name_EV))
+      sPhos_pfPhoIso.append(getattr(treeSkimmer,name_pfPhoIso03))
+      sPhos_trkSumPt.append(getattr(treeSkimmer,name_trkSumPtHollowConeDR03))
+      sPhos_full5x5_iEta.append(getattr(treeSkimmer,name_full5x5_sigmaIetaIeta))
 
-    pho1_vec.append(sPhos[0])
-    pho1_vec.append(sPhos_full5x5_r9[0])
-    pho1_vec.append(sPhos_chHadIso[0])
-    pho1_vec.append(sPhos_HoE[0])
-    pho1_vec.append(sPhos_SCEta[0])
-    pho1_vec.append(sPhos_PSV[0])
+    pho1_vec.append(sPhos[0]) ##==0
+    pho1_vec.append(sPhos_full5x5_r9[0]) ##==1
+    pho1_vec.append(sPhos_chHadIso[0]) ##==2
+    pho1_vec.append(sPhos_HoE[0]) ##==3
+    pho1_vec.append(sPhos_SCEta[0]) ##==4
+    pho1_vec.append(sPhos_PSV[0]) ##==5
+    pho1_vec.append(sPhos_pfPhoIso[0])  ##==6
+    pho1_vec.append(sPhos_trkSumPt[0]) ##==7
+    pho1_vec.append(sPhos_full5x5_iEta[0]) ##==8
 
     pho2_vec.append(sPhos[1])
     pho2_vec.append(sPhos_full5x5_r9[1])
@@ -180,6 +192,9 @@ if __name__ == '__main__':
     pho2_vec.append(sPhos_HoE[1])
     pho2_vec.append(sPhos_SCEta[1])
     pho2_vec.append(sPhos_PSV[1])
+    pho1_vec.append(sPhos_pfPhoIso[1])
+    pho1_vec.append(sPhos_trkSumPt[1])
+    pho1_vec.append(sPhos_full5x5_iEta[1])
 
     pho3_vec.append(sPhos[2]) ## 0
     pho3_vec.append(sPhos_full5x5_r9[2]) ## 1
@@ -187,6 +202,9 @@ if __name__ == '__main__':
     pho3_vec.append(sPhos_HoE[2]) ## 3
     pho3_vec.append(sPhos_SCEta[2]) ## 4
     pho3_vec.append(sPhos_PSV[2]) ## 5
+    pho1_vec.append(sPhos_pfPhoIso[2])
+    pho1_vec.append(sPhos_trkSumPt[2])
+    pho1_vec.append(sPhos_full5x5_iEta[2])
 
     pho4_vec.append(sPhos[3])
     pho4_vec.append(sPhos_full5x5_r9[3])
@@ -194,6 +212,9 @@ if __name__ == '__main__':
     pho4_vec.append(sPhos_HoE[3])
     pho4_vec.append(sPhos_SCEta[3])
     pho4_vec.append(sPhos_PSV[3])
+    pho1_vec.append(sPhos_pfPhoIso[3])
+    pho1_vec.append(sPhos_trkSumPt[3])
+    pho1_vec.append(sPhos_full5x5_iEta[3])
 
     if (year == "2016"):
         Pho12_presel = treeSkimmer.Preselection_2016(pho1_vec, pho2_vec)
