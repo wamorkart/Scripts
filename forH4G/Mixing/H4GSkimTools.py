@@ -237,6 +237,8 @@ class SkimmedTreeTools:
         getattr(self, b)[0] = getattr(inputTree, b)
         #setattr(self, b + "[0]", getattr(inputTree, b) ) ---> this does not work!!! Remember! Since [0] will not be interpreted as an operation
 
+   ## For each photon a vector is defined this way:
+   ##[p4, Full 5x5 r9, ChHadIso, HOE, SCEta, PSV, pfPhoIso, trkSumPt, full5x5 iEta]
    # def selection_cat1(self,Pho1_vec,Pho2_vec):
    #     isCat1 = False
    #     if ((abs(Pho1_vec[4]) < 2.5 and abs(Pho2_vec[4]) < 2.5 and Pho1_vec[0] > 0.85 && Pho2_vec[0] > 0.85)
