@@ -61,7 +61,10 @@ if doHiggsWindow ==  True:
    Cut_Bkg += "&& tp_mass > 110 && tp_mass < 180"
 
 if doBlind == True:
-	Cut += " && !(tp_mass > 115 && tp_mass < 135) "
+    if doSignalRegion:
+        Cut += "&& (tp_mass > 115 && tp_mass < 135)"
+    else:
+	    Cut += " && !(tp_mass > 115 && tp_mass < 135) "
 
 print "Cut_signal ", Cut_Signal
 Cut_DataDriven = "pho1_pt > 30 && pho2_pt > 18 && pho3_pt > 15 && pho4_pt > 15 && abs(pho1_eta) < 2.5 && abs(pho2_eta) < 2.5 && abs(pho3_eta) < 2.5 && abs(pho4_eta) < 2.5 && (abs(pho1_eta) < 1.4442 || abs(pho1_eta) > 1.566) && (abs(pho2_eta) < 1.4442 || abs(pho2_eta) > 1.566) && (abs(pho3_eta) < 1.4442 || abs(pho3_eta) > 1.566) && (abs(pho4_eta) < 1.4442 || abs(pho4_eta) > 1.566) && pho1_electronveto==1 && pho2_electronveto==1 && pho3_electronveto==1 && pho4_electronveto==1 && tp_mass > 110 && tp_mass < 180 &&  !((tp_mass > 115 && tp_mass < 135))"
@@ -179,12 +182,16 @@ for plot in plots:
     dataName_2016 = plot[0]+"_hist"+"_data_2016"
     dataName_2017 = plot[0]+"_hist"+"_data_2017"
     dataName_2018 = plot[0]+"_hist"+"_data_2018"
+
     modelHist.Clear()
     dataHist = 0
     dataHist = modelHist.Clone(dataName)
     dataHist_2016 = modelHist.Clone(dataName_2016)
     dataHist_2017 = modelHist.Clone(dataName_2017)
     dataHist_2018 = modelHist.Clone(dataName_2018)
+    dataHist_PhoMVA_2016 = TH1F('dataHist_PhoMVA_2016','dataHist_PhoMVA_2016',100,-1.1,1)
+    dataHist_PhoMVA_2017 = TH1F('dataHist_PhoMVA_2017','dataHist_PhoMVA_2017',100,-1.1,1)
+    dataHist_PhoMVA_2018 = TH1F('dataHist_PhoMVA_2018','dataHist_PhoMVA_2018',100,-1.1,1)
 # # #    dataHist.Sumw2()
     data_integral = 1
     data_integral_2016 = 1
@@ -197,23 +204,27 @@ for plot in plots:
 
     if (year==1):
         if datasets['data_2016'] not in Trees:
-            # Trees[datasets['data_2016']] = TChain("tagsDumper/trees/Data_13TeV_H4GTag_0")
-            Trees[datasets['data_2016']] = TChain("Data_13TeV_H4GTag_0")
+            Trees[datasets['data_2016']] = TChain("tagsDumper/trees/Data_13TeV_H4GTag_0")
+            # Trees[datasets['data_2016']] = TChain("Data_13TeV_H4GTag_0")
             Trees[datasets['data_2016']].AddFile(DataLocation+datasets['data_2016'])
             SetOwnership( Trees[datasets['data_2016']], True )
         if datasets['data_2017'] not in Trees:
-            # Trees[datasets['data_2017']] = TChain("tagsDumper/trees/Data_13TeV_H4GTag_0")
-            Trees[datasets['data_2017']] = TChain("Data_13TeV_H4GTag_0")
+            Trees[datasets['data_2017']] = TChain("tagsDumper/trees/Data_13TeV_H4GTag_0")
+            #Trees[datasets['data_2017']] = TChain("Data_13TeV_H4GTag_0")
             Trees[datasets['data_2017']].AddFile(DataLocation+datasets['data_2017'])
             SetOwnership( Trees[datasets['data_2017']], True )
         if datasets['data_2018'] not in Trees:
-            # Trees[datasets['data_2018']] = TChain("tagsDumper/trees/Data_13TeV_H4GTag_0")
-            Trees[datasets['data_2018']] = TChain("Data_13TeV_H4GTag_0")
+            Trees[datasets['data_2018']] = TChain("tagsDumper/trees/Data_13TeV_H4GTag_0")
+            #Trees[datasets['data_2018']] = TChain("Data_13TeV_H4GTag_0")
             Trees[datasets['data_2018']].AddFile(DataLocation+datasets['data_2018'])
             SetOwnership( Trees[datasets['data_2018']], True )
         Trees[datasets['data_2016']].Draw(plot[1]+">>"+dataName_2016, TCut(Cut_data ))
         Trees[datasets['data_2017']].Draw(plot[1]+">>"+dataName_2017, TCut(Cut_data ))
         Trees[datasets['data_2018']].Draw(plot[1]+">>"+dataName_2018, TCut(Cut_data ))
+
+        Trees[datasets['data_2016']].Draw("pho1_MVA>>dataHist_PhoMVA_2016", TCut(Cut_data ))
+        Trees[datasets['data_2017']].Draw("pho1_MVA>>dataHist_PhoMVA_2017", TCut(Cut_data ))
+        Trees[datasets['data_2018']].Draw("pho1_MVA>>dataHist_PhoMVA_2018", TCut(Cut_data ))
 
 
     else:
@@ -231,24 +242,28 @@ for plot in plots:
 
     # Trees[datasets['data']].Draw(plot[1]+">>"+dataName, TCut(Cut_data))
 
-    # data_integral = dataHist.Integral()
+    data_integral = dataHist.Integral()
+    # print data_integral
 
     if (year ==1 ):
-       data_integral_2016 = dataHist_2016.Integral()
-       data_integral_2017 = dataHist_2017.Integral()
-       data_integral_2018 = dataHist_2018.Integral()
+       # data_integral_2016 = dataHist_2016.Integral()
+       # data_integral_2017 = dataHist_2017.Integral()
+       # data_integral_2018 = dataHist_2018.Integral()
+       data_integral_2016 = dataHist_PhoMVA_2016.Integral()
+       data_integral_2017 = dataHist_PhoMVA_2017.Integral()
+       data_integral_2018 = dataHist_PhoMVA_2018.Integral()
        data_integral_run2 = data_integral_2016 + data_integral_2017 + data_integral_2018
        dataHist_2016.Add(dataHist_2017)
        dataHist_2016.Add(dataHist_2018)
 
        dataHist = dataHist_2016.Clone('dataHist_Total')
-
+       # dataHist.SaveAs("Data.root")
 
     print '[data_integral_2016]: ' , data_integral_2016
     print '[data_integral_2017]: ' , data_integral_2017
     print '[data_integral_2018]: ' , data_integral_2018
 
-    print '[data_integral_Run2]: ', dataHist_2016.Integral()
+    # print '[data_integral_Run2]: ', dataHist_2016.Integral()
 
     dataHist.SetMarkerStyle(20)
     dataHist.SetMarkerSize(0.8)
@@ -305,23 +320,30 @@ for plot in plots:
                 thisWeightedCut = ""
                 if (bkgtype == 'mix'):
                     if (doreweight):
-                        thisWeightedCut = "(weight)*(" +Cut_Bkg + "&& "+fi["cut"]  +" && !(tp_mass > 115 && tp_mass < 135)) "+Cut_additional
+                        #thisWeightedCut = "(1)*(" +Cut_Bkg + "&& "+fi["cut"] + Cut_additional+")"
+                        if doSignalRegion:
+                            thisWeightedCut = "(weight)*(" +Cut_Bkg + "&& "+fi["cut"]  +" && (tp_mass > 115 && tp_mass < 135)) "+Cut_additional
+                        else:
+                            thisWeightedCut = "(weight)*(" +Cut_Bkg + "&& "+fi["cut"]  +" && !(tp_mass > 115 && tp_mass < 135)) "+Cut_additional
                     else:
-                        thisWeightedCut = "(1)*(" +Cut_Bkg + "&& "+fi["cut"]  +" && (tp_mass > 115 && tp_mass < 135)) "+Cut_additional
+                        thisWeightedCut = "(1)*(" +Cut_Bkg + "&& "+fi["cut"]  +" && !(tp_mass > 115 && tp_mass < 135)) "+Cut_additional
                 print "Background Cut: ", thisWeightedCut
                 Trees[thisTreeLoc_2016].Draw(plot[1]+">>"+locName_2016, thisWeightedCut)
                 Trees[thisTreeLoc_2017].Draw(plot[1]+">>"+locName_2017, thisWeightedCut)
                 Trees[thisTreeLoc_2018].Draw(plot[1]+">>"+locName_2018, thisWeightedCut)
                 if (Norm == 'DataSB'):
                     locHist_2016.Scale(data_integral_2016/locHist_2016.Integral())
-                    print "locHist_2016.Integral == ", locHist_2016.Integral()
                     locHist_2017.Scale(data_integral_2017/locHist_2017.Integral())
                     locHist_2018.Scale(data_integral_2018/locHist_2018.Integral())
+                    print locHist_2016.Integral()
+                    print locHist_2017.Integral()
+                    print locHist_2018.Integral()
                     locHist_2016.Add(locHist_2017)
                     locHist_2016.Add(locHist_2018)
 
                     print locHist_2016.Integral()
-
+                    # locHist_DataMix = locHist_2016.Clone('locHist_DataMix')
+                    # locHist_DataMix.SaveAs('DataMix.root')
                 elif (Norm == 'Lumi'):
                     locHist_2016.Scale(35.9/locHist_2016.Integral())
                     locHist_2017.Scale(41.5/locHist_2017.Integral())
@@ -355,11 +377,15 @@ for plot in plots:
                 # print "name ", locName
                 locHist = thisHist.Clone(locName)
                 thisWeightedCut = ""
+                print "bkgtype", bkgtype
                 if (bkgtype == 'mix'):
                    if (doreweight):
-                       thisWeightedCut = "(weight)*(" +Cut_Bkg + "&& "+fi["cut"]  +" && !(tp_mass > 115 && tp_mass < 135))"
+                       print "Cut_Bkg", Cut_Bkg
+                       # thisWeightedCut = "(1)*(" +Cut_Bkg + "&& "+fi["cut"]
+                       thisWeightedCut = "(1)*(" +Cut_Bkg + "&& "+fi["cut"]  +" && !(tp_mass > 115 && tp_mass < 135)))"
                    else:
-                       thisWeightedCut = "(1)*(" +Cut_Bkg + "&& "+fi["cut"]  +" && (tp_mass > 115 && tp_mass < 135))"
+                       print "HERE ==========="
+                       thisWeightedCut = "(1)*(" +Cut_Bkg + "&& "+fi["cut"]  +" && !(tp_mass > 115 && tp_mass < 135))"
                 elif (bkgtype == 'vbf'):
                     if 'DataDriven' in locName:
                         print 'Data driven background'
@@ -367,12 +393,14 @@ for plot in plots:
                     else:
                         thisWeightedCut =  "(weight_VBF*weight)*(" +Cut + "&& "+fi["cut"] + "&&" + Cut_MVA  + ")"
                 elif (bkgtype == 'MC'):
-                    thisWeightedCut = "(weight) * (" + Cut + "&&" + fi["cut"] + ")"
+                    thisWeightedCut = "(weight) * (" + Cut + "&&" + fi["cut"] + "))"
 
                 print "Background Cut: ", thisWeightedCut
                 Trees[thisTreeLoc].Draw(plot[1]+">>"+locName, thisWeightedCut)
 
                 # print data_integral
+                print "Bkg integral: " , locHist.Integral()
+                # locHist.Scale(lumi)
 
                 locHist.Scale(data_integral/locHist.Integral())
 
@@ -394,5 +422,4 @@ for plot in plots:
 
 dummyTFile.Close()
 os.system("rm dummy.root")
-                                                                                                                                                                                                                                                                 
        
