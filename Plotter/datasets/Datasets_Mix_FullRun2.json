@@ -1,22 +1,23 @@
 {
-   "data_2016":"data_60_2016.root",
-   "data_2017":"data_60_2017.root",
-   "data_2018":"data_60_2018.root",
+   "data_2016":"2016/hadd/data_2016.root",
+   "data_2017":"2017/hadd/data_2017.root",
+   "data_2018":"2018/hadd/data_2018.root",
    "signal":[
 
          {
             "name":"Pseudoscalar",
-            "treeName_2016":"SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_H4GTag_0",
-            "treeName_2017":"SUSYGluGluToHToAA_AToGG_M_60_TuneCP5_13TeV_pythia8_13TeV_H4GTag_0",
-            "treeName_2018":"HAHMHToAA_AToGG_MA_60GeV_TuneCP5_PSweights_13TeV_madgraph_pythia8_13TeV_H4GTag_0",
+            "treeName_2016":"tagsDumper/trees/SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_H4GTag_0",
+            "treeName_2017":"tagsDumper/trees/SUSYGluGluToHToAA_AToGG_M_60_TuneCP5_13TeV_pythia8_13TeV_H4GTag_0",
+            "treeName_2018":"tagsDumper/trees/HAHMHToAA_AToGG_MA_60GeV_TuneCP5_PSweights_13TeV_madgraph_pythia8_13TeV_H4GTag_0",
             "legend":"m_{a} = 60 GeV",
             "color":300,
             "style":1,
-            "file_2016":"signal_m_60_2016.root",
-            "file_2017":"signal_m_60_2017.root",
-            "file_2018":"signal_m_60_2018.root"
+            "file_2016":"2016/hadd/signal_m_60.root",
+            "file_2017":"2017/hadd/signal_m_60.root",
+            "file_2018":"2018/hadd/signal_m_60.root"
 
          }
+
 
 
    ],
@@ -29,11 +30,11 @@
           "style":1,
           "files":[
              {
-                "file_2016":"data_mix_weight_PhoMVA_60_2016.root",
+                "file_2016":"2016/hadd/datamix_skim.root",
                 "treeName_2016":"Data_13TeV_H4GTag_0",
-                "file_2017":"data_mix_weight_PhoMVA_60_2017.root",
+                "file_2017":"2017/hadd/datamix_skim.root",
                 "treeName_2017":"Data_13TeV_H4GTag_0",
-                "file_2018":"data_mix_weight_PhoMVA_60_2018.root",
+                "file_2018":"2018/hadd/datamix_skim.root",
                 "treeName_2018":"Data_13TeV_H4GTag_0",
                 "cut":"1>0"
              }
