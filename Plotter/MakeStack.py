@@ -228,8 +228,8 @@ for plot in plots:
     # data_integral_2017 = 1
     # data_integral_2018 = 1
 
-    Cut_data = Cut
-    Cut_data = Cut_data + Cut_additional
+    #Cut_data = Cut
+    #Cut_data = Cut_data + Cut_additional
     #print "Cut_data: ", Cut_data
 
     if (year==1):
