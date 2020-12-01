@@ -22,7 +22,7 @@ def getSig(hist_B, hist_S):
 			continue
 
 		ratio = b2/sqrt(b1)
-		print ratio
+		#print ratio
 		graph.SetPoint(npoint, hist_B.GetBinCenter(Bin), ratio)
 		npoint += 1
 	graph.Set(npoint)
@@ -45,7 +45,7 @@ def getRatio(hist1, hist2):
 			continue
 
 		ratio = b1/b2
-                # print "b1: ", b1, " b2: ", b2 , " ratio: ", ratio
+                #print "b1: ", b1, " b2: ", b2 
 		chi2_hist += ((b1-b2)*(b1-b2))/b2
 		chi2_ratio += (ratio - 1)*(ratio-1)
                 #print ((b1-b2)*(b1-b2))/b2, "  " , (ratio - 1)*(ratio-1)
@@ -344,17 +344,17 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	Significance.GetXaxis().SetRangeUser(bkg.GetHistogram().GetXaxis().GetXmin(), bkg.GetHistogram().GetXaxis().GetXmax())
 	x = Double(0.)
         y = Double(0.)
-        for i in range(1, Significance.GetN()):
-            Significance.GetPoint(i, x, y)
-            print "================="
-	    print x, y
+        #for i in range(1, Significance.GetN()):
+            #Significance.GetPoint(i, x, y)
+            #print "================="
+	    #print x, y
 	c1 = TCanvas("c2", "c2", 900, 800)
 	SetOwnership(c1,False) #If I don't put this, I get memory leak problems...
 	p1 = TPad("pad1","pad1", 0, float(ratio - epsilon), 1, 1)
 	SetOwnership(p1,False)
 	p1.SetBottomMargin(epsilon)
 	p2 = TPad("pad2","pad2",0,0,1,float(ratio*(1-epsilon)) )
-	print "float(ratio*(1-epsilon))" , float(ratio*(1-epsilon))
+	#print "float(ratio*(1-epsilon))" , float(ratio*(1-epsilon))
 	SetOwnership(p2,False)
 	p2.SetFillColor(0)
 	p2.SetFillStyle(0)
@@ -461,8 +461,8 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	SUM.SetFillStyle(3001)
 	SUM.Draw("E2 same")
 	# SUM.Draw("a3 same")
-	print "Data integral  = ",data.Integral()
-	print "Background integral = ",SUM.Integral()
+	#print "Data integral  = ",data.Integral()
+	#print "Background integral = ",SUM.Integral()
 	scale = data.Integral()/SUM.Integral()
 	# SUM.Scale(scale)
 	# SUM.Draw("E1 same")
@@ -482,8 +482,8 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	tlatex.DrawLatex(0.18, 0.91, "Work in Progress")
        	tlatex.SetTextFont(43)
 	tlatex.SetTextSize(23)
-        tlatex.DrawLatex(0.13, 0.78, "#chi^{2}(Ratio) = " +str(round(chi2_ratio,3)))
-        tlatex.DrawLatex(0.13, 0.73, "#chi^{2}(Hist) = " +str(round(chi2_hist,3)))
+        #tlatex.DrawLatex(0.13, 0.78, "#chi^{2}(Ratio) = " +str(round(chi2_ratio,3)))
+        #tlatex.DrawLatex(0.13, 0.73, "#chi^{2}(Hist) = " +str(round(chi2_hist,3)))
 #	tlatex.DrawLatex(0.65, 0.91,"L = 2.70 fb^{-1} (13 TeV)")
 	# Lumi = "L = " + str(lumi) + " pb^{-1} (13 TeV)"#, "+ year + ")"
 	# if lumi > 1000:
@@ -508,7 +508,6 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 #	pullE.GetYaxis().SetNdivisions(4, False)
 	if(hideData==False):
 		pullE.Draw("AF2")
-		print 'HERE I AM'
 		# print Significance
 		# Significance.Draw("E2 same")
 		# p2.Update()
@@ -521,7 +520,6 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	Line = TLine(bkg.GetHistogram().GetXaxis().GetXmin(), 1., bkg.GetHistogram().GetXaxis().GetXmax(), 1.)
 	Line.SetLineColor(kRed)
 	if(hideData==False):
-		print 'HERE I AM 2'
 		Line.Draw()
 		pullH.Draw("PE0same")
 		# print Significance
@@ -533,7 +531,7 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	p3.cd()
 	Significance.Draw("E2")
 	p3.Draw()
-        c1.SaveAs(dirName+"/test.pdf")
+        #c1.SaveAs(dirName+"/test.pdf")
         c1.cd()
 	p1.Draw()
         c1.cd()
@@ -547,7 +545,7 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	if(hideData):
 		GeneralMaximus = bkg.GetMaximum()*10
 	GeneralMaximus = max(GeneralMaximus, 1E-5)
-	print GeneralMaximus, log10(abs(GeneralMaximus))
+	#print GeneralMaximus, log10(abs(GeneralMaximus))
 	GenMax = pow(10, log10(abs(GeneralMaximus))*3.)
 	bkg.SetMaximum(GenMax)
 	GenMin = bkg.GetMinimum()
@@ -563,8 +561,8 @@ def SaveWithPull(data, bkg, legend, pullH, pullE, fileName, varName, dirName, lu
 	c1.SaveAs(dirName+"/LOG_" + fileName + ".png")
 #	c1.Delete()
 
-	print "Expected number of events (MC):", SUM.Integral()
-	print "Observed number of events (DATA):", data.Integral()
+	#print "Expected number of events (MC):", SUM.Integral()
+	#print "Observed number of events (DATA):", data.Integral()
 
 def SavePull(pullH, pullE, LowEdge, UpEdge, dirName):
 	ca = TCanvas("ca", "ca", 1000, 800)
