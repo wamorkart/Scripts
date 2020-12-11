@@ -1,0 +1,58 @@
+{
+   "data_2016":"2016/hadd/data_2016.root",
+   "data_2017":"2017/hadd/data_2017.root",
+   "data_2018":"2018/hadd/data_2018.root",
+   "signal":[
+
+         {
+            "name":"Pseudoscalar",
+            "treeName_2016":"tagsDumper/trees/SUSYGluGluToHToAA_AToGG_M_60_TuneCUETP8M1_13TeV_pythia8_13TeV_H4GTag_0",
+            "treeName_2017":"tagsDumper/trees/SUSYGluGluToHToAA_AToGG_M_60_TuneCP5_13TeV_pythia8_13TeV_H4GTag_0",
+            "treeName_2018":"tagsDumper/trees/HAHMHToAA_AToGG_MA_60GeV_TuneCP5_PSweights_13TeV_madgraph_pythia8_13TeV_H4GTag_0",
+            "legend":"m_{a} = 60 GeV",
+            "color":300,
+            "style":1,
+            "file_2016":"2016/hadd/signal_m_60.root",
+            "file_2017":"2017/hadd/signal_m_60.root",
+            "file_2018":"2018/hadd/signal_m_60.root"
+
+         },
+         {
+            "name":"Pseudoscalar",
+            "treeName_2016":"tagsDumper/trees/SUSYGluGluToHToAA_AToGG_M_15_TuneCUETP8M1_13TeV_pythia8_13TeV_H4GTag_0",
+            "treeName_2017":"tagsDumper/trees/SUSYGluGluToHToAA_AToGG_M_15_TuneCP5_13TeV_pythia8_13TeV_H4GTag_0",
+            "treeName_2018":"tagsDumper/trees/HAHMHToAA_AToGG_MA_15GeV_TuneCP5_PSweights_13TeV_madgraph_pythia8_13TeV_H4GTag_0",
+            "legend":"m_{a} = 15 GeV",
+            "color":300,
+            "style":1,
+            "file_2016":"2016/hadd/signal_m_15.root",
+            "file_2017":"2017/hadd/signal_m_15.root",
+            "file_2018":"2018/hadd/signal_m_15.root"
+
+         }
+
+
+
+   ],
+
+     "background":{
+       "Mixed Photons":{
+          "position":1,
+          "legend":"Event mixing",
+          "color":"#2B74BA",
+          "style":1,
+          "files":[
+             {
+                "file_2016":"2016/hadd/datamix_skim.root",
+                "treeName_2016":"Data_13TeV_H4GTag_0",
+                "file_2017":"2017/hadd/datamix_skim.root",
+                "treeName_2017":"Data_13TeV_H4GTag_0",
+                "file_2018":"2018/hadd/datamix_skim.root",
+                "treeName_2018":"Data_13TeV_H4GTag_0",
+                "cut":"1>0"
+             }
+
+          ]
+       }
+     }
+     }
