@@ -9,7 +9,6 @@ parser.add_argument('-y', '--year', dest='year', required=False, type=str)
 parser.add_argument('-t', '--training', dest='training', required=True, type=str)
 parser.add_argument('-gm', '--genMass', dest='genMass', required=False, type=float)
 parser.add_argument('-W', '--weight', dest='Weight', required=True, type=str)
-# parser.add_argument('-T', '--training', dest='training', required=True, type=str)
 parser.add_argument('-O', '--output', dest='Out', required=True, type=str)
 
 opt = parser.parse_args()
